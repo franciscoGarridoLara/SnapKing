@@ -1,2 +1,1 @@
-# SnapKing
-Proyecto android.
+
