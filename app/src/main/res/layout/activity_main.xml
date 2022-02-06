@@ -1,18 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+<!-- Login -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/loginFrame"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:clipToOutline="true"
+    android:background="@drawable/login"
+    >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- Logo2 1 -->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- LoginForm -->
+    <View
+        android:id="@+id/logo2_1"
+        android:layout_width="219dp"
+        android:layout_height="219dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/logo" />
+
+    <RelativeLayout
+        android:id="@+id/loginform"
+        android:layout_width="300dp"
+        android:layout_height="228dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="54dp"
+        android:layout_marginTop="327dp"
+        android:background="@drawable/loginform"
+        android:clipToOutline="true">
+
+
+        <!-- btnLogin -->
+        <View
+            android:id="@+id/btnlogin"
+            android:layout_width="150dp"
+            android:layout_height="37dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="75dp"
+            android:layout_marginTop="120dp"
+            android:background="#00000000" />
+
+        <!-- LOGIN -->
+
+        <!-- Rectangle 3 -->
+        <View
+            android:id="@+id/rectangle_3"
+            android:layout_width="150dp"
+            android:layout_height="37dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="75dp"
+            android:layout_marginTop="120dp"
+            android:background="@drawable/rectangle_3" />
+
+        <!-- btnRegister -->
+        <TextView
+            android:id="@+id/login"
+            android:layout_width="105dp"
+            android:layout_height="22dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="97dp"
+            android:layout_marginTop="128dp"
+            android:fontFamily="@font/fredoka_one"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/login"
+            android:textAppearance="@style/login" />
+
+        <View
+            android:id="@+id/btnregister"
+            android:layout_width="150dp"
+            android:layout_height="37dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="75dp"
+            android:layout_marginTop="165dp"
+            android:background="#00000000" />
+
+
+        <!-- REGISTER -->
+        <View
+            android:id="@+id/rectangle_3"
+            android:layout_width="150dp"
+            android:layout_height="37dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="75dp"
+            android:layout_marginTop="165dp"
+            android:background="@drawable/rectangle_3" />
+
+        <TextView
+            android:id="@+id/register"
+            android:layout_width="105dp"
+            android:layout_height="22dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="97dp"
+            android:layout_marginTop="173dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/register"
+            android:textAppearance="@style/register" />
+
+
+        <!-- userEntry -->
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/userentry"
+            android:layout_width="300dp"
+            android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:clipToOutline="true"
+            android:background="@drawable/userentry"
+            />
+
+
+        <!-- userEntryLogo -->
+        <View
+            android:id="@+id/userentrylo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="17dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/userentrylo"
+            />
+
+
+        <!-- passwdEntry -->
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/passwdentry"
+            android:layout_width="300dp"
+            android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="55dp"
+            android:clipToOutline="true"
+            android:background="@drawable/passwdentry"
+            />
+
+
+
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
+
+
+
