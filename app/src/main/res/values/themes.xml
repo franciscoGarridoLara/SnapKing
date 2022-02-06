@@ -49,4 +49,38 @@
 
 LOGIN
 </string>
+    <style name="battle">
+
+        <item name="android:textSize">
+            24sp
+        </item>
+
+        <item name="android:textColor">
+            #FFFFFF
+        </item>
+
+        <item name="android:shadowColor">
+            #40000000
+        </item>
+
+        <item name="android:shadowDx">
+            0
+        </item>
+
+        <item name="android:shadowDy">
+            4
+        </item>
+
+        <item name="android:shadowRadius">
+            4
+        </item>
+
+    </style>
+
+
+    <!-- strings.xml -->
+    <string name="battle">
+
+BATTLE
+</string>
 </resources>

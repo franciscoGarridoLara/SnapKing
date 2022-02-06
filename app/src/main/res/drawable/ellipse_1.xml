@@ -1,0 +1,25 @@
+
+<!-- drawable/ellipse_1.xml -->
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="76dp"
+    android:height="76dp"
+    android:viewportWidth="76"
+    android:viewportHeight="76"
+    >
+
+    <group>
+
+        <clip-path
+            android:pathData="M76 38C76 58.9868 58.9868 76 38 76C17.0132 76 0 58.9868 0 38C0 17.0132 17.0132 0 38 0C58.9868 0 76 17.0132 76 38Z"
+            />
+
+        <path
+            android:pathData="M0 0V76H76V0"
+            android:fillColor="#C4C4C4"
+            />
+
+    </group>
+
+</vector>
