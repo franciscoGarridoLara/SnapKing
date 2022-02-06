@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Main -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:clipToOutline="true"
+    android:background="@drawable/login"
+>
+    <!-- Polygon 1 1 -->
+    <View
+        android:id="@+id/polygon_1_1"
+        android:layout_width="54dp"
+        android:layout_height="61dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="181dp"
+        android:layout_marginTop="463dp"
+        android:background="@drawable/play"
+        android:elevation="4dp" />
+    <!-- s 1 -->
+    <View
+        android:id="@+id/s_1"
+        android:layout_width="234dp"
+        android:layout_height="234dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="92dp"
+        android:layout_marginTop="173dp"
+        android:background="@drawable/s_fondo" />
+    <!-- engranaje 1 -->
+    <View
+        android:id="@+id/engranaje_1"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="31dp"
+        android:background="@drawable/ajustes"
+        android:elevation="4dp" />
+    <!-- user (1) 1 -->
+    <View
+        android:id="@+id/user_1_1"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="327dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/user_1_1" />
+    <!-- Ellipse 1 -->
+    <View
+        android:id="@+id/ellipse_1"
+        android:layout_width="76dp"
+        android:layout_height="76dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="317dp"
+        android:layout_marginTop="19dp"
+        android:background="@drawable/ellipse_1" />
+
+    <!-- Group 5 -->
+    <View
+        android:id="@+id/group_5"
+        android:layout_width="140dp"
+        android:layout_height="48dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="51dp"
+        android:layout_marginTop="628dp"
+        android:background="#00000000" />
+    <!-- BATTLE -->
+
+    <TextView
+        android:id="@+id/battle"
+        android:layout_width="107dp"
+        android:layout_height="32dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="69dp"
+        android:layout_marginTop="635dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="BATTLE"
+        android:textAppearance="@style/battle" />
+    <!-- Group 4 -->
+    <View
+        android:id="@+id/group_4"
+        android:layout_width="140dp"
+        android:layout_height="48dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="245dp"
+        android:layout_marginTop="629dp"
+        android:background="#00000000" />
+
+</RelativeLayout>

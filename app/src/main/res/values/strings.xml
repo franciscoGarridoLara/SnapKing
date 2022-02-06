@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SnapKing</string>
     <string name="register">REGISTER</string>
+    <string name="battle">BATTLE</string>
 </resources>
