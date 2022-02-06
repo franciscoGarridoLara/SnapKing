@@ -39,6 +39,8 @@
             #FFFFFF
         </item>
 
+        <item name="android:fontFamily">@font/fredoka_one</item>
+
     </style>
 
 
