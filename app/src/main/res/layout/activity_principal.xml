@@ -2,6 +2,7 @@
 <!-- Main -->
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -29,7 +30,7 @@
         android:layout_marginLeft="92dp"
         android:layout_marginTop="173dp"
         android:background="@drawable/s_fondo" />
-    <!-- engranaje 1 -->
+    <!-- engranaje 1
     <View
         android:id="@+id/engranaje_1"
         android:layout_width="48dp"
@@ -39,7 +40,16 @@
         android:layout_marginLeft="21dp"
         android:layout_marginTop="31dp"
         android:background="@drawable/ajustes"
-        android:elevation="4dp" />
+        android:elevation="4dp" />-->
+
+    <ImageView
+        android:layout_width="54dp"
+        android:layout_height="57dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="31dp"
+        android:src="@mipmap/ajustes" />
     <!-- user (1) 1 -->
     <View
         android:id="@+id/user_1_1"
@@ -61,38 +71,30 @@
         android:layout_marginTop="19dp"
         android:background="@drawable/ellipse_1" />
 
-    <!-- Group 5 -->
-    <View
-        android:id="@+id/group_5"
-        android:layout_width="140dp"
-        android:layout_height="48dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="51dp"
-        android:layout_marginTop="628dp"
-        android:background="#00000000" />
-    <!-- BATTLE -->
 
-    <TextView
-        android:id="@+id/battle"
-        android:layout_width="107dp"
-        android:layout_height="32dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="69dp"
-        android:layout_marginTop="635dp"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="BATTLE"
-        android:textAppearance="@style/battle" />
-    <!-- Group 4 -->
-    <View
-        android:id="@+id/group_4"
+
+    <Button
+        android:id="@+id/btnBattle"
         android:layout_width="140dp"
         android:layout_height="48dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="245dp"
-        android:layout_marginTop="629dp"
-        android:background="#00000000" />
+        android:layout_marginLeft="49dp"
+        android:layout_marginTop="628dp"
+        android:backgroundTint="@color/azul_oscuro"
+        app:cornerRadius="10dp"
+        android:text="BATTLE"/>
+
+    <Button
+        android:id="@+id/btnParty"
+        android:layout_width="140dp"
+        android:layout_height="48dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="224dp"
+        android:layout_marginTop="628dp"
+        android:backgroundTint="@color/azul_oscuro"
+        android:text="PARTY"
+        app:cornerRadius="10dp" />
 
 </RelativeLayout>
