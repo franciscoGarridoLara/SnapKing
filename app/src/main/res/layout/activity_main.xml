@@ -2,6 +2,7 @@
 <!-- Login -->
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/loginFrame"
     android:layout_width="fill_parent"
@@ -49,9 +50,9 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="75dp"
             android:layout_marginTop="120dp"
-            android:background="@drawable/rectangle_3"
             android:backgroundTint="@color/azul_oscuro"
             android:text="LOGIN"
+            app:cornerRadius="10dp"
             tools:ignore="TouchTargetSizeCheck" />
 
         <!-- btnRegister -->
@@ -67,8 +68,7 @@
             android:fontFamily="@font/fredoka_one"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/login"
-            android:textAppearance="@style/login"
-            tools:ignore="TextContrastCheck" />
+            android:textAppearance="@style/login" />
 
 
         <!-- REGISTER -->
@@ -80,9 +80,9 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="75dp"
             android:layout_marginTop="165dp"
-            android:background="@drawable/rectangle_3"
-            android:backgroundTint="#FFFFFF"
+            android:backgroundTint="@color/azul_oscuro"
             android:text="REGISTER"
+            app:cornerRadius="10dp"
             tools:ignore="TouchTargetSizeCheck" />
 
         <TextView
