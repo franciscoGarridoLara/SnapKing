@@ -14,14 +14,15 @@
     <!-- Logo2 1 -->
 
     <!-- LoginForm -->
+
     <View
         android:id="@+id/logo2_1"
         android:layout_width="219dp"
         android:layout_height="219dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginLeft="95dp"
+        android:layout_marginTop="67dp"
         android:background="@drawable/logo"
         android:foreground="@mipmap/Logo2" />
 
@@ -55,20 +56,7 @@
             app:cornerRadius="10dp"
             tools:ignore="TouchTargetSizeCheck" />
 
-        <!-- btnRegister -->
-        <TextView
-            android:id="@+id/login"
-            android:layout_width="105dp"
-            android:layout_height="22dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="97dp"
-            android:layout_marginTop="128dp"
-            android:background="#FFFFFF"
-            android:fontFamily="@font/fredoka_one"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="@string/login"
-            android:textAppearance="@style/login" />
+
 
 
         <!-- REGISTER -->
@@ -84,19 +72,6 @@
             android:text="REGISTER"
             app:cornerRadius="10dp"
             tools:ignore="TouchTargetSizeCheck" />
-
-        <TextView
-            android:id="@+id/register"
-            android:layout_width="105dp"
-            android:layout_height="22dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="97dp"
-            android:layout_marginTop="173dp"
-            android:fontFamily="@font/fredoka_one"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="@string/register"
-            android:textAppearance="@style/register" />
 
 
         <!-- userEntry -->

@@ -19,7 +19,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="92dp"
         android:layout_marginTop="173dp"
-        android:background="@drawable/s_fondo" />
+        android:background="@mipmap/letraS" />
     <!-- engranaje 1 -->
 
     <ImageView
