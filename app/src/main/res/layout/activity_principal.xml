@@ -9,19 +9,9 @@
     android:clipToOutline="true"
     android:background="@drawable/login"
 >
-    <!-- Polygon 1 1 -->
-    <View
-        android:id="@+id/polygon_1_1"
-        android:layout_width="54dp"
-        android:layout_height="61dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="181dp"
-        android:layout_marginTop="463dp"
-        android:background="@drawable/play"
-        android:elevation="4dp" />
-    <!-- s 1 -->
-    <View
+
+    <!-- s -->
+    <ImageView
         android:id="@+id/s_1"
         android:layout_width="234dp"
         android:layout_height="234dp"
@@ -30,19 +20,10 @@
         android:layout_marginLeft="92dp"
         android:layout_marginTop="173dp"
         android:background="@drawable/s_fondo" />
-    <!-- engranaje 1
-    <View
-        android:id="@+id/engranaje_1"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="21dp"
-        android:layout_marginTop="31dp"
-        android:background="@drawable/ajustes"
-        android:elevation="4dp" />-->
+    <!-- engranaje 1 -->
 
     <ImageView
+        android:id="@+id/ajustes"
         android:layout_width="54dp"
         android:layout_height="57dp"
         android:layout_alignParentLeft="true"
