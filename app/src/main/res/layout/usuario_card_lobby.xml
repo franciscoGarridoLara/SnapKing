@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/perfil"
+        android:layout_width="292dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+
+        android:elevation="4dp">
+
+
+
+        <ImageView
+            android:src="@drawable/user_card_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/fondo_1"
+                android:layout_width="39dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="10dp"
+                android:width="39dp"
+                android:height="38dp"
+                android:layout_gravity="center_vertical"
+                android:viewportWidth="39"
+                android:viewportHeight="38"
+                tools:srcCompat="@tools:sample/avatars" />
+            "/>
+            <TextView
+                android:layout_height="match_parent"
+                android:id="@+id/txtjugador"
+                android:layout_width="155dp"
+                android:layout_alignParentLeft="true"
+
+                android:layout_alignParentTop="true"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/txtjugador"
+                android:textAppearance="@style/txtjugador"
+                tools:text="dragonnefgro0002" />
+
+            <ImageView
+                android:id="@+id/prepado_ima"
+                android:layout_width="41dp"
+                android:layout_height="41dp"
+                android:width="39dp"
+                android:height="38dp"
+                android:viewportWidth="39"
+                android:viewportHeight="38"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+
+                app:srcCompat="@drawable/prepado_image"
+                tools:srcCompat="@drawable/prepado_image" />
+        </LinearLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
