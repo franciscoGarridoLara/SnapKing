@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/votacion"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:clipToOutline="true"
+    android:background="@drawable/votacion"
+    tools:context=".VotacionActivity">
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recicleUsu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/usuarios_votacion">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/txtPlayerV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_alignParentTop="true"
+        android:text="Dragonnegro0002"
+        android:textAppearance="@style/txtPlayerV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recicleUsu" />
+
+    <ImageView
+        android:id="@+id/imagenAvotar"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_height="400dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPlayerV"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <RatingBar
+
+        android:id="@+id/disgusto_1"
+        android:layout_width="match_parent"
+        android:layout_height="92dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginEnd="88dp"
+
+        android:layout_marginBottom="30dp"
+        android:background="#00FFFFFF"
+        android:numStars="5"
+        android:stepSize="1"
+        android:foregroundGravity="center_vertical"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

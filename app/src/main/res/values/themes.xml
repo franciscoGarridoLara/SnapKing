@@ -88,6 +88,31 @@ LOGIN
         </item>
 
     </style>
+    <style name="txtPuntos">
+
+        <item name="android:textSize">
+            12sp
+        </item>
+
+        <item name="android:textColor">
+            #023047
+        </item>
+
+    </style>
+
+
+
+    <style name="txtPlayerV">
+
+        <item name="android:textSize">
+            36sp
+        </item>
+
+        <item name="android:textColor">
+            #1154FF
+        </item>
+
+    </style>
 
 
     <!-- strings.xml -->
