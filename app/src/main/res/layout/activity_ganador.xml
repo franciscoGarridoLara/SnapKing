@@ -15,7 +15,7 @@
         android:layout_height="38dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="44dp"
         android:gravity="center_horizontal|center_vertical"
         android:text="Ganador!!"
         android:textAppearance="@style/txtganador"
@@ -36,8 +36,9 @@
         android:layout_height="280dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/konfettiView"
         app:srcCompat="@drawable/disgusto_1" />
@@ -85,12 +86,16 @@
     <ImageButton
         android:layout_width="140dp"
         android:layout_height="48dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="52dp"
         android:background="#00FFFFFF"
         android:src="@drawable/btnlobby"
+        app:layout_constraintBottom_toBottomOf="@+id/konfettiView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtjugadorWiner" />
+        app:layout_constraintTop_toBottomOf="@+id/txtjugadorWiner"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
