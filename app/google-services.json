@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "400573421580",
+    "project_id": "snap-king",
+    "storage_bucket": "snap-king.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:400573421580:android:b63f4040528a2d3d5f7629",
+        "android_client_info": {
+          "package_name": "com.example.snapking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "400573421580-j01bf8u90qre7cbrevpg94qganlh7vla.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCboC17zjBI6hYL96sv7Cb_r_uHLcXsK64"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "400573421580-j01bf8u90qre7cbrevpg94qganlh7vla.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

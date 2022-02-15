@@ -28,8 +28,8 @@
 
     <RelativeLayout
         android:id="@+id/loginform"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="316dp"
+        android:layout_height="379dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="55dp"
@@ -43,112 +43,125 @@
 
         <!-- Rectangle 3 -->
 
-
         <!-- REGISTER -->
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="150dp"
-            android:layout_height="37dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="77dp"
-            android:layout_marginTop="170dp"
-            android:backgroundTint="@color/azul_oscuro"
-            android:text="LOGIN"
-            app:cornerRadius="10dp"
-            tools:ignore="TouchTargetSizeCheck" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btnRegister"
-            android:layout_width="150dp"
-            android:layout_height="37dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="77dp"
-            android:layout_marginTop="215dp"
-            android:backgroundTint="@color/azul_oscuro"
-            android:text="REGISTER"
-            app:cornerRadius="10dp"
-            tools:ignore="TouchTargetSizeCheck" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
+                <RelativeLayout
+                    android:id="@+id/userentry"
+                    android:layout_width="300dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/userentry"
+                    android:clipToOutline="true">
+
+                    <EditText
+                        android:id="@+id/userEd"
+                        android:layout_width="236dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="64dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/userentry"
+                        android:clipToOutline="true"
+                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                    <!-- userEntryLogo -->
+                    <View
+                        android:id="@+id/userentrylo"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+
+                        android:foreground="@mipmap/user" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/passwdentry"
+                    android:layout_width="300dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/passwdentry"
+                    android:clipToOutline="true">
+
+                    <!-- passEntryLogo -->
+
+                    <EditText
+                        android:id="@+id/passwdEd"
+                        android:layout_width="236dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+
+                        android:layout_marginLeft="64dp"
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/passwdentry"
+                        android:clipToOutline="true"
+                        android:inputType="textPassword"
+                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                    <View
+                        android:id="@+id/passentrylo"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+
+                        android:foreground="@mipmap/padlock" />
+
+
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/btnRegister"
+                    android:layout_width="150dp"
+                    android:layout_height="37dp"
+                    android:backgroundTint="@color/azul_oscuro"
+                    android:text="REGISTER"
+                    android:textAlignment="center"
+                    app:cornerRadius="10dp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <Button
+                    android:id="@+id/btnLogin"
+                    android:layout_width="150dp"
+                    android:layout_height="37dp"
+                    android:backgroundTint="@color/azul_oscuro"
+                    android:text="LOGIN"
+                    app:cornerRadius="10dp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/sign_in_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="61dp">
+
+                </com.google.android.gms.common.SignInButton>
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- userEntry -->
-        <RelativeLayout
-            android:id="@+id/userentry"
-            android:layout_width="300dp"
-            android:layout_height="45dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/userentry"
-            android:clipToOutline="true">
-
-            <EditText
-                android:id="@+id/userEd"
-                android:layout_width="236dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="64dp"
-                android:layout_marginTop="0dp"
-                android:background="@drawable/userentry"
-                android:clipToOutline="true"
-                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
-            <!-- userEntryLogo -->
-            <View
-                android:id="@+id/userentrylo"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="8dp"
-
-                android:foreground="@mipmap/user" />
-
-        </RelativeLayout>
 
 
         <!-- passwdEntry -->
-        <RelativeLayout
-            android:id="@+id/passwdentry"
-            android:layout_width="300dp"
-            android:layout_height="45dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="55dp"
-            android:background="@drawable/passwdentry"
-            android:clipToOutline="true">
-
-            <!-- passEntryLogo -->
-
-            <EditText
-                android:id="@+id/passwdEd"
-                android:layout_width="236dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-
-                android:layout_marginLeft="64dp"
-                android:layout_marginTop="0dp"
-                android:background="@drawable/passwdentry"
-                android:clipToOutline="true"
-                android:inputType="textPassword"
-                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-            <View
-                android:id="@+id/passentrylo"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="8dp"
-
-                android:foreground="@mipmap/padlock" />
-
-
-        </RelativeLayout>
 
 
     </RelativeLayout>

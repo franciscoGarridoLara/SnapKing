@@ -23,12 +23,16 @@
     <EditText
         android:id="@+id/editTextTextPersonName"
         android:layout_width="288dp"
-        android:layout_height="46dp"
+        android:layout_height="48dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name #ID_USER"
-        tools:layout_editor_absoluteX="41dp"
-        tools:layout_editor_absoluteY="72dp" />
+        app:layout_constraintBottom_toTopOf="@+id/fondorecicl"
+        app:layout_constraintEnd_toStartOf="@+id/lupa_"
+        app:layout_constraintHorizontal_bias="0.602"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAmigos"
+        app:layout_constraintVertical_bias="0.423" />
 
     <FrameLayout
         android:id="@+id/fondorecicl"
