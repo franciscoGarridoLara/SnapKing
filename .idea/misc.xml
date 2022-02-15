@@ -46,13 +46,13 @@
         <entry key="app/src/main/res/drawable/userentrylo.xml" value="0.2755" />
         <entry key="app/src/main/res/drawable/votacion.xml" value="0.2755" />
         <entry key="app/src/main/res/layout/activity_amigos.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_ganador.xml" value="0.35833333333333334" />
+        <entry key="app/src/main/res/layout/activity_ganador.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_lobby.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_principal.xml" value="0.35833333333333334" />
         <entry key="app/src/main/res/layout/activity_registro.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_tematica.xml" value="0.35833333333333334" />
-        <entry key="app/src/main/res/layout/activity_votacion.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_votacion.xml" value="0.33" />
         <entry key="app/src/main/res/layout/usuario_card.xml" value="0.22" />
         <entry key="app/src/main/res/layout/usuario_card_lobby.xml" value="0.25271739130434784" />
         <entry key="app/src/main/res/layout/usuarios_votacion.xml" value="0.35833333333333334" />
