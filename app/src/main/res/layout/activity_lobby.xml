@@ -7,7 +7,7 @@
     android:background="@drawable/lobby"
     tools:context=".LobbyActivity">
 
-    B
+
 
     <ImageButton
         android:id="@+id/lupa_1"
@@ -47,38 +47,52 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="405dp"
+        android:layout_height="45dp"
+        android:fontFamily="@font/fredoka_one"
+        android:text="Lobby"
+        android:textAlignment="center"
+        android:textColorLink="#023047"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/fondorecicl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ImageButton
         android:id="@+id/btnReady"
 
-        android:layout_width="140dp"
-        android:layout_height="48dp"
+        android:layout_width="143dp"
+        android:layout_height="57dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
 
         android:layout_marginStart="110dp"
         android:layout_marginEnd="110dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="16dp"
         android:background="#00FFFFFF"
         android:elevation="4dp"
         android:src="@drawable/ready"
         app:layout_constraintBottom_toBottomOf="parent"
 
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fondorecicl"
+        app:layout_constraintVertical_bias="1.0"
         tools:ignore="SpeakableTextPresentCheck" />
 
-
-
-    <androidx.cardview.widget.CardView
+    <FrameLayout
         android:id="@+id/fondorecicl"
-        android:layout_width="311dp"
-        android:layout_height="520dp"
+        android:layout_width="331dp"
+        android:layout_height="526dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="24dp"
         android:layout_marginTop="120dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/lobby_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -86,17 +100,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:background="@drawable/lobby_container"
-            >
+            android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="292dp"
-                android:layout_height="416dp">
+                android:layout_width="wrap_content"
+                android:layout_height="505dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recicle"
-                    android:layout_width="240dp"
+                    android:layout_width="match_parent"
                     android:layout_height="415dp"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
@@ -106,35 +119,34 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:listitem="@layout/usuario_card_lobby" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    tools:listitem="@layout/usuario_card_lobby">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                </androidx.recyclerview.widget.RecyclerView>
 
                 <ImageButton
 
                     android:id="@+id/plus_circle"
-                    android:layout_width="49dp"
-                    android:layout_height="49dp"
+                    android:layout_width="61dp"
+                    android:layout_height="66dp"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginBottom="44dp"
+                    android:layout_marginStart="121dp"
+                    android:layout_marginEnd="120dp"
+                    android:layout_marginBottom="24dp"
                     android:background="#00FFFFFF"
                     android:clipToOutline="true"
                     android:src="@drawable/plus_circle_1"
-                    app:layout_constraintBottom_toBottomOf="@+id/fondorecicl"
-                    app:layout_constraintStart_toStartOf="@+id/fondorecicl"
-                    app:layout_goneMarginEnd="130dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recicle"
                     tools:ignore="SpeakableTextPresentCheck" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
 
-
-    </androidx.cardview.widget.CardView>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

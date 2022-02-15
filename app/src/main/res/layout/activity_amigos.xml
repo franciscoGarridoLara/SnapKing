@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AmigosActivity"
+    android:background="@drawable/login">
+
+
+    <TextView
+        android:id="@+id/tvAmigos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Amigos"
+        android:textAlignment="center"
+        android:textColorLink="#000000"
+        android:textSize="48sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="288dp"
+        android:layout_height="46dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name #ID_USER"
+        tools:layout_editor_absoluteX="41dp"
+        tools:layout_editor_absoluteY="72dp" />
+
+    <FrameLayout
+        android:id="@+id/fondorecicl"
+        android:layout_width="329dp"
+        android:layout_height="495dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.584">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/lobby_container"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="505dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recicle"
+                    android:layout_width="305dp"
+                    android:layout_height="504dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+
+
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/usuario_card">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+    <ImageButton
+        android:id="@+id/lupa_"
+        android:layout_width="51dp"
+        android:layout_height="51dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="4dp"
+        android:width="51dp"
+        android:height="51dp"
+        android:background="#00FFFFFF"
+        android:scaleType="centerInside"
+
+        android:viewportWidth="51"
+        android:viewportHeight="51"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck"
+        tools:src="@drawable/lupa" />
+</androidx.constraintlayout.widget.ConstraintLayout>

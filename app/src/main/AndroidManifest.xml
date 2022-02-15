@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SnapKing">
         <activity
+            android:name=".AmigosActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegistroActivity"
             android:exported="false" />
         <activity

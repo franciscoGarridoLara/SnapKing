@@ -61,12 +61,12 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="43dp"
-        android:layout_height="48dp"
+        android:layout_width="53dp"
+        android:layout_height="49dp"
         android:layout_marginTop="70dp"
         app:layout_constraintStart_toEndOf="@+id/txtEstrellas"
         app:layout_constraintTop_toBottomOf="@+id/imgperfil"
-        app:srcCompat="@drawable/_40px_golden_star_5" />
+        app:srcCompat="@drawable/ic_star" />
 
     <TextView
         android:id="@+id/txtjugadorWiner"
@@ -84,8 +84,8 @@
         app:layout_constraintTop_toBottomOf="@+id/txtEstrellas" />
 
     <ImageButton
-        android:layout_width="140dp"
-        android:layout_height="48dp"
+        android:layout_width="142dp"
+        android:layout_height="62dp"
         android:layout_marginTop="52dp"
         android:background="#00FFFFFF"
         android:src="@drawable/btnlobby"
