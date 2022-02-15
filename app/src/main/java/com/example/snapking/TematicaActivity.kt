@@ -1,18 +1,11 @@
 package com.example.snapking
 
-import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.snapking.R
+import android.os.Bundle
 
-class MainActivity : AppCompatActivity() {
-
+class TematicaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-
-
+        setContentView(R.layout.activity_tematica)
     }
-
 }

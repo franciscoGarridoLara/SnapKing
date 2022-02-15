@@ -26,6 +26,7 @@
         android:viewportHeight="51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck"
         tools:src="@drawable/lupa" />
 
     <com.mikhaellopez.circularimageview.CircularImageView
@@ -46,8 +47,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
-
     <ImageButton
         android:id="@+id/btnReady"
 
@@ -65,7 +64,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 
 
@@ -78,8 +78,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="120dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/fondorecicl"
-
+        android:background="@drawable/lobby_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -87,41 +86,50 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@drawable/lobby_container"
+            >
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recicle"
-                android:layout_width="311dp"
-                android:layout_height="465dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="292dp"
+                android:layout_height="416dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recicle"
+                    android:layout_width="240dp"
+                    android:layout_height="415dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
 
 
-                android:layout_marginEnd="24dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/usuario_card_lobby" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:listitem="@layout/usuario_card_lobby" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <ImageButton
+                <ImageButton
 
-                android:id="@+id/plus_circle"
-                android:layout_width="49dp"
-                android:layout_height="49dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="130dp"
-                android:layout_marginEnd="130dp"
-                android:layout_marginBottom="20dp"
-                android:background="#00FFFFFF"
-                android:clipToOutline="true"
-                android:src="@drawable/plus_circle_1"
-                app:layout_constraintBottom_toBottomOf="@+id/fondorecicl"
-                app:layout_constraintEnd_toEndOf="@+id/fondorecicl"
-                app:layout_constraintStart_toStartOf="@+id/fondorecicl"
-                app:layout_goneMarginEnd="130dp" />
+                    android:id="@+id/plus_circle"
+                    android:layout_width="49dp"
+                    android:layout_height="49dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginBottom="44dp"
+                    android:background="#00FFFFFF"
+                    android:clipToOutline="true"
+                    android:src="@drawable/plus_circle_1"
+                    app:layout_constraintBottom_toBottomOf="@+id/fondorecicl"
+                    app:layout_constraintStart_toStartOf="@+id/fondorecicl"
+                    app:layout_goneMarginEnd="130dp"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 

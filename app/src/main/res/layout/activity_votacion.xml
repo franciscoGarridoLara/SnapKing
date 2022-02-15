@@ -20,9 +20,9 @@
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         tools:listitem="@layout/usuarios_votacion">
 
     </androidx.recyclerview.widget.RecyclerView>
@@ -31,13 +31,15 @@
         android:id="@+id/txtPlayerV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/fredoka_one"
         android:text="Dragonnegro0002"
         android:textAppearance="@style/txtPlayerV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recicleUsu" />
+
 
     <ImageView
         android:id="@+id/imagenAvotar"
@@ -51,22 +53,23 @@
 
     <RatingBar
 
-        android:id="@+id/starts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/disgusto_1"
+        android:layout_width="240dp"
+        android:layout_height="61dp"
         android:layout_marginStart="88dp"
         android:layout_marginEnd="88dp"
 
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="16dp"
         android:background="#00FFFFFF"
+        android:foregroundGravity="center_vertical"
         android:numStars="5"
         android:stepSize="1"
-        android:foregroundGravity="center_vertical"
-        android:theme="@style/RatingBar"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

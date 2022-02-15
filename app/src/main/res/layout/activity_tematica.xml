@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tematica -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tematica"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:clipToOutline="true"
+
+    >
+
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/viewFinder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteY="145dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btnConfiguracion"
+                android:layout_width="73dp"
+                android:layout_height="73dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/icon_configuration"
+                android:foreground="@drawable/icon_configuration"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/btnConfirmar"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_marginStart="66dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/tick"
+                        android:foreground="@drawable/tick"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/btnCancelar"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+                    <Button
+                        android:id="@+id/btnCancelar"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_marginEnd="96dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/cancel"
+                        android:foreground="@drawable/cancel"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+                    <Button
+                        android:id="@+id/btnChat"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="19dp"
+                        android:layout_marginTop="11dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="18dp"
+                        android:background="@drawable/ic_chat"
+                        android:foreground="@drawable/ic_chat"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/btnCancelar"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="1.0"
+                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvTematica"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="484dp"
+
+                android:fontFamily="@font/fredoka_one"
+                android:text="TEMÁTICA"
+                android:textAlignment="center"
+
+                android:textAllCaps="false"
+                android:textColor="#219EBC"
+                android:textSize="60sp"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnConfiguracion"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <FrameLayout
+                android:layout_width="90dp"
+                android:layout_height="87dp"
+                android:layout_marginEnd="307dp"
+                android:layout_marginBottom="392dp"
+                android:background="@drawable/timer_framelayout"
+                android:backgroundTint="@color/azul_claro"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+
+                app:layout_constraintTop_toBottomOf="@+id/tvTematica"
+                app:layout_constraintVertical_bias="1.0">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tvSegundos"
+                        android:layout_width="70dp"
+                        android:layout_height="41dp"
+                        android:text="360"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="30dp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </TextView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </FrameLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.camera.view.PreviewView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

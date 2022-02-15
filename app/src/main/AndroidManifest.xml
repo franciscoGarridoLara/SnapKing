@@ -13,6 +13,9 @@
             android:name=".GanadorActivity"
             android:exported="false" />
         <activity
+            android:name=".TematicaActivity"
+            android:exported="false" />
+        <activity
             android:name=".VotacionActivity"
             android:exported="false" />
         <activity

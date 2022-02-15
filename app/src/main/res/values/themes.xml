@@ -159,6 +159,10 @@ LOGIN
     <!-- strings.xml -->
     <string name="battle">
 
+        <style name="Button.color.blue">
+            <item name="colorBlue"></item>
+        </style>
+
 BATTLE
 </string>
 </resources>

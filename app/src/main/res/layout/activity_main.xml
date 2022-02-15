@@ -21,20 +21,19 @@
         android:layout_height="219dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="95dp"
+        android:layout_marginStart="95dp"
         android:layout_marginTop="67dp"
-        android:background="@drawable/logo"
-        android:foreground="@mipmap/Logo2" />
+
+        android:foreground="@mipmap/logo2" />
 
     <RelativeLayout
         android:id="@+id/loginform"
         android:layout_width="300dp"
-        android:layout_height="228dp"
+        android:layout_height="300dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="57dp"
-        android:layout_marginTop="369dp"
-        android:background="@drawable/loginform"
+        android:layout_marginLeft="55dp"
+        android:layout_marginTop="322dp"
         android:clipToOutline="true">
 
 
@@ -43,31 +42,30 @@
         <!-- LOGIN -->
 
         <!-- Rectangle 3 -->
+
+
+        <!-- REGISTER -->
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="150dp"
             android:layout_height="37dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="75dp"
-            android:layout_marginTop="120dp"
+            android:layout_marginLeft="77dp"
+            android:layout_marginTop="170dp"
             android:backgroundTint="@color/azul_oscuro"
             android:text="LOGIN"
             app:cornerRadius="10dp"
             tools:ignore="TouchTargetSizeCheck" />
 
-
-
-
-        <!-- REGISTER -->
         <Button
             android:id="@+id/btnRegister"
             android:layout_width="150dp"
             android:layout_height="37dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="75dp"
-            android:layout_marginTop="165dp"
+            android:layout_marginLeft="77dp"
+            android:layout_marginTop="215dp"
             android:backgroundTint="@color/azul_oscuro"
             android:text="REGISTER"
             app:cornerRadius="10dp"
@@ -86,11 +84,11 @@
 
             <EditText
                 android:id="@+id/userEd"
-                android:layout_width="251dp"
+                android:layout_width="236dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="49dp"
+                android:layout_marginLeft="64dp"
                 android:layout_marginTop="0dp"
                 android:background="@drawable/userentry"
                 android:clipToOutline="true"
@@ -103,9 +101,9 @@
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="17dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/userentrylo"
+
                 android:foreground="@mipmap/user" />
 
         </RelativeLayout>
@@ -126,15 +124,16 @@
 
             <EditText
                 android:id="@+id/passwdEd"
-                android:layout_width="251dp"
+                android:layout_width="236dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
 
-                android:layout_marginLeft="49dp"
+                android:layout_marginLeft="64dp"
                 android:layout_marginTop="0dp"
                 android:background="@drawable/passwdentry"
                 android:clipToOutline="true"
+                android:inputType="textPassword"
                 tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
             <View
@@ -143,9 +142,9 @@
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="17dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/passentrylo"
+
                 android:foreground="@mipmap/padlock" />
 
 

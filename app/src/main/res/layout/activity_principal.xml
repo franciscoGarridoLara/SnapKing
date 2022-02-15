@@ -3,6 +3,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -13,25 +14,29 @@
     <!-- s -->
     <ImageView
         android:id="@+id/s_1"
-        android:layout_width="234dp"
-        android:layout_height="234dp"
+        android:layout_width="239dp"
+        android:layout_height="289dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="92dp"
         android:layout_marginTop="173dp"
-        android:background="@mipmap/letraS" />
+        android:background="@mipmap/letra_s"
+        />
     <!-- engranaje 1 -->
 
-    <ImageView
+    <!-- user (1) 1 -->
+    <Button
         android:id="@+id/ajustes"
-        android:layout_width="54dp"
-        android:layout_height="57dp"
+        android:layout_width="73dp"
+        android:layout_height="76dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="21dp"
-        android:layout_marginTop="31dp"
-        android:src="@mipmap/ajustes" />
-    <!-- user (1) 1 -->
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/icon_configuration"
+        android:foreground="@drawable/icon_configuration"
+        tools:ignore="SpeakableTextPresentCheck" />
+
     <View
         android:id="@+id/user_1_1"
         android:layout_width="56dp"
@@ -40,9 +45,10 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="327dp"
         android:layout_marginTop="30dp"
-        android:background="@drawable/user_1_1" />
+        android:background="@mipmap/user"
+        />
     <!-- Ellipse 1 -->
-    <View
+    <Button
         android:id="@+id/ellipse_1"
         android:layout_width="76dp"
         android:layout_height="76dp"
@@ -50,8 +56,9 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="317dp"
         android:layout_marginTop="19dp"
-        android:background="@drawable/ellipse_1" />
-
+        android:background="@mipmap/user"
+        android:foreground="@mipmap/user"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 
     <Button
@@ -63,8 +70,8 @@
         android:layout_marginLeft="49dp"
         android:layout_marginTop="628dp"
         android:backgroundTint="@color/azul_oscuro"
-        app:cornerRadius="10dp"
-        android:text="BATTLE"/>
+        android:text="BATTLE"
+        app:cornerRadius="10dp" />
 
     <Button
         android:id="@+id/btnParty"
