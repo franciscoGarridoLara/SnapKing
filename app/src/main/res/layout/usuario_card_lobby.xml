@@ -56,13 +56,14 @@
             <ImageView
                 android:id="@+id/prepado_ima"
                 android:layout_width="41dp"
-                android:layout_height="41dp"
+                android:layout_height="match_parent"
                 android:width="39dp"
                 android:height="38dp"
                 android:viewportWidth="39"
                 android:viewportHeight="38"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
+                android:layout_marginStart="25dp"
 
                 app:srcCompat="@drawable/prepado_image"
                 tools:srcCompat="@drawable/prepado_image" />

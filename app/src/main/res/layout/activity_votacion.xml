@@ -22,6 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         tools:listitem="@layout/usuarios_votacion">
 
     </androidx.recyclerview.widget.RecyclerView>
@@ -52,7 +53,7 @@
 
         android:id="@+id/disgusto_1"
         android:layout_width="match_parent"
-        android:layout_height="92dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="88dp"
         android:layout_marginEnd="88dp"
 
