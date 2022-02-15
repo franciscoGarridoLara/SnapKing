@@ -27,39 +27,83 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <TextView
-        android:id="@+id/txtPlayerV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/fredoka_one"
-        android:text="Dragonnegro0002"
-        android:textAppearance="@style/txtPlayerV"
+
+    <FrameLayout
+        android:layout_width="323dp"
+        android:layout_height="419dp"
+        android:background="@drawable/foto_final"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recicleUsu" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imagenAvotar"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_height="400dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPlayerV"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            <ImageView
+                android:id="@+id/imagenAvotar"
+                android:layout_width="262dp"
+                android:layout_height="213dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="19dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.491"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvWinner"
+                app:layout_constraintVertical_bias="0.686"
+                tools:srcCompat="@mipmap/manzana" />
+
+            <TextView
+                android:id="@+id/tvWinner2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="3dp"
+                android:fontFamily="@font/fredoka_one"
+                android:text="Ganador"
+                android:textAlignment="center"
+                android:textAppearance="@style/txtPlayerV"
+                android:textColor="#000000"
+                android:textSize="48sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvWinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginEnd="3dp"
+                android:fontFamily="@font/fredoka_one"
+                android:text="Paco"
+                android:textAlignment="center"
+                android:textAppearance="@style/txtPlayerV"
+                android:textColor="#000000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
 
     <RatingBar
 
         android:id="@+id/disgusto_1"
-        android:layout_width="240dp"
-        android:layout_height="61dp"
+        android:layout_width="277dp"
+        android:layout_height="44dp"
         android:layout_marginStart="88dp"
         android:layout_marginEnd="88dp"
 
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="64dp"
         android:background="#00FFFFFF"
         android:foregroundGravity="center_vertical"
         android:numStars="5"
@@ -67,7 +111,6 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 

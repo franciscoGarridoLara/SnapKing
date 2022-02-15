@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/_40px_golden_star_5" />
+                app:srcCompat="@drawable/ic_star" />
 
             <TextView
                 android:id="@+id/txtPuntos"
