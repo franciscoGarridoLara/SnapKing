@@ -2,4 +2,12 @@
     <string name="app_name">SnapKing</string>
     <string name="register">REGISTER</string>
     <string name="txtjugador">dragonnegro002</string>
+    <string name="email_introducir">Introduce email</string>
+    <string name="pass_introducir">Introduce contraseña</string>
+    <string name="pass_longitud">La longitud es de mínimo 6 caracteres</string>
+    <string name="dialog_sesion">Dialogo sesión</string>
+    <string name="error_autenticacion_usuario">Error autenticando al usuario.</string>
+    <string name="error_conexion">Error de conexión</string>
+    <string name="error_login">Error de login</string>
+
 </resources>
