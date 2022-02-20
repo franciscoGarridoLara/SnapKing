@@ -219,23 +219,6 @@
     </FrameLayout>
 
     <Button
-        android:id="@+id/btnRegister2"
-        android:layout_width="170dp"
-        android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="117dp"
-        android:layout_marginEnd="144dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/azul_oscuro"
-        android:text="GO BACK"
-        app:cornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <Button
         android:id="@+id/btnLogin2"
         android:layout_width="170dp"
         android:layout_height="40dp"
@@ -249,9 +232,28 @@
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toTopOf="@+id/btnRegister2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
         app:layout_constraintVertical_bias="1.0"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <Button
+        android:id="@+id/btnRegister2"
+        android:layout_width="170dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="117dp"
+        android:layout_marginEnd="144dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/azul_oscuro"
+        android:text="GO BACK"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="TouchTargetSizeCheck" />
 
     <!-- RegisterForm -->

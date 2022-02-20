@@ -1,3 +1,6 @@
 package com.example.snapking.modelo
 
-class Sala
+data class Sala(var id:String, var nombre:String, var capacidad:Int,var anfitrion:String, var estado:Boolean, var ronda:Ronda, var rondas_totales:Int, var jugadores:Jugadores){
+
+
+}

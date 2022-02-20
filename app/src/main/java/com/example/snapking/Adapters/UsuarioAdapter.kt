@@ -31,7 +31,7 @@ class UsuarioAdapter(val usuarios:List<WrapperUsuarioLobby>) : RecyclerView.Adap
 
 
         fun bind(wrapperUsuario: WrapperUsuarioLobby) {
-            binding.txtjugador.text=wrapperUsuario.usuario.nombre
+            binding.txtjugador.text=wrapperUsuario.usuario.nickname
             if(!wrapperUsuario.estado){
                 binding.prepadoIma.visibility=View.INVISIBLE
             }else{
