@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/login"
+    android:clipToOutline="true">
+
+    <!-- REGISTER -->
+
+    <TextView
+        android:id="@+id/tv_register"
+        android:layout_width="236dp"
+        android:layout_height="64dp"
+        android:layout_marginLeft="88dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="88dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/register"
+        android:textAppearance="@style/register"
+        android:textColor="@color/azul_oscuro"
+        android:textSize="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="343dp"
+        android:layout_height="449dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_register">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <FrameLayout
+                android:id="@+id/frame_username"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/passwdentry">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <FrameLayout
+                        android:id="@+id/frame_user_image"
+                        android:layout_width="73dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_user"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </FrameLayout>
+
+                    <EditText
+                        android:id="@+id/tvUsername"
+                        android:layout_width="244dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="28dp"
+                        android:text="username"
+                        android:textAlignment="center"
+                        android:textSize="34sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/frame_user_image"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/frame_correo"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/passwdentry">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <FrameLayout
+                        android:id="@+id/frame_correo_image"
+                        android:layout_width="73dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_email"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </FrameLayout>
+
+                    <EditText
+                        android:id="@+id/tvCorreo"
+                        android:layout_width="244dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="28dp"
+                        android:text="e-mail"
+                        android:textAlignment="center"
+                        android:textSize="34sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/frame_pass1"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/passwdentry">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <FrameLayout
+
+                        android:layout_width="73dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_key"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </FrameLayout>
+
+                    <EditText
+                        android:id="@+id/tvPass1"
+                        android:layout_width="244dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="28dp"
+                        android:text="password"
+                        android:textAlignment="center"
+                        android:textSize="34sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/frame_pass2"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/passwdentry">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <FrameLayout
+
+                        android:layout_width="73dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_key"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </FrameLayout>
+
+                    <EditText
+                        android:id="@+id/tvPass2"
+                        android:layout_width="244dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="28dp"
+                        android:text="password"
+                        android:textAlignment="center"
+                        android:textSize="34sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/frame_terminos"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginVertical="10dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <CheckBox
+                        android:id="@+id/checkBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Términos y condiciones"
+                        android:textSize="20sp" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </FrameLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btnLogin2"
+        android:layout_width="170dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="117dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="144dp"
+        android:backgroundTint="@color/azul_oscuro"
+        android:text="REGISTER"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegister2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <Button
+        android:id="@+id/btnRegister2"
+        android:layout_width="170dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="117dp"
+        android:layout_marginEnd="144dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/azul_oscuro"
+        android:text="GO BACK"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <!-- RegisterForm -->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

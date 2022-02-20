@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">400573421580-j01bf8u90qre7cbrevpg94qganlh7vla.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">400573421580</string>
+    <string name="google_api_key" translatable="false">AIzaSyCboC17zjBI6hYL96sv7Cb_r_uHLcXsK64</string>
+    <string name="google_app_id" translatable="false">1:400573421580:android:b63f4040528a2d3d5f7629</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCboC17zjBI6hYL96sv7Cb_r_uHLcXsK64</string>
+    <string name="google_storage_bucket" translatable="false">snap-king.appspot.com</string>
+    <string name="project_id" translatable="false">snap-king</string>
+</resources>
