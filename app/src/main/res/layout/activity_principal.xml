@@ -19,12 +19,13 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginLeft="64dp"
-        android:layout_marginTop="116dp"
         android:layout_marginEnd="56dp"
         android:background="@mipmap/roundlogo"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.266" />
 
     <ImageButton
         android:id="@+id/btnAjustes"
@@ -48,18 +49,21 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <!-- Ellipse 1 -->
+
+
     <Button
         android:id="@+id/btnPerfil"
         android:layout_width="76dp"
         android:layout_height="76dp"
-        android:layout_marginLeft="317dp"
-        android:layout_marginTop="19dp"
+        android:layout_marginStart="224dp"
+        android:layout_marginTop="20dp"
         android:background="@mipmap/user"
         android:foreground="@mipmap/user"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/btnAjustes"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
-
 
     <Button
         android:id="@+id/btnParty"
@@ -71,18 +75,24 @@
         android:text="PARTY"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.586"
+        app:layout_constraintStart_toEndOf="@+id/btnBattle"
+        app:layout_constraintTop_toBottomOf="@+id/ivRoundLogo"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/btnBattle"
         android:layout_width="167dp"
         android:layout_height="67dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="32dp"
         android:layout_marginBottom="76dp"
         android:backgroundTint="@color/azul_oscuro"
         android:text="BATTLE"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivRoundLogo"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
