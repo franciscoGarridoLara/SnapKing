@@ -5,7 +5,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/roundlogo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/roundlogo"
         android:supportsRtl="true"
@@ -40,7 +40,7 @@
             android:exported="false" android:screenOrientation="locked"/>
         <activity
             android:name="com.example.snapking.LobbyActivity"
-            android:exported="false"android:screenOrientation="locked"/>
+            android:exported="false" android:screenOrientation="locked"/>
 
         <activity
             android:name="com.example.snapking.PrincipalActivity"

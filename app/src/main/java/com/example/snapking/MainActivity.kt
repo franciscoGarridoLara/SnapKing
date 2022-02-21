@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.snapking.Firebase.User
 import com.example.snapking.modelo.Modelo
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -103,6 +104,7 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
 
             if(task.isSuccessful) {
                 //modelo.hideDialog()
+                    User.crearInstance(mAuth)
                 startActivity(Intent(this@MainActivity, PrincipalActivity::class.java))
                 finish()
             }
@@ -149,6 +151,7 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
 
             if(task.isSuccessful) {
                 //modelo.hideDialog()
+                    User.crearInstance(mAuth)
                 startActivity(Intent(this@MainActivity, PrincipalActivity::class.java))
                 finish()
             }
