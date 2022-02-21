@@ -1,10 +1,14 @@
 package com.example.snapking.Firebase
 
 import android.util.Log
+import com.example.snapking.modelo.Amigos
+import com.example.snapking.modelo.Usuario
 import com.google.firebase.auth.FirebaseAuth
 
 class User private constructor(var auth:FirebaseAuth) {
     var mAuth:FirebaseAuth = auth
+    var user : Usuario = Usuario(auth.uid.toString(),auth.currentUser?.displayName.toString(), "",1, Amigos(ArrayList()))
+
 
     companion object {
         private var instance: User? = null

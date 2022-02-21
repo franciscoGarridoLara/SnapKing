@@ -3,6 +3,7 @@ package com.example.snapking
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.example.snapking.BaseDatos.BaseDatos
 import com.example.snapking.Firebase.User
 
 class PrincipalActivity : AppCompatActivity() {
@@ -17,5 +18,9 @@ class PrincipalActivity : AppCompatActivity() {
         }else{
             Log.d(User.TAG,"no hay usuario ")
         }
+
+        //BaseDatos.getInstance()!!.escribir()
+        BaseDatos.getInstance()!!.escribirUsuario(User.getInstancia()!!.user)
+
     }
 }
