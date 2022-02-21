@@ -46,11 +46,12 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
 
     override fun onStart() {
         super.onStart()
-        /*
-        if (mAuth.currentUser != null) {
+        //Si ya ha iniciado sesion.
+        if (mAuth != null && mAuth.currentUser != null) {
+            User.crearInstance(mAuth,mGoogleSignInClient)
             startActivity(Intent(this,PrincipalActivity::class.java))
             finish()
-        }*/
+        }
     }
 
     private fun instanciasGoogle() {
@@ -104,7 +105,9 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
 
             if(task.isSuccessful) {
                 //modelo.hideDialog()
-                    User.crearInstance(mAuth)
+
+
+                    User.crearInstance(mAuth,mGoogleSignInClient)
                 startActivity(Intent(this@MainActivity, PrincipalActivity::class.java))
                 finish()
             }
@@ -151,7 +154,7 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
 
             if(task.isSuccessful) {
                 //modelo.hideDialog()
-                    User.crearInstance(mAuth)
+                    User.crearInstance(mAuth,mGoogleSignInClient)
                 startActivity(Intent(this@MainActivity, PrincipalActivity::class.java))
                 finish()
             }

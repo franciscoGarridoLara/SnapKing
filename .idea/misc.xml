@@ -31,6 +31,8 @@
         <entry key="..\:/Users/pacog/StudioProjects/SnapKing/app/src/main/res/layout/usuario_card_lobby.xml" value="0.2604166666666667" />
         <entry key="..\:/Users/pacog/StudioProjects/SnapKing/app/src/main/res/layout/usuarios_votacion.xml" value="0.2604166666666667" />
         <entry key="..\:/Users/pacog/StudioProjects/SnapKing/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.296875" />
+        <entry key="app/src/main/res/layout/activity_principal.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_registro.xml" value="0.2625" />
       </map>
     </option>
   </component>
@@ -39,5 +41,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.1" />
+      </ProjectState>
+    </option>
   </component>
 </project>

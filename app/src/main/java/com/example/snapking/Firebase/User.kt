@@ -3,21 +3,24 @@ package com.example.snapking.Firebase
 import android.util.Log
 import com.example.snapking.modelo.Amigos
 import com.example.snapking.modelo.Usuario
+import com.example.snapking.modelo.WrapperUsuario
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 
-class User private constructor(var auth:FirebaseAuth) {
+class User private constructor(var auth:FirebaseAuth, var client : GoogleSignInClient?) {
     var mAuth:FirebaseAuth = auth
-    var user : Usuario = Usuario(auth.uid.toString(),auth.currentUser?.displayName.toString(), "",1, Amigos(ArrayList()))
-
+    var user : Usuario = Usuario(auth.currentUser?.displayName.toString(), "",1, Amigos(ArrayList()))
+    var wrapper : WrapperUsuario = WrapperUsuario(auth.currentUser!!.uid, user)
+    var googleClient : GoogleSignInClient? = client
 
     companion object {
         private var instance: User? = null
         var TAG:String = "USER LOGS"
 
         @Synchronized
-        private fun createInstance(auth: FirebaseAuth) {
+        private fun createInstance(auth: FirebaseAuth, client:GoogleSignInClient) {
             if (instance == null) {
-                instance = User(auth)
+                instance = User(auth,client)
             }
         }
 
@@ -27,8 +30,8 @@ class User private constructor(var auth:FirebaseAuth) {
             return instance
         }
 
-        fun crearInstance(auth: FirebaseAuth): User? {
-            if (instance == null) createInstance(auth)
+        fun crearInstance(auth: FirebaseAuth, client:GoogleSignInClient): User? {
+            if (instance == null) createInstance(auth,client)
             return instance
         }
     }
@@ -53,6 +56,12 @@ class User private constructor(var auth:FirebaseAuth) {
         if(instance!= null)
             token = instance!!.mAuth!!.uid.toString()
         Log.d(TAG,token)
+    }
+
+    fun signOut()
+    {
+        mAuth.signOut()
+        googleClient?.signOut()
     }
 
 
