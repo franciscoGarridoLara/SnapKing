@@ -235,7 +235,9 @@ ADDED from C:\Users\pacog\StudioProjects\SnapKing\app\src\main\AndroidManifest.x
 	android:name
 		ADDED from C:\Users\pacog\StudioProjects\SnapKing\app\src\main\AndroidManifest.xml:42:13-62
 activity#com.example.snapking.PrincipalActivity
-ADDED from C:\Users\pacog\StudioProjects\SnapKing\app\src\main\AndroidManifest.xml:45:9-47:40
+ADDED from C:\Users\pacog\StudioProjects\SnapKing\app\src\main\AndroidManifest.xml:45:9-47:82
+	android:parentActivityName
+		ADDED from C:\Users\pacog\StudioProjects\SnapKing\app\src\main\AndroidManifest.xml:47:38-80
 	android:exported
 		ADDED from C:\Users\pacog\StudioProjects\SnapKing\app\src\main\AndroidManifest.xml:47:13-37
 	android:name

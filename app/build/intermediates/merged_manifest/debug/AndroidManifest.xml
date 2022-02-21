@@ -65,7 +65,8 @@
             android:exported="false" />
         <activity
             android:name="com.example.snapking.PrincipalActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName="com.example.snapking.MainActivity" />
 
         <uses-library
             android:name="androidx.camera.extensions.impl"
