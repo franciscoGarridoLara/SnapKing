@@ -19,35 +19,32 @@
 
     <ImageView
         android:id="@+id/ivRoundLogo"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginLeft="56dp"
-        android:layout_marginEnd="56dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:background="@mipmap/roundlogo"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnBattle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.359" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/btnAjustes"
         android:layout_width="73dp"
         android:layout_height="76dp"
-        android:layout_marginLeft="52dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="16dp"
         android:background="@mipmap/ajustes"
         android:foreground="@mipmap/ajustes"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnPerfil"
         android:layout_width="76dp"
         android:layout_height="76dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="56dp"
+        android:layout_marginEnd="36dp"
         android:background="@mipmap/user"
         android:foreground="@mipmap/user"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,28 +55,24 @@
         android:id="@+id/btnParty"
         android:layout_width="167dp"
         android:layout_height="67dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="76dp"
+        android:layout_marginBottom="48dp"
         android:backgroundTint="@color/azul_oscuro"
         android:text="PARTY"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivRoundLogo"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnBattle"
         android:layout_width="167dp"
         android:layout_height="67dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="76dp"
+        android:layout_marginBottom="24dp"
         android:backgroundTint="@color/azul_oscuro"
         android:text="BATTLE"
         app:cornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivRoundLogo"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintBottom_toTopOf="@+id/btnParty"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

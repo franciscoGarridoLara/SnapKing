@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/etBusqueda"
         android:layout_width="288dp"
         android:layout_height="48dp"
         android:ems="10"
@@ -59,7 +59,7 @@
                 android:layout_height="505dp">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recicle"
+                    android:id="@+id/rvAmigos"
                     android:layout_width="305dp"
                     android:layout_height="504dp"
                     android:layout_alignParentLeft="true"
