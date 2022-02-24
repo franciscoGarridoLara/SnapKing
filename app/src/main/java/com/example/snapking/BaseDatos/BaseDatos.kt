@@ -3,6 +3,7 @@ package com.example.snapking.BaseDatos
 import android.util.Log
 import com.example.snapking.Firebase.User
 import com.example.snapking.modelo.Usuario
+import com.example.snapking.modelo.WrapperSala
 import com.example.snapking.modelo.WrapperUsuario
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -21,6 +22,10 @@ class BaseDatos(){
 
         Log.d(BaseDatos.TAG,"Escribiendo usuario")
         reference.child("usuarios").child(wrapper.id).setValue(wrapper.usuario)
+    }
+    fun escribrSala(sala:WrapperSala){
+        Log.d(BaseDatos.TAG,"Escribiendo sala")
+        reference.child("salas").child(sala.id).setValue(sala)
     }
 
 
