@@ -1,52 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AmigosActivity"
-    android:background="@drawable/login">
+    android:background="@drawable/login"
+    android:orientation="vertical"
+    tools:context=".AmigosActivity">
 
 
     <TextView
         android:id="@+id/tvAmigos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="Amigos"
         android:textAlignment="center"
         android:textColorLink="#000000"
-        android:textSize="48sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="48sp" />
 
-    <EditText
-        android:id="@+id/etBusqueda"
-        android:layout_width="288dp"
-        android:layout_height="48dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name #ID_USER"
-        app:layout_constraintBottom_toTopOf="@+id/fondorecicl"
-        app:layout_constraintEnd_toStartOf="@+id/lupa_"
-        app:layout_constraintHorizontal_bias="0.602"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAmigos"
-        app:layout_constraintVertical_bias="0.423" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:paddingStart="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/lupa"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:width="51dp"
+                android:height="51dp"
+                android:background="#00FFFFFF"
+                android:contentDescription="TODO"
+
+                android:scaleType="fitCenter"
+                android:src="@drawable/lupa"
+
+                android:viewportWidth="51"
+                android:viewportHeight="51"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.359"
+                app:layout_constraintStart_toEndOf="@+id/etBusqueda"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <EditText
+                android:id="@+id/etBusqueda"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="24dp"
+                android:ems="0"
+                android:hint="Name #ID_USER"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/fondorecicl"
-        android:layout_width="329dp"
-        android:layout_height="495dp"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.584">
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,13 +87,13 @@
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="505dp">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvAmigos"
-                    android:layout_width="305dp"
-                    android:layout_height="504dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
 
@@ -81,23 +113,4 @@
 
     </FrameLayout>
 
-    <ImageButton
-        android:id="@+id/lupa_"
-        android:layout_width="51dp"
-        android:layout_height="51dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="4dp"
-        android:width="51dp"
-        android:height="51dp"
-        android:background="#00FFFFFF"
-        android:scaleType="centerInside"
-
-        android:viewportWidth="51"
-        android:viewportHeight="51"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck"
-        tools:src="@drawable/lupa" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
