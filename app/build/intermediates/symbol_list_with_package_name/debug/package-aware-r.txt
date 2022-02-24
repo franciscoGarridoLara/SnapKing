@@ -2811,13 +2811,13 @@ id easeIn
 id easeInOut
 id easeOut
 id east
-id editTextTextPersonName
 id edit_query
 id elastic
 id end
 id endToStart
 id enterAlways
 id enterAlwaysCollapsed
+id etBusqueda
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
@@ -2906,7 +2906,7 @@ id list_item
 id loginFrame
 id loginform
 id logo2_1
-id lupa_
+id lupa
 id lupa_1
 id main
 id masked
@@ -3027,6 +3027,7 @@ id right_side
 id right_to_left
 id rounded
 id row_index_key
+id rvAmigos
 id save_non_transition_alpha
 id save_overlay_view
 id sawtooth
@@ -3163,7 +3164,6 @@ id unlabeled
 id up
 id useLogo
 id userEd
-id userImage
 id userentry
 id userentrylo
 id vertical_only
@@ -3370,6 +3370,7 @@ layout text_view_with_line_height_from_style
 layout text_view_with_theme_line_height
 layout text_view_without_line_height
 layout usuario_card
+layout usuario_card_add
 layout usuario_card_lobby
 layout usuarios_votacion
 menu example_menu

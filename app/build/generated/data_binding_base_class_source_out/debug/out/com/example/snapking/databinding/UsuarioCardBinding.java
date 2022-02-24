@@ -4,7 +4,7 @@ package com.example.snapking.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -26,7 +26,7 @@ public final class UsuarioCardBinding implements ViewBinding {
   public final CircularImageView fondo1;
 
   @NonNull
-  public final ImageView onlineIma;
+  public final ImageButton onlineIma;
 
   @NonNull
   public final CardView perfil;
@@ -35,7 +35,7 @@ public final class UsuarioCardBinding implements ViewBinding {
   public final TextView txtjugador;
 
   private UsuarioCardBinding(@NonNull LinearLayout rootView, @NonNull CircularImageView fondo1,
-      @NonNull ImageView onlineIma, @NonNull CardView perfil, @NonNull TextView txtjugador) {
+      @NonNull ImageButton onlineIma, @NonNull CardView perfil, @NonNull TextView txtjugador) {
     this.rootView = rootView;
     this.fondo1 = fondo1;
     this.onlineIma = onlineIma;
@@ -77,7 +77,7 @@ public final class UsuarioCardBinding implements ViewBinding {
       }
 
       id = R.id.online_ima;
-      ImageView onlineIma = ViewBindings.findChildViewById(rootView, id);
+      ImageButton onlineIma = ViewBindings.findChildViewById(rootView, id);
       if (onlineIma == null) {
         break missingId;
       }

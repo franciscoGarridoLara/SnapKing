@@ -25,15 +25,16 @@
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
         android:extractNativeLibs="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/roundlogo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/roundlogo"
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/Theme.SnapKing" >
         <activity
             android:name="com.example.snapking.MainActivity"
-            android:exported="true" >
+            android:exported="true"
+            android:screenOrientation="locked" >
 
             <!--
                 Inside this activity you should be having below code for
@@ -47,26 +48,34 @@
         </activity>
         <activity
             android:name="com.example.snapking.AmigosActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName="com.example.snapking.PrincipalActivity"
+            android:screenOrientation="locked" />
         <activity
             android:name="com.example.snapking.RegistroActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked" />
         <activity
             android:name="com.example.snapking.GanadorActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked" />
         <activity
             android:name="com.example.snapking.TematicaActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked" />
         <activity
             android:name="com.example.snapking.VotacionActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked" />
         <activity
             android:name="com.example.snapking.LobbyActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="locked" />
         <activity
             android:name="com.example.snapking.PrincipalActivity"
             android:exported="false"
-            android:parentActivityName="com.example.snapking.MainActivity" />
+            android:parentActivityName="com.example.snapking.AmigosActivity"
+            android:screenOrientation="locked" />
 
         <uses-library
             android:name="androidx.camera.extensions.impl"
@@ -91,10 +100,16 @@
                 android:name="com.google.firebase.components:com.google.firebase.auth.ktx.FirebaseAuthKtxRegistrar"
                 android:value="com.google.firebase.components.ComponentRegistrar" />
             <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.database.ktx.FirebaseDatabaseKtxRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
                 android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
                 android:value="com.google.firebase.components.ComponentRegistrar" />
             <meta-data
                 android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonKtxRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.database.DatabaseRegistrar"
                 android:value="com.google.firebase.components.ComponentRegistrar" />
             <meta-data
                 android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"

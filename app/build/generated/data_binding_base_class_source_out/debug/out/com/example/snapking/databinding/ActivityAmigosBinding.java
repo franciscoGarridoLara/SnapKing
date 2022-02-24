@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
@@ -21,10 +21,10 @@ import java.lang.String;
 
 public final class ActivityAmigosBinding implements ViewBinding {
   @NonNull
-  private final ConstraintLayout rootView;
+  private final LinearLayout rootView;
 
   @NonNull
-  public final EditText editTextTextPersonName;
+  public final EditText etBusqueda;
 
   @NonNull
   public final FrameLayout fondorecicl;
@@ -33,25 +33,25 @@ public final class ActivityAmigosBinding implements ViewBinding {
   public final ImageButton lupa;
 
   @NonNull
-  public final RecyclerView recicle;
+  public final RecyclerView rvAmigos;
 
   @NonNull
   public final TextView tvAmigos;
 
-  private ActivityAmigosBinding(@NonNull ConstraintLayout rootView,
-      @NonNull EditText editTextTextPersonName, @NonNull FrameLayout fondorecicl,
-      @NonNull ImageButton lupa, @NonNull RecyclerView recicle, @NonNull TextView tvAmigos) {
+  private ActivityAmigosBinding(@NonNull LinearLayout rootView, @NonNull EditText etBusqueda,
+      @NonNull FrameLayout fondorecicl, @NonNull ImageButton lupa, @NonNull RecyclerView rvAmigos,
+      @NonNull TextView tvAmigos) {
     this.rootView = rootView;
-    this.editTextTextPersonName = editTextTextPersonName;
+    this.etBusqueda = etBusqueda;
     this.fondorecicl = fondorecicl;
     this.lupa = lupa;
-    this.recicle = recicle;
+    this.rvAmigos = rvAmigos;
     this.tvAmigos = tvAmigos;
   }
 
   @Override
   @NonNull
-  public ConstraintLayout getRoot() {
+  public LinearLayout getRoot() {
     return rootView;
   }
 
@@ -76,9 +76,9 @@ public final class ActivityAmigosBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.editTextTextPersonName;
-      EditText editTextTextPersonName = ViewBindings.findChildViewById(rootView, id);
-      if (editTextTextPersonName == null) {
+      id = R.id.etBusqueda;
+      EditText etBusqueda = ViewBindings.findChildViewById(rootView, id);
+      if (etBusqueda == null) {
         break missingId;
       }
 
@@ -88,15 +88,15 @@ public final class ActivityAmigosBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.lupa_;
+      id = R.id.lupa;
       ImageButton lupa = ViewBindings.findChildViewById(rootView, id);
       if (lupa == null) {
         break missingId;
       }
 
-      id = R.id.recicle;
-      RecyclerView recicle = ViewBindings.findChildViewById(rootView, id);
-      if (recicle == null) {
+      id = R.id.rvAmigos;
+      RecyclerView rvAmigos = ViewBindings.findChildViewById(rootView, id);
+      if (rvAmigos == null) {
         break missingId;
       }
 
@@ -106,8 +106,8 @@ public final class ActivityAmigosBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityAmigosBinding((ConstraintLayout) rootView, editTextTextPersonName,
-          fondorecicl, lupa, recicle, tvAmigos);
+      return new ActivityAmigosBinding((LinearLayout) rootView, etBusqueda, fondorecicl, lupa,
+          rvAmigos, tvAmigos);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -31,7 +31,7 @@ public final class ActivityPrincipalBinding implements ViewBinding {
   public final Button btnParty;
 
   @NonNull
-  public final Button btnPerfil;
+  public final ImageButton btnPerfil;
 
   @NonNull
   public final ImageView ivRoundLogo;
@@ -39,13 +39,10 @@ public final class ActivityPrincipalBinding implements ViewBinding {
   @NonNull
   public final ConstraintLayout main;
 
-  @NonNull
-  public final View userImage;
-
   private ActivityPrincipalBinding(@NonNull ConstraintLayout rootView,
       @NonNull ImageButton btnAjustes, @NonNull Button btnBattle, @NonNull Button btnParty,
-      @NonNull Button btnPerfil, @NonNull ImageView ivRoundLogo, @NonNull ConstraintLayout main,
-      @NonNull View userImage) {
+      @NonNull ImageButton btnPerfil, @NonNull ImageView ivRoundLogo,
+      @NonNull ConstraintLayout main) {
     this.rootView = rootView;
     this.btnAjustes = btnAjustes;
     this.btnBattle = btnBattle;
@@ -53,7 +50,6 @@ public final class ActivityPrincipalBinding implements ViewBinding {
     this.btnPerfil = btnPerfil;
     this.ivRoundLogo = ivRoundLogo;
     this.main = main;
-    this.userImage = userImage;
   }
 
   @Override
@@ -102,7 +98,7 @@ public final class ActivityPrincipalBinding implements ViewBinding {
       }
 
       id = R.id.btnPerfil;
-      Button btnPerfil = ViewBindings.findChildViewById(rootView, id);
+      ImageButton btnPerfil = ViewBindings.findChildViewById(rootView, id);
       if (btnPerfil == null) {
         break missingId;
       }
@@ -115,14 +111,8 @@ public final class ActivityPrincipalBinding implements ViewBinding {
 
       ConstraintLayout main = (ConstraintLayout) rootView;
 
-      id = R.id.userImage;
-      View userImage = ViewBindings.findChildViewById(rootView, id);
-      if (userImage == null) {
-        break missingId;
-      }
-
       return new ActivityPrincipalBinding((ConstraintLayout) rootView, btnAjustes, btnBattle,
-          btnParty, btnPerfil, ivRoundLogo, main, userImage);
+          btnParty, btnPerfil, ivRoundLogo, main);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

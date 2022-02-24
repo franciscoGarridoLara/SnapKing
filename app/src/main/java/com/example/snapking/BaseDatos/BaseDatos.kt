@@ -1,12 +1,9 @@
 package com.example.snapking.BaseDatos
 
 import android.util.Log
+import com.example.snapking.Wrapper.WraperInsertarJugador
 import com.example.snapking.modelo.*
-import com.google.android.gms.tasks.Task
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -28,7 +25,10 @@ class BaseDatos(){
         reference.child("salas").child(sala.id).setValue(sala)
 
     }
-    fun leerSala() {
+    fun leerSala(): ArrayList<WrapperSala> {
+        var listasalas:ArrayList<WrapperSala>
+        listasalas=ArrayList<WrapperSala>()
+
         var datasnapshot = reference.child("salas").get().addOnSuccessListener { datasnapshot->
 
             for(child in datasnapshot.children){
@@ -41,15 +41,19 @@ class BaseDatos(){
 
                 var jugadores=ArrayList<Jugador>()
 
-                for (idJugador in child.child("jugadores").children){
-
+                for(jugadorsnap in child.child("jugadores").children){
+                  var j= jugadorsnap.key?.let {
+                      Jugador(
+                          it,
+                          jugadorsnap.child("ready").value as Boolean,
+                          jugadorsnap.child("punto").value as Int)
+                  }
+                    if (j != null) {
+                        jugadores.add(j)
+                    }
 
 
                 }
-
-
-
-
 
 
                 var sala=Sala(
@@ -60,16 +64,33 @@ class BaseDatos(){
                     ronda,
                     child.child("rondas_totales").value as Int,
                     jugadores
-
-
                 )
+                 var wrapperSala= child?.key?.let { WrapperSala(it,sala) }
+
+                if(wrapperSala!= null){
+                    listasalas.add(wrapperSala)
+                }
+
 
             }
 
         }.addOnFailureListener {
             Log.e("firebase", "Error getting data", it)
 
+
         }
+        return listasalas
+
+    }
+
+    fun escribirSala(sala: Sala){
+        reference.child("salas").push().setValue(sala)
+
+    }
+    fun meterJugadorSala(id:String,jugador:Jugador){
+        var datos= WraperInsertarJugador(jugador.ready,jugador.punto)
+        reference.child("salas").child(id).child("jugadores")
+            .child(jugador.id).setValue(datos)
     }
 
 

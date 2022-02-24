@@ -4,17 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.ImageButton
-import androidx.lifecycle.LiveData
 import com.example.snapking.BaseDatos.BaseDatos
 import com.example.snapking.Firebase.User
 import com.example.snapking.databinding.ActivityPrincipalBinding
-import com.example.snapking.modelo.Usuario
-import com.example.snapking.modelo.WrapperSala
-import com.example.snapking.modelo.WrapperUsuario
-import com.google.android.gms.tasks.Task
-import com.google.firebase.database.DataSnapshot
+import com.example.snapking.modelo.Jugador
+import com.example.snapking.modelo.Sala
 
 class PrincipalActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPrincipalBinding
@@ -45,7 +40,9 @@ class PrincipalActivity : AppCompatActivity() {
             Log.d(User.TAG,"no hay usuario ")
         }
 
-
+        binding.btnBattle.setOnClickListener {
+            batalla()
+        }
         binding.btnPerfil.setOnClickListener()
         {
             startActivity(Intent(this,AmigosActivity::class.java))
@@ -57,15 +54,39 @@ class PrincipalActivity : AppCompatActivity() {
 
     }
     private fun batalla(){
-        var salas:Task<DataSnapshot>
-        salas=BaseDatos.getInstance()!!.leerSala()
-       salas.addC
+        var id= User.getInstancia()?.printToken() as String
+        var jugador=Jugador(id,false,0)
+        var salas=BaseDatos.getInstance()!!.leerSala()
+        var bucle=true
+        var i=0
+        while (bucle&&i<salas.size){
+            var wrappersala=salas[i]
+            if (wrappersala.sala.capacidad<wrappersala.sala.jugadores.size){
+
+
+                bucle=false
+
+                BaseDatos.getInstance()?.meterJugadorSala(wrappersala.id,jugador)
+            }
+
+        }
+        if(!bucle){
+            var jugadores=ArrayList<Jugador>()
+            jugadores.add(jugador)
+
+            var sala=Sala(
+                "sala publica",
+                8,
+                User.getInstancia()?.printToken() as String,
+                true,null,5,jugadores
+            )
+            BaseDatos.getInstance()?.escribirSala(sala)
+        }
+
+
 
     }
-    fun onSalaValuesChange(): LiveData<List<WrapperSala>> {
 
-        return
-    }
 
 
     /*private fun incializarBotones() {

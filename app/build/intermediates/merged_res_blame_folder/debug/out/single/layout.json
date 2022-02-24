@@ -1,46 +1,50 @@
 [
     {
-        "merged": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_amigos.xml",
-        "source": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\src\\main\\res\\layout\\activity_amigos.xml"
+        "merged": "D:\\dam2\\androidv2\\SnapKing2\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_principal.xml",
+        "source": "D:\\dam2\\androidv2\\SnapKing2\\app\\src\\main\\res\\layout\\activity_principal.xml"
     },
     {
-        "merged": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_main.xml",
-        "source": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\src\\main\\res\\layout\\activity_main.xml"
+        "merged": "D:\\dam2\\androidv2\\SnapKing2\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_tematica.xml",
+        "source": "D:\\dam2\\androidv2\\SnapKing2\\app\\src\\main\\res\\layout\\activity_tematica.xml"
     },
     {
-        "merged": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_votacion.xml",
-        "source": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\src\\main\\res\\layout\\activity_votacion.xml"
+        "merged": "D:\\dam2\\androidv2\\SnapKing2\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\usuario_card_add.xml",
+        "source": "D:\\dam2\\androidv2\\SnapKing2\\app\\src\\main\\res\\layout\\usuario_card_add.xml"
     },
     {
-        "merged": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\usuario_card_lobby.xml",
-        "source": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\src\\main\\res\\layout\\usuario_card_lobby.xml"
+        "merged": "D:\\dam2\\androidv2\\SnapKing2\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_votacion.xml",
+        "source": "D:\\dam2\\androidv2\\SnapKing2\\app\\src\\main\\res\\layout\\activity_votacion.xml"
     },
     {
-        "merged": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\usuarios_votacion.xml",
-        "source": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\src\\main\\res\\layout\\usuarios_votacion.xml"
+        "merged": "D:\\dam2\\androidv2\\SnapKing2\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_lobby.xml",
+        "source": "D:\\dam2\\androidv2\\SnapKing2\\app\\src\\main\\res\\layout\\activity_lobby.xml"
     },
     {
-        "merged": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\usuario_card.xml",
-        "source": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\src\\main\\res\\layout\\usuario_card.xml"
+        "merged": "D:\\dam2\\androidv2\\SnapKing2\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_registro.xml",
+        "source": "D:\\dam2\\androidv2\\SnapKing2\\app\\src\\main\\res\\layout\\activity_registro.xml"
     },
     {
-        "merged": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_registro.xml",
-        "source": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\src\\main\\res\\layout\\activity_registro.xml"
+        "merged": "D:\\dam2\\androidv2\\SnapKing2\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\usuarios_votacion.xml",
+        "source": "D:\\dam2\\androidv2\\SnapKing2\\app\\src\\main\\res\\layout\\usuarios_votacion.xml"
     },
     {
-        "merged": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_ganador.xml",
-        "source": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\src\\main\\res\\layout\\activity_ganador.xml"
+        "merged": "D:\\dam2\\androidv2\\SnapKing2\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_main.xml",
+        "source": "D:\\dam2\\androidv2\\SnapKing2\\app\\src\\main\\res\\layout\\activity_main.xml"
     },
     {
-        "merged": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_principal.xml",
-        "source": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\src\\main\\res\\layout\\activity_principal.xml"
+        "merged": "D:\\dam2\\androidv2\\SnapKing2\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_ganador.xml",
+        "source": "D:\\dam2\\androidv2\\SnapKing2\\app\\src\\main\\res\\layout\\activity_ganador.xml"
     },
     {
-        "merged": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_lobby.xml",
-        "source": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\src\\main\\res\\layout\\activity_lobby.xml"
+        "merged": "D:\\dam2\\androidv2\\SnapKing2\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_amigos.xml",
+        "source": "D:\\dam2\\androidv2\\SnapKing2\\app\\src\\main\\res\\layout\\activity_amigos.xml"
     },
     {
-        "merged": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_tematica.xml",
-        "source": "C:\\Users\\pacog\\StudioProjects\\SnapKing\\app\\src\\main\\res\\layout\\activity_tematica.xml"
+        "merged": "D:\\dam2\\androidv2\\SnapKing2\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\usuario_card.xml",
+        "source": "D:\\dam2\\androidv2\\SnapKing2\\app\\src\\main\\res\\layout\\usuario_card.xml"
+    },
+    {
+        "merged": "D:\\dam2\\androidv2\\SnapKing2\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\usuario_card_lobby.xml",
+        "source": "D:\\dam2\\androidv2\\SnapKing2\\app\\src\\main\\res\\layout\\usuario_card_lobby.xml"
     }
 ]
