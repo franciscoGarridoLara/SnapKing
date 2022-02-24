@@ -65,7 +65,7 @@
                 android:width="39dp"
                 android:height="38dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_offline"
+                android:src="@drawable/plus_circle_1"
                 android:viewportWidth="39"
                 android:viewportHeight="38"
 

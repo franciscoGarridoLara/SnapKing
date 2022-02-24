@@ -45,7 +45,7 @@ class PrincipalActivity : AppCompatActivity() {
         btnPerfil.setOnClickListener()
         {
             startActivity(Intent(this,AmigosActivity::class.java))
-            finish()
+            //finish()
         }
 
         //BaseDatos.getInstance()!!.escribir()
