@@ -67,12 +67,15 @@ class PrincipalActivity : AppCompatActivity() {
         var wraperSalaFinal:WrapperSala?
         wraperSalaFinal=null
         var salas=BaseDatos.getInstance()!!.leerSala()
-        Toast.makeText(this, "salas obtenidas", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "salas obtenidas"+ salas.size.toString(), Toast.LENGTH_SHORT).show()
+
         var bucle=true
         var i=0
         while (bucle&&i<salas.size){
             var wrappersala=salas[i]
+            Toast.makeText(this, "entrado en el bucle", Toast.LENGTH_SHORT).show()
             if (wrappersala.sala.capacidad<wrappersala.sala.jugadores.size){
+
 
 
                 bucle=false
