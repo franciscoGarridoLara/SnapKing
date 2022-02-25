@@ -8,6 +8,13 @@
         android:minSdkVersion="24"
         android:targetSdkVersion="32" />
 
+    <uses-feature android:name="android.hardware.camera.any" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+
     <queries>
         <intent>
             <action android:name="androidx.camera.extensions.action.VENDOR_ACTION" />
@@ -133,6 +140,11 @@
             android:exported="true"
             android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
             android:visibleToInstantApps="true" />
+
+        <provider
+            android:name="com.squareup.picasso.PicassoProvider"
+            android:authorities="com.example.snapking.com.squareup.picasso"
+            android:exported="false" />
 
         <activity
             android:name="com.google.firebase.auth.internal.GenericIdpActivity"

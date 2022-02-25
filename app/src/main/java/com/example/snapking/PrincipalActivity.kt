@@ -29,11 +29,20 @@ class PrincipalActivity : AppCompatActivity() {
         //incializarBotones()
 
 
+        //-------------BORRAR----------------
+        binding.tematica.setOnClickListener(){
+            startActivity(Intent(this,TematicaActivity::class.java))
+            finish()
+        }
+
+
+
+
         binding.btnAjustes.setOnClickListener()
         {
             User.getInstancia()!!.signOut()
             startActivity(Intent(this,MainActivity::class.java))
-            finish()
+            //finish()
         }
         if(User.getInstancia()!= null){
             User.getInstancia()!!.printName()
