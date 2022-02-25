@@ -3,17 +3,21 @@ package com.example.snapking.BaseDatos
 import android.util.Log
 import com.example.snapking.Firebase.User
 import com.example.snapking.modelo.*
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import java.sql.Wrapper
 
 
 class BaseDatos(){
 
     var database: FirebaseDatabase = Firebase.database
     val reference = database.reference
-    var salas= ArrayList<WrapperSala>()
+    lateinit var listaSalasglobal:ArrayList<WrapperSala>
+
+
 
 
     fun escribirUsuario(wrapper : WrapperUsuario){
@@ -26,13 +30,16 @@ class BaseDatos(){
         reference.child("salas").push().setValue(sala)
 
     }
-    fun leerSala(): ArrayList<WrapperSala> {
+
+       fun leerSala(): ArrayList<WrapperSala> {
         var listasalas:ArrayList<WrapperSala>
-        listasalas=ArrayList<WrapperSala>()
+        listaSalasglobal=ArrayList()
+        listasalas=ArrayList()
+           var listanueva: ArrayList<WrapperSala>? =null
 
-        var datasnapshot = reference.child("salas").get().addOnSuccessListener { datasnapshot->
+        var datasnapshot = reference.child("salas").get().addOnSuccessListener {
 
-            for(child in datasnapshot.children){
+            for(child in it.children){
 
                 var ronda:Ronda?
                 try {
@@ -50,15 +57,15 @@ class BaseDatos(){
                     for(jugadorsnap in child.child("jugadores").children){
                         var long= jugadorsnap.child("punto").value as Long
 
-                      var j= jugadorsnap.key?.let {
-                          Jugador(
-                              it,
-                              jugadorsnap.child("ready").value as Boolean,
-                              long.toInt()
-                             )
-                      }
+                      var j:String?
+                          j=jugadorsnap.key
+
+
+
                         if (j != null) {
-                            jugadores.add(j)
+
+                            var jugadorclass=Jugador(j,false, 0)
+                            jugadores.add(jugadorclass)
                         }
 
 
@@ -84,10 +91,12 @@ class BaseDatos(){
 
                     if(wrapperSala!= null){
                         listasalas.add(wrapperSala)
-                        Log.d("------------------mmmmmmm","ajkdhsajkdhak")
+                        Log.d("------------------mmmmmmm","base de datos size "+listasalas.size.toString())
                     }else{
                         Log.d("------------------mmmmmmm","nulllazooooooooo")
+
                     }
+                    listaSalasglobal=listasalas
 
 
 
@@ -98,7 +107,13 @@ class BaseDatos(){
 
 
         }
-        return listasalas
+           Thread.sleep(5000)
+           Log.d("firebase", "--------------------------------"+listasalas.size.toString())
+
+
+
+
+        return listaSalasglobal
 
     }
 
@@ -132,10 +147,10 @@ class BaseDatos(){
         }
     }
 
-    fun getUsersWithNickname(nickname:String) : List<Usuario>?{
-        var usuarios : ArrayList<Usuario>?
-        usuarios = ArrayList<Usuario>()
-        var userFound : Usuario?
+    fun getUsersWithNickname(nickname:String) : List<WrapperUsuario>?{
+        var usuarios : ArrayList<WrapperUsuario>?
+        usuarios = ArrayList<WrapperUsuario>()
+        var userFound : WrapperUsuario?
         reference.child("usuarios").get().addOnSuccessListener {
 
             for (usuario in it.children)
@@ -143,11 +158,13 @@ class BaseDatos(){
                 var userNickname = usuario.child("nickname").value as String
                 if(userNickname.equals(nickname))
                 {
-                    userFound = Usuario(
+                    userFound = WrapperUsuario(usuario.key.toString(),
+                        Usuario(
                         usuario.child("nickname").value as String,
                         usuario.child("avatar").value as String,
                         usuario.child("nivel").value as Long,
                         ArrayList()
+                    )
                     )
 
                     for(amigo in usuario.child("amigos").children)
@@ -155,7 +172,7 @@ class BaseDatos(){
                         var idAmigo = amigo.value as String
                         if(idAmigo != null)
                         {
-                            userFound!!.amigos.add(idAmigo!!)
+                            userFound!!.usuario.amigos.add(idAmigo!!)
                         }
                     }
 
@@ -170,6 +187,66 @@ class BaseDatos(){
 
         }
         return usuarios
+    }
+
+    fun agregarUsuario(idUsuario: String)
+    {
+        var wrapperUsuario : WrapperUsuario = User.getInstancia()!!.wrapper
+
+        if(wrapperUsuario != null && wrapperUsuario.usuario != null && !wrapperUsuario.usuario.amigos.contains(idUsuario))
+        {
+            wrapperUsuario.usuario.amigos.add(idUsuario)
+        }
+
+        escribirUsuario(wrapperUsuario)
+
+    }
+
+    fun getListWrapperUsuariosFromListIds(ids : List<String>) : ArrayList<WrapperUsuario>
+    {
+        var listaWrapperUsuarios : ArrayList<WrapperUsuario> = ArrayList()
+        Log.d(TAG,"SE LLAMA A LA FUNCION DE RECONSTRUIR -------------------")
+
+        reference.child("usuarios").get().addOnSuccessListener {
+            for(usuario in it.children)
+            {
+                var id:String = usuario.key.toString()
+                Log.d(TAG,"Id de la base de datos: " + id.toString())
+                for(idLista in ids)
+                {
+                    Log.d(TAG,"Id de la lista de amigos del usuario: " + idLista)
+                    if(id.toString().equals(idLista))
+                    {
+                        listaWrapperUsuarios.add(WrapperUsuario(id,reconstruirUsuario(usuario)))
+                        break
+                    }
+                }
+
+            }
+
+
+        }
+
+        return listaWrapperUsuarios
+    }
+
+    fun reconstruirUsuario(snapshot:DataSnapshot): Usuario{
+        var usuario : Usuario
+        var listaAmigos : ArrayList<String> = ArrayList()
+
+        for(id in snapshot.child("amigos").children)
+        {
+            listaAmigos.add(id as String)
+        }
+        usuario =  Usuario(
+            snapshot.child("nickname").value as String,
+            snapshot.child("avatar").value as String,
+            snapshot.child("nivel").value as Long,
+            listaAmigos
+        )
+
+
+        return usuario
     }
 
 

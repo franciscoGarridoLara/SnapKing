@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class User private constructor(var auth:FirebaseAuth, var client : GoogleSignInClient?) {
     var mAuth:FirebaseAuth = auth
+    //FIXME: Inicalizar este usuario cuando nos interese, si no va a crearlo todo el rato cuando no tengamos una instancia de esta clase.
     var user : Usuario = Usuario(auth.currentUser?.displayName.toString(), "",1, ArrayList())
     var wrapper : WrapperUsuario = WrapperUsuario(auth.currentUser!!.uid, user)
     var googleClient : GoogleSignInClient? = client
