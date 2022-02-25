@@ -15,7 +15,9 @@ class BaseDatos(){
 
     var database: FirebaseDatabase = Firebase.database
     val reference = database.reference
-    var salas= ArrayList<WrapperSala>()
+    lateinit var listaSalasglobal:ArrayList<WrapperSala>
+
+
 
 
     fun escribirUsuario(wrapper : WrapperUsuario){
@@ -28,13 +30,16 @@ class BaseDatos(){
         reference.child("salas").push().setValue(sala)
 
     }
-    fun leerSala(): ArrayList<WrapperSala> {
+
+       fun leerSala(): ArrayList<WrapperSala> {
         var listasalas:ArrayList<WrapperSala>
-        listasalas=ArrayList<WrapperSala>()
+        listaSalasglobal=ArrayList()
+        listasalas=ArrayList()
+           var listanueva: ArrayList<WrapperSala>? =null
 
-        var datasnapshot = reference.child("salas").get().addOnSuccessListener { datasnapshot->
+        var datasnapshot = reference.child("salas").get().addOnSuccessListener {
 
-            for(child in datasnapshot.children){
+            for(child in it.children){
 
                 var ronda:Ronda?
                 try {
@@ -52,15 +57,15 @@ class BaseDatos(){
                     for(jugadorsnap in child.child("jugadores").children){
                         var long= jugadorsnap.child("punto").value as Long
 
-                      var j= jugadorsnap.key?.let {
-                          Jugador(
-                              it,
-                              jugadorsnap.child("ready").value as Boolean,
-                              long.toInt()
-                             )
-                      }
+                      var j:String?
+                          j=jugadorsnap.key
+
+
+
                         if (j != null) {
-                            jugadores.add(j)
+
+                            var jugadorclass=Jugador(j,false, 0)
+                            jugadores.add(jugadorclass)
                         }
 
 
@@ -86,10 +91,12 @@ class BaseDatos(){
 
                     if(wrapperSala!= null){
                         listasalas.add(wrapperSala)
-                        Log.d("------------------mmmmmmm","ajkdhsajkdhak")
+                        Log.d("------------------mmmmmmm","base de datos size "+listasalas.size.toString())
                     }else{
                         Log.d("------------------mmmmmmm","nulllazooooooooo")
+
                     }
+                    listaSalasglobal=listasalas
 
 
 
@@ -100,7 +107,13 @@ class BaseDatos(){
 
 
         }
-        return listasalas
+           Thread.sleep(5000)
+           Log.d("firebase", "--------------------------------"+listasalas.size.toString())
+
+
+
+
+        return listaSalasglobal
 
     }
 
