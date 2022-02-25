@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
+import android.widget.Toast
 import com.example.snapking.BaseDatos.BaseDatos
 import com.example.snapking.Firebase.User
 import com.example.snapking.databinding.ActivityPrincipalBinding
 import com.example.snapking.modelo.Jugador
 import com.example.snapking.modelo.Sala
+import com.example.snapking.modelo.WrapperSala
 
 class PrincipalActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPrincipalBinding
@@ -41,7 +43,13 @@ class PrincipalActivity : AppCompatActivity() {
         }
 
         binding.btnBattle.setOnClickListener {
-            batalla()
+            var wraperSalaGlobal:WrapperSala?
+            wraperSalaGlobal= machmaking()
+
+            if(wraperSalaGlobal!=null){
+                Toast.makeText(this, "wrapper sala "+wraperSalaGlobal.id.toString(), Toast.LENGTH_SHORT).show()
+            }
+
         }
         binding.btnPerfil.setOnClickListener()
         {
@@ -53,10 +61,13 @@ class PrincipalActivity : AppCompatActivity() {
         BaseDatos.getInstance()!!.escribirUsuario(User.getInstancia()!!.wrapper)
 
     }
-    private fun batalla(){
+    private fun machmaking(): WrapperSala? {
         var id= User.getInstancia()?.printToken() as String
         var jugador=Jugador(id,false,0)
+        var wraperSalaFinal:WrapperSala?
+        wraperSalaFinal=null
         var salas=BaseDatos.getInstance()!!.leerSala()
+        Toast.makeText(this, "salas obtenidas", Toast.LENGTH_SHORT).show()
         var bucle=true
         var i=0
         while (bucle&&i<salas.size){
@@ -67,10 +78,13 @@ class PrincipalActivity : AppCompatActivity() {
                 bucle=false
 
                 BaseDatos.getInstance()?.meterJugadorSala(wrappersala.id,jugador)
+                wraperSalaFinal=wrappersala
             }
+            i++
 
         }
-        if(!bucle){
+        Toast.makeText(this, "buckke vale "+ bucle.toString(), Toast.LENGTH_SHORT).show()
+        if(bucle){
             var jugadores=ArrayList<Jugador>()
             jugadores.add(jugador)
 
@@ -80,8 +94,15 @@ class PrincipalActivity : AppCompatActivity() {
                 User.getInstancia()?.printToken() as String,
                 true,null,5,jugadores
             )
-            BaseDatos.getInstance()?.escribirSala(sala)
+            var clave=BaseDatos.getInstance()?.escribirSala(sala)
+            if (clave!=null){
+                wraperSalaFinal=WrapperSala(clave,sala)
+            }
+
+
+
         }
+        return wraperSalaFinal
 
 
 

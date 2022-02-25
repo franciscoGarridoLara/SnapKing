@@ -1,10 +1,10 @@
 package com.example.snapking.BaseDatos
 
 import android.util.Log
-import com.example.snapking.Wrapper.WraperInsertarJugador
 import com.example.snapking.modelo.*
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 
 
@@ -22,7 +22,7 @@ class BaseDatos(){
     }
     fun escribrSala(sala:WrapperSala){
         Log.d(BaseDatos.TAG,"Escribiendo sala")
-        reference.child("salas").child(sala.id).setValue(sala)
+        reference.child("salas").push().setValue(sala)
 
     }
     fun leerSala(): ArrayList<WrapperSala> {
@@ -33,43 +33,52 @@ class BaseDatos(){
 
             for(child in datasnapshot.children){
 
-                var ronda=Ronda(
-                    child.child("ronda").child("numero").value as Int,
-                    child.child("ronda").child("id_tematica") as String
+                var ronda:Ronda?
+                try {
+                    ronda=Ronda(
+                        child.child("ronda").child("numero").value as Int,
+                        child.child("ronda").child("id_tematica") as String
 
-                )
+                    )
+                } catch (e: NullPointerException) {
+                    ronda=null
+                }
 
                 var jugadores=ArrayList<Jugador>()
 
-                for(jugadorsnap in child.child("jugadores").children){
-                  var j= jugadorsnap.key?.let {
-                      Jugador(
-                          it,
-                          jugadorsnap.child("ready").value as Boolean,
-                          jugadorsnap.child("punto").value as Int)
-                  }
-                    if (j != null) {
-                        jugadores.add(j)
+                    for(jugadorsnap in child.child("jugadores").children){
+                        var long= jugadorsnap.child("punto").value as Long
+
+                      var j= jugadorsnap.key?.let {
+                          Jugador(
+                              it,
+                              jugadorsnap.child("ready").value as Boolean,
+                              long.toInt()
+                             )
+                      }
+                        if (j != null) {
+                            jugadores.add(j)
+                        }
+
+
                     }
 
 
-                }
+                    var sala=Sala(
+                        child.child("nombre").value as String,
+                        child.child("capacidad").value as Long,
+                        child.child("anfitrion").value as String,
+                        child.child("estado").value as Boolean,
+                        ronda,
+                        child.child("rondas_totales").value as Long,
+                        jugadores
+                    )
+                    var wrapperSala= child?.key?.let { WrapperSala(it,sala) }
 
+                    if(wrapperSala!= null){
+                        listasalas.add(wrapperSala)
+                    }
 
-                var sala=Sala(
-                    child.child("nombre").value as String,
-                    child.child("capacidad").value as Int,
-                    child.child("anfitrion").value as String,
-                    child.child("estado").value as Boolean,
-                    ronda,
-                    child.child("rondas_totales").value as Int,
-                    jugadores
-                )
-                 var wrapperSala= child?.key?.let { WrapperSala(it,sala) }
-
-                if(wrapperSala!= null){
-                    listasalas.add(wrapperSala)
-                }
 
 
             }
@@ -83,14 +92,34 @@ class BaseDatos(){
 
     }
 
-    fun escribirSala(sala: Sala){
-        reference.child("salas").push().setValue(sala)
+    fun leerSalabyId(id:String ): Sala? {
+        var sala:Sala?
+        sala=null
+        reference.child("salas").child(id).get().addOnSuccessListener {
+            sala=it.getValue<Sala>()
+        }
+        return sala
+
+    }
+
+    fun escribirSala(sala: Sala): String? {
+        var clave=reference.child("salas").push().key
+        if (clave != null) {
+            reference.child("salas").child(clave).setValue(sala)
+        }
+        return clave
 
     }
     fun meterJugadorSala(id:String,jugador:Jugador){
-        var datos= WraperInsertarJugador(jugador.ready,jugador.punto)
-        reference.child("salas").child(id).child("jugadores")
-            .child(jugador.id).setValue(datos)
+
+        var sala=leerSalabyId(id)
+
+
+
+        if (sala!=null) {
+
+            reference.child("salas").child(id).setValue(sala)
+        }
     }
 
 

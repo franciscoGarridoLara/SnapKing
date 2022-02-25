@@ -49,13 +49,13 @@ class User private constructor(var auth:FirebaseAuth, var client : GoogleSignInC
         Log.d(TAG,nombre)
     }
 
-    fun printToken()
-    {
+    fun printToken(): String {
         var token = "SIN TOKEN"
 
         if(instance!= null)
             token = instance!!.mAuth!!.uid.toString()
         Log.d(TAG,token)
+        return token
     }
 
     fun signOut()
