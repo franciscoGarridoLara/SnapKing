@@ -1,6 +1,7 @@
 package com.example.snapking.BaseDatos
 
 import android.util.Log
+import com.example.snapking.Firebase.User
 import com.example.snapking.modelo.*
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
@@ -120,6 +121,46 @@ class BaseDatos(){
 
             reference.child("salas").child(id).setValue(sala)
         }
+    }
+
+    fun getUsersWithNickname(nickname:String) : List<Usuario>?{
+        var usuarios : ArrayList<Usuario>?
+        usuarios = ArrayList<Usuario>()
+        var userFound : Usuario?
+        reference.child("usuarios").get().addOnSuccessListener {
+
+            for (usuario in it.children)
+            {
+                var userNickname = usuario.child("nickname").value as String
+                if(userNickname.equals(nickname))
+                {
+                    userFound = Usuario(
+                        usuario.child("nickname").value as String,
+                        usuario.child("avatar").value as String,
+                        usuario.child("nivel").value as Long,
+                        ArrayList()
+                    )
+
+                    for(amigo in usuario.child("amigos").children)
+                    {
+                        var idAmigo = amigo.value as String
+                        if(idAmigo != null)
+                        {
+                            userFound!!.amigos.add(idAmigo!!)
+                        }
+                    }
+
+
+                    if(userFound != null)
+                    {
+                        usuarios.add(userFound!!)
+                    }
+                }
+            }
+
+
+        }
+        return usuarios
     }
 
 

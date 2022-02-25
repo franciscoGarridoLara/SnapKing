@@ -10,10 +10,6 @@ import com.example.snapking.databinding.UsuarioCardLobbyBinding
 
 class UsuarioAdapter(val usuarios:List<WrapperUsuarioLobby>) : RecyclerView.Adapter<UsuarioAdapter.ViewHolder>() {
 
-
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view=UsuarioCardLobbyBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ViewHolder(view)

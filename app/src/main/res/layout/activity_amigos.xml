@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/fredoka_one"
         android:text="Amigos"
         android:textAlignment="center"
         android:textColorLink="#000000"
@@ -73,7 +74,7 @@
     <FrameLayout
         android:id="@+id/fondorecicl"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="500dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="24dp"
