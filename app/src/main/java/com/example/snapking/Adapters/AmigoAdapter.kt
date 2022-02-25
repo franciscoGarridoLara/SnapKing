@@ -9,6 +9,7 @@ import com.example.snapking.Wrapper.WrapperUsuarioLobby
 import com.example.snapking.databinding.UsuarioCardAddBinding
 import com.example.snapking.databinding.UsuarioCardLobbyBinding
 import com.example.snapking.modelo.Usuario
+import com.squareup.picasso.Picasso
 
 class AmigoAdapter(val usuarios:List<Usuario>) : RecyclerView.Adapter<AmigoAdapter.ViewHolder>() {
 
@@ -29,6 +30,13 @@ class AmigoAdapter(val usuarios:List<Usuario>) : RecyclerView.Adapter<AmigoAdapt
 
         fun bind(usuario: Usuario) {
             binding.txtjugador.text=usuario.nickname
+            var avatar = usuario.avatar.toString()
+            if(!avatar.isEmpty())
+            {
+                Picasso.get()
+                    .load(avatar)
+                    .into(binding.fotoPerfil)
+            }
 
             binding.txtjugador.setOnClickListener()
             {
