@@ -73,10 +73,19 @@ class BaseDatos(){
                         child.child("rondas_totales").value as Long,
                         jugadores
                     )
-                    var wrapperSala= child?.key?.let { WrapperSala(it,sala) }
+                    var clave=child.key
+                var wrapperSala:WrapperSala?
+                  wrapperSala=null
+                if(clave!=null){
+                     wrapperSala= WrapperSala(clave,sala)
+                }
+
 
                     if(wrapperSala!= null){
                         listasalas.add(wrapperSala)
+                        Log.d("------------------mmmmmmm","ajkdhsajkdhak")
+                    }else{
+                        Log.d("------------------mmmmmmm","nulllazooooooooo")
                     }
 
 
