@@ -7,8 +7,10 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.snapking.Adapters.AmigoAdapter
+import com.example.snapking.Adapters.AmigoAdapterOnline
 import com.example.snapking.Adapters.UsuarioAdapter
 import com.example.snapking.BaseDatos.BaseDatos
+import com.example.snapking.Firebase.User
 
 class AmigosActivity : AppCompatActivity() {
 
@@ -22,6 +24,7 @@ class AmigosActivity : AppCompatActivity() {
 
         inicializarInterfaz()
         setListeners()
+        cargarAmigos()
     }
 
     private fun inicializarInterfaz() {
@@ -46,6 +49,16 @@ class AmigosActivity : AppCompatActivity() {
                 Toast.makeText(this,"El campo no puede ser nulo",Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun cargarAmigos()
+    {
+        var adapter =
+            BaseDatos.getInstance()!!.getListWrapperUsuariosFromListIds(User.getInstancia()!!.user.amigos)
+                ?.let { it1 -> AmigoAdapterOnline(it1) }
+
+        rvAmigos.adapter = adapter
+
     }
 
 }

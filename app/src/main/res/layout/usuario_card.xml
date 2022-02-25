@@ -28,8 +28,8 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <com.mikhaellopez.circularimageview.CircularImageView
-                android:id="@+id/fondo_1"
+            <ImageView
+                android:id="@+id/foto_perfil"
                 android:layout_width="39dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
