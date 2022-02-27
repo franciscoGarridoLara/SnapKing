@@ -15,8 +15,7 @@ import com.example.snapking.modelo.Sala
 import com.example.snapking.modelo.WrapperSala
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+
 
 class PrincipalActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPrincipalBinding
@@ -56,6 +55,12 @@ class PrincipalActivity : AppCompatActivity() {
             startActivity(Intent(this,TematicaActivity::class.java))
             finish()
         }
+        binding.btnParty.setOnClickListener{
+
+
+
+
+        }
 
 
         binding.btnAjustes.setOnClickListener()
@@ -72,7 +77,7 @@ class PrincipalActivity : AppCompatActivity() {
         }
 
         binding.btnBattle.setOnClickListener {
-
+            crearSala()
             machmaking()
 
 
