@@ -77,6 +77,7 @@ class PrincipalActivity : AppCompatActivity() {
         }
 
         binding.btnBattle.setOnClickListener {
+
             machmaking()
 
 
@@ -130,7 +131,6 @@ class PrincipalActivity : AppCompatActivity() {
                         var jugador=Jugador(id,false,0)
                         var listaJugadores=ArrayList<Jugador>()
                         listaJugadores.add(jugador)
-
 
                         var sala=Sala("sala publica",8,id,true,null,5,listaJugadores)
                         var idsala=BaseDatos.getInstance()?.escribirSala(sala)

@@ -48,7 +48,8 @@
             android:exported="false" android:screenOrientation="locked"/>
         <activity
             android:name="com.example.snapking.LobbyActivity"
-            android:exported="false" android:screenOrientation="locked"/>
+            android:exported="false" android:screenOrientation="locked"
+            android:parentActivityName=".PrincipalActivity"/>
 
         <activity
             android:name="com.example.snapking.PrincipalActivity"
