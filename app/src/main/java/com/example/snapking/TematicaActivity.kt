@@ -1,39 +1,39 @@
 package com.example.snapking
 
 import android.Manifest
+import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.camera.core.ImageCapture
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import com.example.snapking.databinding.ActivityTematicaBinding
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
-import android.util.Log
-import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.core.content.PermissionChecker
 import android.provider.MediaStore
-import android.content.ContentValues
-import android.content.Intent
-import android.graphics.Bitmap
+import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
-import java.nio.ByteBuffer
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import com.example.snapking.databinding.ActivityTematicaBinding
+import com.example.snapking.databinding.FragmentImageBinding
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
-typealias LumaListener = (luma: Double) -> Unit
 
 class TematicaActivity : AppCompatActivity() {
 
     private lateinit var viewBinding: ActivityTematicaBinding
     private var imageCapture: ImageCapture? = null
     private lateinit var cameraExecutor: ExecutorService
-
+    private lateinit var fragmentTransaction: FragmentTransaction
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,17 +42,51 @@ class TematicaActivity : AppCompatActivity() {
         viewBinding = ActivityTematicaBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        var btnBack:Button = viewBinding.btnBack
+        var btnAcept:Button = viewBinding.btnSi
+        var btnPhoto:Button = viewBinding.btnPhoto
+
+
+
+
         if (allPermissionsGranted()) {
             startCamera()
         } else {
             ActivityCompat.requestPermissions(
                 this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
+        btnBack.visibility = View.INVISIBLE
+        btnAcept.visibility = View.INVISIBLE
+
+        btnPhoto.setOnClickListener {
+            takePhoto()
+            switchFragment()
+            btnBack.visibility = View.VISIBLE
+            btnPhoto.visibility = View.INVISIBLE
+            btnAcept.visibility = View.VISIBLE
+        }
 
 
-        viewBinding.btnConfirmar.setOnClickListener { takePhoto() }
+
+        btnBack.setOnClickListener {
+            onBackPressed()
+            btnBack.visibility = View.INVISIBLE
+            btnPhoto.visibility= View.VISIBLE
+            btnAcept.visibility = View.INVISIBLE}
+
+        btnAcept.setOnClickListener {
+            btnPhoto.visibility= View.VISIBLE
+            btnAcept.visibility = View.INVISIBLE
+            btnBack.visibility = View.INVISIBLE
+        }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
+    }
+
+
+    public fun goBack() {
+
+
     }
 
     private fun takePhoto() {
@@ -137,6 +171,23 @@ class TematicaActivity : AppCompatActivity() {
         }, ContextCompat.getMainExecutor(this))
 
     }
+    private fun switchFragment(){
+
+        var fragment: Fragment?= null
+
+        fragment = ImageFragment()
+
+        fragmentTransaction= supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.cameraLayout,fragment)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+
+
+        Thread.sleep(500)
+
+
+
+    }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(
@@ -156,7 +207,7 @@ class TematicaActivity : AppCompatActivity() {
             mutableListOf (
                 Manifest.permission.CAMERA,
 
-            ).apply {
+                ).apply {
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
                     add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 }
