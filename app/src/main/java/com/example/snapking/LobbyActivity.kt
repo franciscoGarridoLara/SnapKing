@@ -20,9 +20,12 @@ import android.os.Handler
 
 import android.preference.PreferenceManager
 import androidx.core.content.ContextCompat
+import com.example.snapking.BaseDatos.BaseDatos
+import com.example.snapking.Firebase.User
 
 
 class LobbyActivity : AppCompatActivity() {
+    var wraperSala:WrapperSala?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding=ActivityLobbyBinding.inflate(layoutInflater)
@@ -30,7 +33,7 @@ class LobbyActivity : AppCompatActivity() {
         binding.recicle
         val intent = intent
         val type: Type = object : TypeToken<WrapperSala>() {}.type
-        var wraperSala=Gson().fromJson<WrapperSala>(intent.getStringExtra("wrapersala"),type)
+         wraperSala=Gson().fromJson<WrapperSala>(intent.getStringExtra("wrapersala"),type)
         Log.d("-------------------activity lobby",wraperSala.toString())
 
 
@@ -49,6 +52,7 @@ class LobbyActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext,
                         android.R.string.yes, Toast.LENGTH_SHORT).show()
                     //llamar a base de datos para eliminar la sala.
+                    BaseDatos.getInstance()?.elminarJugadorSala(wraperSala!!.id, User.getInstancia()!!.printToken())
 
                     startActivity(Intent(this,PrincipalActivity::class.java))
                     finish()
