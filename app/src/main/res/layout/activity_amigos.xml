@@ -73,8 +73,8 @@
 
     <FrameLayout
         android:id="@+id/fondorecicl"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_width="363dp"
+        android:layout_height="444dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="24dp"
@@ -83,7 +83,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="443dp"
             android:background="@drawable/lobby_container"
             android:orientation="vertical">
 

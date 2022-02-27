@@ -1,9 +1,12 @@
 package com.example.snapking.Adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.snapking.BaseDatos.BaseDatos
+import com.example.snapking.MainActivity
 import com.example.snapking.databinding.UsuarioCardAddBinding
 import com.example.snapking.modelo.WrapperUsuario
 import com.squareup.picasso.Picasso

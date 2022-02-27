@@ -71,10 +71,9 @@ class PrincipalActivity : AppCompatActivity() {
              machmaking()
 
 
-
-
-
         }
+
+
         binding.btnPerfil.setOnClickListener()
         {
             startActivity(Intent(this,AmigosActivity::class.java))

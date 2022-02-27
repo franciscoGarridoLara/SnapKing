@@ -26,74 +26,6 @@ class BaseDatos(){
 
 
 
-    fun escribirUsuario(wrapper : WrapperUsuario){
-
-            Log.d(BaseDatos.TAG,"Escribiendo usuario")
-            existeUsuario(wrapper,0)
-
-    }
-
-    fun insertarUsuario(wrapper: WrapperUsuario){
-        Log.d(TAG,"Insertando usuario")
-        reference.child("usuarios").child(wrapper.id).setValue(wrapper.usuario)
-    }
-
-    fun actualizarUsuario(wrapper : WrapperUsuario){
-        Log.d(BaseDatos.TAG,"Actualizando usuario")
-        existeUsuario(wrapper,1)
-    }
-
-    fun actualizarUser(wrapper: WrapperUsuario){
-        Log.d(TAG,"Actualizando usuario")
-        reference.child("usuarios").child(wrapper.id).setValue(wrapper.usuario)
-    }
-
-    fun existeUsuario(wrapper: WrapperUsuario, mode:Int){
-
-                var usuarios: Task<DataSnapshot> = reference.child("usuarios").get().addOnSuccessListener {
-                    var existe = false
-
-                    for (usuario in it.children)
-                    {
-                        if(usuario.key.equals(wrapper.id)) {
-                            Log.d(TAG,"Existe el usuario con id: " + usuario.key.toString())
-                            //llamar a funcion de insertar
-                            existe = true
-                            break
-                        }
-
-                    }
-                    if(mode == 0)
-                    {
-                        if(existe)
-                        {
-                            Log.d(TAG,"El usuario ya existe")
-                        }else
-                        {
-                            insertarUsuario(wrapper)
-                        }
-                    }else if(mode == 1)
-                    {
-                        if(existe)
-                        {
-                            actualizarUser(wrapper)
-                        }
-                    }
-
-
-
-                }
-
-
-
-    }
-
-
-
-
-
-
-
     fun getUser(id:String) : Usuario?
     {
         var user : Usuario? = null
@@ -104,11 +36,12 @@ class BaseDatos(){
                 if(usuario.key.equals(id))
                 {
                     Log.d(TAG,"Existe el usuario por lo que llamamos a la funcion de reconstruir.")
-                    user = reconstruirUsuario(usuario)
+                    //user = reconstruirUsuario(usuario)
                 }
 
             }
         }
+
         return user
     }
 
@@ -227,15 +160,7 @@ class BaseDatos(){
 
     }
     fun meterJugadorSala(id:String,jugador:Jugador){
-
-
-
-
-
-
-
-            reference.child("salas").child(id).child("jugadores").push().setValue(jugador)
-
+        reference.child("salas").child(id).child("jugadores").push().setValue(jugador)
     }
 
     fun getUsersWithNickname(nickname:String) : List<WrapperUsuario>?{
@@ -247,16 +172,19 @@ class BaseDatos(){
             for (usuario in it.children)
             {
                 var userNickname = usuario.child("nickname").value as String
+                var lvl = usuario.child("nivel").value as Long
+                var avatar = usuario.child("avatar").value as String
+
                 if(userNickname.contains(nickname))
                 {
                     userFound = WrapperUsuario(usuario.key.toString(),
-                        Usuario(
-                        usuario.child("nickname").value as String,
-                        usuario.child("avatar").value as String,
-                        usuario.child("nivel").value as Long,
-                        ArrayList()
-                    )
-                    )
+                            Usuario(
+                                userNickname,
+                                avatar,
+                                lvl,
+                                ArrayList()
+                            )
+                        )
 
                     for(amigo in usuario.child("amigos").children)
                     {
@@ -280,19 +208,27 @@ class BaseDatos(){
         return usuarios
     }
 
+
     fun agregarUsuario(idUsuario: String)
     {
-        var wrapperUsuario : WrapperUsuario = User.getInstancia()!!.wrapper
+        var wrapperUsuario : WrapperUsuario = User.wrapper!!
 
         if(wrapperUsuario != null && wrapperUsuario.usuario != null && !wrapperUsuario.usuario.amigos.contains(idUsuario))
         {
+            Log.d(TAG, "Agregando amigo " + idUsuario + " a el usuario " + wrapperUsuario.usuario.nickname)
             wrapperUsuario.usuario.amigos.add(idUsuario)
+            actualizarUsuario(wrapperUsuario)
         }
 
-        actualizarUsuario(wrapperUsuario)
+
 
     }
 
+    fun actualizarUsuario(usuario : WrapperUsuario){
+        reference.child("usuarios").child(usuario.id).setValue(usuario.usuario)
+    }
+
+    /*
     fun getListWrapperUsuariosFromListIds(ids : List<String>) : ArrayList<WrapperUsuario>
     {
         var listaWrapperUsuarios : ArrayList<WrapperUsuario> = ArrayList()
@@ -321,25 +257,8 @@ class BaseDatos(){
         return listaWrapperUsuarios
     }
 
-    fun reconstruirUsuario(snapshot:DataSnapshot): Usuario{
-        var usuario : Usuario
-        var listaAmigos : ArrayList<String> = ArrayList()
-        //FIXME: Reconstruir amigos.
-        for(id in snapshot.child("amigos").children)
-        {
-            //Log.d(TAG,"FUNCION RECONSTRUIR DATOS ID: " + id.key.toString() + id.value.toString())
-            listaAmigos.add(id.key.toString())
-        }
-        usuario =  Usuario(
-            snapshot.child("nickname").value as String,
-            snapshot.child("avatar").value as String,
-            snapshot.child("nivel").value as Long,
-            listaAmigos
-        )
 
-
-        return usuario
-    }
+*/
 
 
 
