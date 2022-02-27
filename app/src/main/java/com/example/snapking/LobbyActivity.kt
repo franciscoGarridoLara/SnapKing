@@ -39,9 +39,9 @@ class LobbyActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding=ActivityLobbyBinding.inflate(layoutInflater)
+        binding=ActivityLobbyBinding.inflate(layoutInflater)
 
-        setContentView(binding.root)
+        setContentView(binding!!.root)
 
 
         val intent = intent
@@ -49,14 +49,27 @@ class LobbyActivity : AppCompatActivity() {
          wraperSala=Gson().fromJson<WrapperSala>(intent.getStringExtra("wrapersala"),type)
         Log.d("ACTIVITY LOBBY",wraperSala.toString())
 
+        setListeners()
+        cargarUsuarios()
 
+    }
+
+    private fun setListeners() {
+        binding!!.btnReady.setOnClickListener(){
+            Log.d("ACTIVITY LOBBY", "PULSANDO EL BOTON DE READY!")
+            //escribir en la base de datos el ready
+            BaseDatos.getInstance()!!.setUserReadySala(wraperSala!!.id, User.getInstancia()!!.printToken())
+        }
+    }
+
+    private fun cargarUsuarios() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 BaseDatos!!.getInstance()!!.getUsersFromSala(wraperSala!!.id,object : IGetUsersFromSala{
                     override fun OnCallBack(lista: List<WrapperUsuarioLobby>) {
                         Log.d("-----LOBBY ACTIVITY",lista.toString())
                         var adapter = lista.let { it -> UsuarioAdapter(it) }
-                        binding.recicle.adapter = adapter
+                        binding!!.recicle.adapter = adapter
                     }
                 })
             }
@@ -68,19 +81,6 @@ class LobbyActivity : AppCompatActivity() {
         }
 
         BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).addValueEventListener(postListener)
-        //FIXME: BINDING DE LA FUNCION.
-        //cargarUsuarios()
-
-    }
-
-    private fun cargarUsuarios() {
-        BaseDatos!!.getInstance()!!.getUsersFromSala(wraperSala!!.id,object : IGetUsersFromSala{
-            override fun OnCallBack(lista: List<WrapperUsuarioLobby>) {
-                Log.d("-----LOBBY ACTIVITY",lista.toString())
-                var adapter = lista.let { it -> UsuarioAdapter(it) }
-                binding!!.recicle.adapter = adapter
-            }
-        })
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

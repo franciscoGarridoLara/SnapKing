@@ -257,6 +257,21 @@ class BaseDatos(){
 
     }
 
+    fun setUserReadySala(idSala:String, idJugador:String){
+        reference.child("salas").child(idSala).child("jugadores").get().addOnSuccessListener {
+
+            for(user in it.children)
+            {
+                var userId = user.child("id").value as String
+                if(userId.equals(idJugador))
+                {
+                    user.child("ready").ref.setValue(true)
+                    break
+                }
+            }
+        }
+    }
+
 
     fun agregarUsuario(idUsuario: String)
     {

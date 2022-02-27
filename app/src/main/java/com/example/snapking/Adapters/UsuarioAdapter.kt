@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.snapking.R
 import com.example.snapking.Wrapper.WrapperUsuarioLobby
 import com.example.snapking.databinding.UsuarioCardLobbyBinding
+import com.squareup.picasso.Picasso
 
 class UsuarioAdapter(val usuarios:List<WrapperUsuarioLobby>) : RecyclerView.Adapter<UsuarioAdapter.ViewHolder>() {
 
@@ -28,10 +29,17 @@ class UsuarioAdapter(val usuarios:List<WrapperUsuarioLobby>) : RecyclerView.Adap
 
         fun bind(wrapperUsuario: WrapperUsuarioLobby) {
             binding.txtjugador.text=wrapperUsuario.usuario.nickname
+            var avatar = wrapperUsuario.usuario.avatar.toString()
+            if(!avatar.isEmpty())
+            {
+                Picasso.get()
+                    .load(avatar)
+                    .into(binding.fotoPerfil)
+            }
             if(!wrapperUsuario.estado){
-                binding.prepadoIma.visibility=View.INVISIBLE
+                binding.preparado.visibility=View.INVISIBLE
             }else{
-                binding.prepadoIma.visibility=View.VISIBLE
+                binding.preparado.visibility=View.VISIBLE
             }
 
         }
