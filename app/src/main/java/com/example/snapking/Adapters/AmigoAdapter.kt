@@ -7,6 +7,7 @@ import com.example.snapking.BaseDatos.BaseDatos
 import com.example.snapking.databinding.UsuarioCardAddBinding
 import com.example.snapking.modelo.WrapperUsuario
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.*
 
 class AmigoAdapter(val usuarios:List<WrapperUsuario>) : RecyclerView.Adapter<AmigoAdapter.ViewHolder>() {
 
@@ -25,7 +26,7 @@ class AmigoAdapter(val usuarios:List<WrapperUsuario>) : RecyclerView.Adapter<Ami
 
     class ViewHolder(val binding:UsuarioCardAddBinding):RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(usuario: WrapperUsuario) {
+        fun bind(usuario: WrapperUsuario){
             binding.txtjugador.text=usuario.usuario.nickname
             var avatar = usuario.usuario.avatar.toString()
             if(!avatar.isEmpty())

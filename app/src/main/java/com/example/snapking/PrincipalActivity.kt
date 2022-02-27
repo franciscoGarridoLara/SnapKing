@@ -19,13 +19,21 @@ class PrincipalActivity : AppCompatActivity() {
 
     private lateinit var btnAjustes:ImageButton
     private lateinit var btnPerfil:ImageButton
-
+    private lateinit var user:User
+    private lateinit var db:BaseDatos
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding=ActivityPrincipalBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+
+        db = BaseDatos.getInstance()!!
+        user = User.getInstancia()!!
+
+        //db.escribirUsuario(user.wrapper)
+
+
 
         //incializarBotones()
 
@@ -65,8 +73,10 @@ class PrincipalActivity : AppCompatActivity() {
             //finish()
         }
 
-        //BaseDatos.getInstance()!!.escribir()
-        BaseDatos.getInstance()!!.escribirUsuario(User.getInstancia()!!.wrapper)
+
+
+
+
 
     }
     private fun machmaking() {

@@ -1,13 +1,19 @@
 package com.example.snapking.BaseDatos
 
+import android.text.BoringLayout
 import android.util.Log
 import com.example.snapking.Firebase.User
 import com.example.snapking.modelo.*
+import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.sql.Wrapper
 
 
@@ -22,9 +28,90 @@ class BaseDatos(){
 
     fun escribirUsuario(wrapper : WrapperUsuario){
 
-        Log.d(BaseDatos.TAG,"Escribiendo usuario")
+            Log.d(BaseDatos.TAG,"Escribiendo usuario")
+            existeUsuario(wrapper,0)
+
+    }
+
+    fun insertarUsuario(wrapper: WrapperUsuario){
+        Log.d(TAG,"Insertando usuario")
         reference.child("usuarios").child(wrapper.id).setValue(wrapper.usuario)
     }
+
+    fun actualizarUsuario(wrapper : WrapperUsuario){
+        Log.d(BaseDatos.TAG,"Actualizando usuario")
+        existeUsuario(wrapper,1)
+    }
+
+    fun actualizarUser(wrapper: WrapperUsuario){
+        Log.d(TAG,"Actualizando usuario")
+        reference.child("usuarios").child(wrapper.id).setValue(wrapper.usuario)
+    }
+
+    fun existeUsuario(wrapper: WrapperUsuario, mode:Int){
+
+                var usuarios: Task<DataSnapshot> = reference.child("usuarios").get().addOnSuccessListener {
+                    var existe = false
+
+                    for (usuario in it.children)
+                    {
+                        if(usuario.key.equals(wrapper.id)) {
+                            Log.d(TAG,"Existe el usuario con id: " + usuario.key.toString())
+                            //llamar a funcion de insertar
+                            existe = true
+                            break
+                        }
+
+                    }
+                    if(mode == 0)
+                    {
+                        if(existe)
+                        {
+                            Log.d(TAG,"El usuario ya existe")
+                        }else
+                        {
+                            insertarUsuario(wrapper)
+                        }
+                    }else if(mode == 1)
+                    {
+                        if(existe)
+                        {
+                            actualizarUser(wrapper)
+                        }
+                    }
+
+
+
+                }
+
+
+
+    }
+
+
+
+
+
+
+
+    fun getUser(id:String) : Usuario?
+    {
+        var user : Usuario? = null
+
+        var usuarios = reference.child("usuarios").get().addOnSuccessListener {
+            for (usuario in it.children)
+            {
+                if(usuario.key.equals(id))
+                {
+                    Log.d(TAG,"Existe el usuario por lo que llamamos a la funcion de reconstruir.")
+                    user = reconstruirUsuario(usuario)
+                }
+
+            }
+        }
+        return user
+    }
+
     fun escribrSala(sala:WrapperSala){
         Log.d(BaseDatos.TAG,"Escribiendo sala")
         reference.child("salas").push().setValue(sala)
@@ -160,7 +247,7 @@ class BaseDatos(){
             for (usuario in it.children)
             {
                 var userNickname = usuario.child("nickname").value as String
-                if(userNickname.equals(nickname))
+                if(userNickname.contains(nickname))
                 {
                     userFound = WrapperUsuario(usuario.key.toString(),
                         Usuario(
@@ -202,7 +289,7 @@ class BaseDatos(){
             wrapperUsuario.usuario.amigos.add(idUsuario)
         }
 
-        escribirUsuario(wrapperUsuario)
+        actualizarUsuario(wrapperUsuario)
 
     }
 
@@ -237,10 +324,11 @@ class BaseDatos(){
     fun reconstruirUsuario(snapshot:DataSnapshot): Usuario{
         var usuario : Usuario
         var listaAmigos : ArrayList<String> = ArrayList()
-
+        //FIXME: Reconstruir amigos.
         for(id in snapshot.child("amigos").children)
         {
-            listaAmigos.add(id as String)
+            //Log.d(TAG,"FUNCION RECONSTRUIR DATOS ID: " + id.key.toString() + id.value.toString())
+            listaAmigos.add(id.key.toString())
         }
         usuario =  Usuario(
             snapshot.child("nickname").value as String,
