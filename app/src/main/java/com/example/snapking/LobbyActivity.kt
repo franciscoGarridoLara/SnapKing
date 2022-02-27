@@ -20,8 +20,11 @@ import android.os.Handler
 
 import android.preference.PreferenceManager
 import androidx.core.content.ContextCompat
+import com.example.snapking.Adapters.UsuarioAdapter
 import com.example.snapking.BaseDatos.BaseDatos
+import com.example.snapking.BaseDatos.IGetUsersFromSala
 import com.example.snapking.Firebase.User
+import com.example.snapking.Wrapper.WrapperUsuarioLobby
 
 
 class LobbyActivity : AppCompatActivity() {
@@ -36,6 +39,16 @@ class LobbyActivity : AppCompatActivity() {
          wraperSala=Gson().fromJson<WrapperSala>(intent.getStringExtra("wrapersala"),type)
         Log.d("-------------------activity lobby",wraperSala.toString())
 
+
+        BaseDatos!!.getInstance()!!.getUsersFromSala(wraperSala!!.id,object : IGetUsersFromSala{
+            override fun OnCallBack(lista: List<WrapperUsuarioLobby>) {
+                Log.d("-----LOBBY ACTIVITY",lista.toString())
+                var adapter = lista.let { it -> UsuarioAdapter(it) }
+                binding.recicle.adapter = adapter
+            }
+
+
+        })
 
     }
 

@@ -3,6 +3,7 @@ package com.example.snapking.BaseDatos
 import android.text.BoringLayout
 import android.util.Log
 import com.example.snapking.Firebase.User
+import com.example.snapking.Wrapper.WrapperUsuarioLobby
 import com.example.snapking.modelo.*
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
@@ -23,7 +24,7 @@ class BaseDatos(){
 
 
 
-    fun getUser(id:String) : Usuario?
+    fun getUser(id:String, IGetUser:IGetUser) : Usuario?
     {
         var user : Usuario? = null
 
@@ -33,7 +34,8 @@ class BaseDatos(){
                 if(usuario.key.equals(id))
                 {
                     Log.d(TAG,"Existe el usuario por lo que llamamos a la funcion de reconstruir.")
-                    //user = reconstruirUsuario(usuario)
+                    user = User.getInstancia()!!.reconstruirUsuario(usuario)
+                    IGetUser.OnCallBack(user!!)
                 }
 
             }
@@ -225,6 +227,34 @@ class BaseDatos(){
 
         }
         return usuarios
+    }
+
+    fun getUsersFromSala(idSala:String, iGetUsersFromSala: IGetUsersFromSala){
+        var usuarios : ArrayList<WrapperUsuarioLobby>?
+        usuarios = ArrayList<WrapperUsuarioLobby>()
+        var sala : WrapperSala
+
+        reference.child("salas").child(idSala).child("jugadores").get().addOnSuccessListener {
+            for(user in it.children)
+            {
+                var idUser:String = user.child("id").value as String
+                var estado = user.child("ready").value as Boolean
+                Log.d(TAG,idUser + ":" + estado.toString())
+
+                var userConstruido = getUser(idUser,object : IGetUser{
+                    override fun OnCallBack(user: Usuario) {
+                        usuarios.add(WrapperUsuarioLobby(user!!,estado))
+                        Log.d(TAG, "USER: -> " + user.toString())
+                        Log.d(TAG,usuarios.toString())
+                        iGetUsersFromSala.OnCallBack(usuarios)
+                    }
+                })
+
+            }
+
+        }
+
+
     }
 
 
