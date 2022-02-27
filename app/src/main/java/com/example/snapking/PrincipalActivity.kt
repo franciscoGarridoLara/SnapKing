@@ -130,16 +130,14 @@ class PrincipalActivity : AppCompatActivity() {
                     if(bucle){
                         var jugador=Jugador(id,false,0)
                         var listaJugadores=ArrayList<Jugador>()
-                        listaJugadores.add(jugador)
+
 
                         var sala=Sala("sala publica",8,id,true,null,5,listaJugadores)
                         var idsala=BaseDatos.getInstance()?.escribirSala(sala)
                         WrapperSalaGlobal=WrapperSala(idsala.toString(),sala)
 
                     }
-                if(!haysalas){
-                    crearSala()
-                }
+
 
                 var intent=Intent(applicationContext,LobbyActivity::class.java)
                 Log.d("----------",WrapperSalaGlobal.toString())

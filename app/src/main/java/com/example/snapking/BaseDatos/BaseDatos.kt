@@ -115,17 +115,19 @@ class BaseDatos(){
 
                     }
                     listaSalasglobal=listasalas
-                Log.d("-----------------fff","entradon7")
-                    interfazSala.OncallBack(listasalas)
-                Log.d("-----------------fff","entradon8")
+
 
 
 
             }
+            Log.d("-----------------fff","entradon7")
+            interfazSala.OncallBack(listasalas)
+            Log.d("-----------------fff","entradon8")
 
         }.addOnFailureListener {
             Log.e("firebase", "Error getting data", it)
 
+            //interfazSala.OncallBack(ArrayList<WrapperSala>())
 
         }
 
