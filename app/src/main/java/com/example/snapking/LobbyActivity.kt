@@ -25,31 +25,62 @@ import com.example.snapking.BaseDatos.BaseDatos
 import com.example.snapking.BaseDatos.IGetUsersFromSala
 import com.example.snapking.Firebase.User
 import com.example.snapking.Wrapper.WrapperUsuarioLobby
+import com.example.snapking.modelo.Jugador
+import com.example.snapking.modelo.Sala
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
 
 
 class LobbyActivity : AppCompatActivity() {
     var wraperSala:WrapperSala?=null
+    var binding : ActivityLobbyBinding? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding=ActivityLobbyBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
-        binding.recicle
+
+
         val intent = intent
         val type: Type = object : TypeToken<WrapperSala>() {}.type
          wraperSala=Gson().fromJson<WrapperSala>(intent.getStringExtra("wrapersala"),type)
-        Log.d("-------------------activity lobby",wraperSala.toString())
+        Log.d("ACTIVITY LOBBY",wraperSala.toString())
 
 
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                BaseDatos!!.getInstance()!!.getUsersFromSala(wraperSala!!.id,object : IGetUsersFromSala{
+                    override fun OnCallBack(lista: List<WrapperUsuarioLobby>) {
+                        Log.d("-----LOBBY ACTIVITY",lista.toString())
+                        var adapter = lista.let { it -> UsuarioAdapter(it) }
+                        binding.recicle.adapter = adapter
+                    }
+                })
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w("ACTIVITY LOBBY", "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+
+        BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).addValueEventListener(postListener)
+        //FIXME: BINDING DE LA FUNCION.
+        //cargarUsuarios()
+
+    }
+
+    private fun cargarUsuarios() {
         BaseDatos!!.getInstance()!!.getUsersFromSala(wraperSala!!.id,object : IGetUsersFromSala{
             override fun OnCallBack(lista: List<WrapperUsuarioLobby>) {
                 Log.d("-----LOBBY ACTIVITY",lista.toString())
                 var adapter = lista.let { it -> UsuarioAdapter(it) }
-                binding.recicle.adapter = adapter
+                binding!!.recicle.adapter = adapter
             }
-
-
         })
-
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
