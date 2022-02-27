@@ -13,6 +13,9 @@ import com.example.snapking.databinding.ActivityPrincipalBinding
 import com.example.snapking.modelo.Jugador
 import com.example.snapking.modelo.Sala
 import com.example.snapking.modelo.WrapperSala
+import com.google.gson.Gson
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class PrincipalActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPrincipalBinding
@@ -21,6 +24,9 @@ class PrincipalActivity : AppCompatActivity() {
     private lateinit var btnPerfil:ImageButton
     private lateinit var user:User
     private lateinit var db:BaseDatos
+    var haysalas=false
+    var WrapperSalaGlobal:WrapperSala?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -66,6 +72,8 @@ class PrincipalActivity : AppCompatActivity() {
 
 
 
+
+
         }
         binding.btnPerfil.setOnClickListener()
         {
@@ -79,6 +87,17 @@ class PrincipalActivity : AppCompatActivity() {
 
 
     }
+
+    private fun crearSala() {
+        var iduser=User.getInstancia()?.printToken().toString()
+        var jugador=Jugador(iduser,false,0)
+        var listaJugadores=ArrayList<Jugador>()
+        listaJugadores.add(jugador)
+
+        var sala=Sala("sala publica",8,iduser,true,null,5,listaJugadores)
+        var id=BaseDatos.getInstance()?.escribirSala(sala)
+    }
+
     private fun machmaking() {
         var wraperSala:WrapperSala?
         wraperSala=null
@@ -86,9 +105,12 @@ class PrincipalActivity : AppCompatActivity() {
 
         BaseDatos.getInstance()?.leerSala(object: ISalasLectura{
             override fun OncallBack(lista: List<WrapperSala>) {
+                haysalas=true
                 Log.d("-----------principal","entro principal")
                     var i=0
                     var bucle=true
+                    var wraperFinal:WrapperSala?
+                    wraperFinal=null
                     while(bucle&&i<lista.size) {
                         var wraperSalaIn=lista[i]
                         if (wraperSalaIn.sala.capacidad > wraperSalaIn.sala.jugadores.size) {
@@ -98,6 +120,7 @@ class PrincipalActivity : AppCompatActivity() {
                             Log.d("-----------pr","entro en el escribiendo")
                             BaseDatos.getInstance()?.meterJugadorSala(wraperSalaIn.id,jugador)
                             bucle=false
+                            WrapperSalaGlobal=wraperSalaIn
                         }
                         i++
                     }
@@ -107,9 +130,19 @@ class PrincipalActivity : AppCompatActivity() {
                         var listaJugadores=ArrayList<Jugador>()
                         listaJugadores.add(jugador)
 
-                        var sala=Sala("sala pblica",8,id,true,null,5,listaJugadores)
-                        BaseDatos.getInstance()?.escribirSala(sala)
+                        var sala=Sala("sala publica",8,id,true,null,5,listaJugadores)
+                        var idsala=BaseDatos.getInstance()?.escribirSala(sala)
+                        WrapperSalaGlobal=WrapperSala(idsala.toString(),sala)
+
                     }
+                if(!haysalas){
+                    crearSala()
+                }
+
+                var intent=Intent(applicationContext,LobbyActivity::class.java)
+                Log.d("----------",WrapperSalaGlobal.toString())
+                intent.putExtra("wrapersala",Gson().toJson(WrapperSalaGlobal) )
+                startActivity(intent)
 
             }
 
