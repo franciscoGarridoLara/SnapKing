@@ -41,6 +41,26 @@ class BaseDatos(){
 
         return user
     }
+    fun elminarJugadorSala(idSala:String,idJugador:String){
+        reference.child("salas").child(idSala)
+            .get().addOnSuccessListener { datasnapshot->
+                var anfitrion=datasnapshot.child("anfitrion").value as String
+
+
+               if(anfitrion.equals(idJugador)){
+                    datasnapshot.ref.removeValue()
+               }else {
+
+
+                   for (jugadorsnap in datasnapshot.child("jugadores").children) {
+                       var idBd = jugadorsnap.child("id").value as String
+                       if (idBd.equals(idJugador)) {
+                          jugadorsnap.ref.removeValue()
+                       }
+                   }
+               }
+        }
+    }
 
     fun escribrSala(sala:WrapperSala){
         Log.d(BaseDatos.TAG,"Escribiendo sala")

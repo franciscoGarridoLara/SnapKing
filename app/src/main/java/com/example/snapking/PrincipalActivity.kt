@@ -77,7 +77,6 @@ class PrincipalActivity : AppCompatActivity() {
         }
 
         binding.btnBattle.setOnClickListener {
-            crearSala()
             machmaking()
 
 
@@ -130,6 +129,7 @@ class PrincipalActivity : AppCompatActivity() {
                     if(bucle){
                         var jugador=Jugador(id,false,0)
                         var listaJugadores=ArrayList<Jugador>()
+                        listaJugadores.add(jugador)
 
 
                         var sala=Sala("sala publica",8,id,true,null,5,listaJugadores)
