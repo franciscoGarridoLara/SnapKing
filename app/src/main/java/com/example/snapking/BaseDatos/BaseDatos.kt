@@ -31,14 +31,15 @@ class BaseDatos(){
 
     }
 
-       fun leerSala(): ArrayList<WrapperSala> {
+       fun leerSala(interfazSala:ISalasLectura): ArrayList<WrapperSala> {
         var listasalas:ArrayList<WrapperSala>
+        Log.d("-----------------fff","entradon")
         listaSalasglobal=ArrayList()
         listasalas=ArrayList()
            var listanueva: ArrayList<WrapperSala>? =null
 
         var datasnapshot = reference.child("salas").get().addOnSuccessListener {
-
+            Log.d("-----------------fff","entradon2")
             for(child in it.children){
 
                 var ronda:Ronda?
@@ -51,7 +52,7 @@ class BaseDatos(){
                 } catch (e: NullPointerException) {
                     ronda=null
                 }
-
+                Log.d("-----------------fff","entradon3")
                 var jugadores=ArrayList<Jugador>()
 
                     for(jugadorsnap in child.child("jugadores").children){
@@ -60,7 +61,7 @@ class BaseDatos(){
                       var j:String?
                           j=jugadorsnap.key
 
-
+                        Log.d("-----------------fff","entradon4")
 
                         if (j != null) {
 
@@ -71,7 +72,7 @@ class BaseDatos(){
 
                     }
 
-
+                Log.d("-----------------fff","entradon5")
                     var sala=Sala(
                         child.child("nombre").value as String,
                         child.child("capacidad").value as Long,
@@ -88,7 +89,7 @@ class BaseDatos(){
                      wrapperSala= WrapperSala(clave,sala)
                 }
 
-
+                Log.d("-----------------fff","entradon6")
                     if(wrapperSala!= null){
                         listasalas.add(wrapperSala)
                         Log.d("------------------mmmmmmm","base de datos size "+listasalas.size.toString())
@@ -97,6 +98,9 @@ class BaseDatos(){
 
                     }
                     listaSalasglobal=listasalas
+                Log.d("-----------------fff","entradon7")
+                    interfazSala.OncallBack(listasalas)
+                Log.d("-----------------fff","entradon8")
 
 
 
@@ -107,7 +111,7 @@ class BaseDatos(){
 
 
         }
-           Thread.sleep(5000)
+
            Log.d("firebase", "--------------------------------"+listasalas.size.toString())
 
 
@@ -137,14 +141,14 @@ class BaseDatos(){
     }
     fun meterJugadorSala(id:String,jugador:Jugador){
 
-        var sala=leerSalabyId(id)
 
 
 
-        if (sala!=null) {
 
-            reference.child("salas").child(id).setValue(sala)
-        }
+
+
+            reference.child("salas").child(id).child("jugadores").push().setValue(jugador)
+
     }
 
     fun getUsersWithNickname(nickname:String) : List<WrapperUsuario>?{

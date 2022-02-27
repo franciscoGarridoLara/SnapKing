@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.ImageButton
 import android.widget.Toast
 import com.example.snapking.BaseDatos.BaseDatos
+import com.example.snapking.BaseDatos.ISalasLectura
 import com.example.snapking.Firebase.User
 import com.example.snapking.databinding.ActivityPrincipalBinding
 import com.example.snapking.modelo.Jugador
@@ -52,12 +53,10 @@ class PrincipalActivity : AppCompatActivity() {
         }
 
         binding.btnBattle.setOnClickListener {
-            var wraperSalaGlobal:WrapperSala?
-            wraperSalaGlobal= machmaking()
 
-            if(wraperSalaGlobal!=null){
-                Toast.makeText(this, "wrapper sala "+wraperSalaGlobal.id.toString(), Toast.LENGTH_SHORT).show()
-            }
+             machmaking()
+
+
 
         }
         binding.btnPerfil.setOnClickListener()
@@ -70,51 +69,42 @@ class PrincipalActivity : AppCompatActivity() {
         BaseDatos.getInstance()!!.escribirUsuario(User.getInstancia()!!.wrapper)
 
     }
-    private fun machmaking(): WrapperSala? {
-        var id= User.getInstancia()?.printToken() as String
-        var jugador=Jugador(id,false,0)
-        var wraperSalaFinal:WrapperSala?
-        wraperSalaFinal=null
-        var salas=BaseDatos.getInstance()!!.leerSala()
-        Toast.makeText(this, "salas obtenidas"+ salas.size.toString(), Toast.LENGTH_SHORT).show()
+    private fun machmaking() {
+        var wraperSala:WrapperSala?
+        wraperSala=null
+        var id=User.getInstancia()?.printToken().toString()
 
-        var bucle=true
-        var i=0
-        while (bucle&&i<salas.size){
-            var wrappersala=salas[i]
-            Toast.makeText(this, "entrado en el bucle", Toast.LENGTH_SHORT).show()
-            if (wrappersala.sala.capacidad<wrappersala.sala.jugadores.size){
+        BaseDatos.getInstance()?.leerSala(object: ISalasLectura{
+            override fun OncallBack(lista: List<WrapperSala>) {
+                Log.d("-----------principal","entro principal")
+                    var i=0
+                    var bucle=true
+                    while(bucle&&i<lista.size) {
+                        var wraperSalaIn=lista[i]
+                        if (wraperSalaIn.sala.capacidad > wraperSalaIn.sala.jugadores.size) {
+                            Log.d("-----------pr","entro en el if")
 
+                            var jugador=Jugador(User.getInstancia()?.printToken().toString(),false,0)
+                            Log.d("-----------pr","entro en el escribiendo")
+                            BaseDatos.getInstance()?.meterJugadorSala(wraperSalaIn.id,jugador)
+                            bucle=false
+                        }
+                        i++
+                    }
+                Log.d("---------bb", bucle.toString())
+                    if(bucle){
+                        var jugador=Jugador(id,false,0)
+                        var listaJugadores=ArrayList<Jugador>()
+                        listaJugadores.add(jugador)
 
+                        var sala=Sala("sala pblica",8,id,true,null,5,listaJugadores)
+                        BaseDatos.getInstance()?.escribirSala(sala)
+                    }
 
-                bucle=false
-
-                BaseDatos.getInstance()?.meterJugadorSala(wrappersala.id,jugador)
-                wraperSalaFinal=wrappersala
-            }
-            i++
-
-        }
-        Toast.makeText(this, "buckke vale "+ bucle.toString(), Toast.LENGTH_SHORT).show()
-        if(bucle){
-            var jugadores=ArrayList<Jugador>()
-            jugadores.add(jugador)
-
-            var sala=Sala(
-                "sala publica",
-                8,
-                User.getInstancia()?.printToken() as String,
-                true,null,5,jugadores
-            )
-            var clave=BaseDatos.getInstance()?.escribirSala(sala)
-            if (clave!=null){
-                wraperSalaFinal=WrapperSala(clave,sala)
             }
 
 
-
-        }
-        return wraperSalaFinal
+        })
 
 
 
