@@ -1,5 +1,6 @@
 package com.example.snapking.Adapters
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,7 +13,7 @@ import com.example.snapking.modelo.WrapperUsuario
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
 
-class AmigoAdapter(val usuarios:List<WrapperUsuario>) : RecyclerView.Adapter<AmigoAdapter.ViewHolder>() {
+class AmigoAdapter(val context: Context,val usuarios:List<WrapperUsuario>) : RecyclerView.Adapter<AmigoAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view=UsuarioCardAddBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -42,6 +43,7 @@ class AmigoAdapter(val usuarios:List<WrapperUsuario>) : RecyclerView.Adapter<Ami
             binding.btnAdd.setOnClickListener()
             {
                 BaseDatos.getInstance()!!.agregarUsuario(usuario.id)
+
             }
         }
     }

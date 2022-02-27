@@ -29,8 +29,9 @@ class AmigosActivity : AppCompatActivity() {
         setContentView(R.layout.activity_amigos)
 
         inicializarInterfaz()
-        setListeners()
         cargarAmigos()
+        setListeners()
+
     }
 
     private fun inicializarInterfaz() {
@@ -46,7 +47,7 @@ class AmigosActivity : AppCompatActivity() {
             {
                 var adapter =
                     BaseDatos.getInstance()!!.getUsersWithNickname(etBusqueda.text.toString())
-                        ?.let { it1 -> AmigoAdapter(it1) }
+                        ?.let { it1 -> AmigoAdapter(this,it1) }
 
                 rvAmigos.adapter = adapter
 
@@ -55,6 +56,14 @@ class AmigosActivity : AppCompatActivity() {
                 Toast.makeText(this,"El campo no puede ser nulo",Toast.LENGTH_SHORT).show()
             }
         }
+
+        listenerAmigos()
+    }
+
+    private fun listenerAmigos(){
+
+
+
     }
 
 

@@ -106,4 +106,10 @@ dependencies {
     // ADD THIS AT THE BOTTOM
     apply plugin: 'com.google.gms.google-services'
 
+    // Dependency FirebaseUI for Firebase Realtime Database
+    implementation 'com.firebaseui:firebase-ui-database:6.2.1'
+
+    // Dependency for Firebase REaltime Database
+    implementation 'com.google.firebase:firebase-database:19.3.1'
+
 }
