@@ -2,14 +2,17 @@ package com.example.snapking
 
 import android.Manifest
 import android.content.ContentValues
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -42,7 +45,7 @@ class TematicaActivity : AppCompatActivity() {
     private var imageCapture: ImageCapture? = null
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var fragmentTransaction: FragmentTransaction
-    private var wraperSala: WrapperSala?=null
+    private var wraperSala:WrapperSala?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +66,37 @@ class TematicaActivity : AppCompatActivity() {
 
 
     }
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (event != null) {
+            if(keyCode==event.keyCode)
+            {
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Salir de la sala")
+                builder.setMessage("¿Quieres salir de la sala?")
+                //builder.setPositiveButton("OK", DialogInterface.OnClickListener(function = x))
+
+                builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+                    Toast.makeText(applicationContext,
+                        android.R.string.yes, Toast.LENGTH_SHORT).show()
+                    //llamar a base de datos para eliminar la sala.
+                    BaseDatos.getInstance()?.elminarJugadorSala(wraperSala!!.id, User.getInstancia()!!.printToken())
+
+                    startActivity(Intent(this,PrincipalActivity::class.java))
+                    finish()
+                }
+
+                builder.setNegativeButton(android.R.string.no) { dialog, which ->
+                    Toast.makeText(applicationContext,
+                        android.R.string.no, Toast.LENGTH_SHORT).show()
+                }
+
+                builder.show()
+
+            }
+
+        }
+        return super.onKeyDown(keyCode, event)
+    }
 
     private fun crearRonda() {
         if(wraperSala!!.sala?.anfitrion.equals(User.getInstancia()!!.printToken())) {
@@ -70,6 +104,9 @@ class TematicaActivity : AppCompatActivity() {
             BaseDatos.getInstance()!!.crearRonda(wraperSala!!.id, object : IGetRonda{
                 override fun OnCallBack(ronda: Ronda) {
                     Log.d(TAG, ronda.toString())
+
+
+
                 }
 
             })

@@ -1,5 +1,6 @@
 package com.example.snapking
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -36,10 +37,13 @@ class LobbyActivity : AppCompatActivity() {
     var wraperSala:WrapperSala?=null
     var binding : ActivityLobbyBinding? = null
     var ready=true
+    var chequearStart=true
+    var activityActual:Activity?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityLobbyBinding.inflate(layoutInflater)
+        activityActual=activ
 
         setContentView(binding!!.root)
 
@@ -78,7 +82,7 @@ class LobbyActivity : AppCompatActivity() {
                         var adapter = lista.let { it -> UsuarioAdapter(it) }
                         binding!!.recicle.adapter = adapter
 
-                        if(wraperSala!!.sala?.anfitrion.equals(User.getInstancia()!!.printToken())){
+                        if(chequearStart&&wraperSala!!.sala?.anfitrion.equals(User.getInstancia()!!.printToken())){
                             var votos=lista.count {
                                 it.estado==true
                             }
@@ -89,6 +93,8 @@ class LobbyActivity : AppCompatActivity() {
                                 var intent=Intent(applicationContext,TematicaActivity::class.java)
                                 intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
                                 startActivity(intent)
+                                chequearStart=false
+                                finish()
                             }
                         }else{
                             BaseDatos.getInstance()?.comprobarPartida(wraperSala!!.id,object:IComprobarStart{
@@ -97,6 +103,7 @@ class LobbyActivity : AppCompatActivity() {
                                         var intent=Intent(applicationContext,TematicaActivity::class.java)
                                         intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
                                         startActivity(intent)
+                                        activity.finish()
                                     }
                                 }
 
@@ -140,6 +147,7 @@ class LobbyActivity : AppCompatActivity() {
                 builder.setPositiveButton(android.R.string.yes) { dialog, which ->
                     Toast.makeText(applicationContext,
                         android.R.string.yes, Toast.LENGTH_SHORT).show()
+                    chequearStart=false
                     //llamar a base de datos para eliminar la sala.
                     BaseDatos.getInstance()?.elminarJugadorSala(wraperSala!!.id, User.getInstancia()!!.printToken())
 
