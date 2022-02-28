@@ -53,7 +53,7 @@ class LobbyActivity : AppCompatActivity() {
         cargarUsuarios()
 
     }
-
+//paco
     private fun setListeners() {
         binding!!.btnReady.setOnClickListener(){
             Log.d("ACTIVITY LOBBY", "PULSANDO EL BOTON DE READY!")
