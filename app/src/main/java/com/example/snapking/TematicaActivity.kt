@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.snapking.BaseDatos.BaseDatos
 import com.example.snapking.BaseDatos.IGetRonda
+import com.example.snapking.BaseDatos.IGetSegundos
 import com.example.snapking.Firebase.User
 import com.example.snapking.databinding.ActivityTematicaBinding
 import com.example.snapking.databinding.FragmentImageBinding
@@ -87,8 +88,11 @@ class TematicaActivity : AppCompatActivity() {
                 override fun onTick(millisUntilFinished: Long) {
                     Log.d("TEMATICA ACTIVITY","segundos restantes:" + millisUntilFinished / 1000)
 
-                    var segundos = (millisUntilFinished/1000).toString()
-                    viewBinding.tvTiempo.setText(segundos)
+                    var segundos = (millisUntilFinished/1000).toInt()
+
+                    BaseDatos.getInstance()!!.actualizarTiempo(wraperSala!!.id,segundos)
+
+                    viewBinding.tvTiempo.setText(segundos.toString())
                 }
 
                 override fun onFinish() {
@@ -96,6 +100,21 @@ class TematicaActivity : AppCompatActivity() {
                     viewBinding.tvTiempo.setText("TIEMPO!")
                 }
             }.start()
+        }else
+        {
+            BaseDatos.getInstance()!!.getSegundos(wraperSala!!.id, object : IGetSegundos{
+                override fun OnCallBack(segundos: Int) {
+                    Log.d("TEMATICA ACTIVITY", "Segundos desde el servidor.")
+                    if(segundos > 0){
+                        viewBinding.tvTiempo.setText(segundos.toString())
+                    }else{
+                        viewBinding.tvTiempo.setText("TIEMPO!")
+                    }
+
+                }
+
+
+            })
         }
     }
     /*

@@ -477,6 +477,19 @@ class BaseDatos(){
 
     }
 
+    fun actualizarTiempo(idSala : String, segundos : Int){
+        reference.child("salas").child(idSala).child("ronda").child("tiempo").setValue(segundos)
+    }
+
+    fun getSegundos(idSala : String, iGetSegundos: IGetSegundos){
+
+        reference.child("salas").child(idSala).child("ronda").get().addOnSuccessListener {
+            var segundos = it.child("tiempo").value as Int
+            iGetSegundos.OnCallBack(segundos)
+        }
+
+    }
+
     fun subirfoto(fileURL: String,idSala: String,idUser:String) {
 
 
