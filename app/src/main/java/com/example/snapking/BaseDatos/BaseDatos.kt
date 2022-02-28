@@ -1,5 +1,6 @@
 package com.example.snapking.BaseDatos
 
+import android.nfc.Tag
 import android.text.BoringLayout
 import android.util.Log
 import com.example.snapking.Firebase.User
@@ -43,6 +44,9 @@ class BaseDatos(){
 
         return user
     }
+
+
+
     fun elminarJugadorSala(idSala:String,idJugador:String){
         reference.child("salas").child(idSala)
             .get().addOnSuccessListener { datasnapshot->
@@ -257,7 +261,40 @@ class BaseDatos(){
 
     }
 
-    fun setUserReadySala(idSala:String, idJugador:String){
+    fun getJugadoresFromSala(idSala:String,iGetJugadoresFromSala: IGetJugadoresFromSala){
+        reference.child("salas").child(idSala).child("jugadores").get().addOnSuccessListener {datasnap->
+
+            var jugadores=ArrayList<Jugador>()
+            for(jugadorsnap in datasnap.children ){
+                var jugador: Jugador? =jugadorsnap.getValue<Jugador>()
+
+                if (jugador != null) {
+                    jugadores.add(jugador)
+                }
+            }
+            iGetJugadoresFromSala.OnCallback(jugadores)
+
+
+
+        }
+    }
+
+    fun empezarPartida(idSala:String){
+        reference.child("salas").child(idSala).child("start").setValue(true)
+    }
+    fun comprobarPartida(idSala:String,iComprobarStart: IComprobarStart){
+        reference.child("salas").child(idSala).child("start").get().addOnSuccessListener {
+            var ready=false
+              try {
+            ready=it.value as Boolean
+        } catch (e: NullPointerException) {
+
+        }
+            iComprobarStart.OncallBack(ready)
+        }
+    }
+
+    fun setUserReadySala(idSala:String, idJugador:String,ready:Boolean){
         reference.child("salas").child(idSala).child("jugadores").get().addOnSuccessListener {
 
             for(user in it.children)
@@ -265,7 +302,7 @@ class BaseDatos(){
                 var userId = user.child("id").value as String
                 if(userId.equals(idJugador))
                 {
-                    user.child("ready").ref.setValue(true)
+                    user.child("ready").ref.setValue(ready)
                     break
                 }
             }

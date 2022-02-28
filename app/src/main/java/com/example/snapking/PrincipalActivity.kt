@@ -87,6 +87,7 @@ class PrincipalActivity : AppCompatActivity() {
         {
             startActivity(Intent(this,AmigosActivity::class.java))
             //finish()
+
         }
     }
 

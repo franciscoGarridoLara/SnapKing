@@ -22,6 +22,8 @@ import android.preference.PreferenceManager
 import androidx.core.content.ContextCompat
 import com.example.snapking.Adapters.UsuarioAdapter
 import com.example.snapking.BaseDatos.BaseDatos
+import com.example.snapking.BaseDatos.IComprobarStart
+import com.example.snapking.BaseDatos.IGetJugadoresFromSala
 import com.example.snapking.BaseDatos.IGetUsersFromSala
 import com.example.snapking.Firebase.User
 import com.example.snapking.Wrapper.WrapperUsuarioLobby
@@ -36,6 +38,7 @@ import com.google.firebase.database.ktx.getValue
 class LobbyActivity : AppCompatActivity() {
     var wraperSala:WrapperSala?=null
     var binding : ActivityLobbyBinding? = null
+    var ready=false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +61,9 @@ class LobbyActivity : AppCompatActivity() {
         binding!!.btnReady.setOnClickListener(){
             Log.d("ACTIVITY LOBBY", "PULSANDO EL BOTON DE READY!")
             //escribir en la base de datos el ready
-            BaseDatos.getInstance()!!.setUserReadySala(wraperSala!!.id, User.getInstancia()!!.printToken())
+
+            BaseDatos.getInstance()!!.setUserReadySala(wraperSala!!.id, User.getInstancia()!!.printToken(),ready)
+            ready=!ready
         }
     }
 
@@ -70,7 +75,40 @@ class LobbyActivity : AppCompatActivity() {
                         Log.d("-----LOBBY ACTIVITY",lista.toString())
                         var adapter = lista.let { it -> UsuarioAdapter(it) }
                         binding!!.recicle.adapter = adapter
+
+                        if(wraperSala!!.sala?.anfitrion.equals(User.getInstancia()!!.printToken())){
+                            var votos=lista.count {
+                                it.estado==true
+                            }
+                            if(votos==lista.size){
+                                BaseDatos.getInstance()?.empezarPartida(wraperSala!!.id)
+                                var intent=Intent(applicationContext,TematicaActivity::class.java)
+                                intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
+                                startActivity(intent)
+                            }
+                        }else{
+                            BaseDatos.getInstance()?.comprobarPartida(wraperSala!!.id,object:IComprobarStart{
+                                override fun OncallBack(ready: Boolean) {
+                                    if(ready){
+                                        var intent=Intent(applicationContext,TematicaActivity::class.java)
+                                        intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
+                                        startActivity(intent)
+                                    }
+                                }
+
+
+                            })
+                        }
+
                     }
+                })
+
+                BaseDatos.getInstance()?.getJugadoresFromSala(wraperSala!!.id,object:
+                    IGetJugadoresFromSala {
+                    override fun OnCallback(lista: ArrayList<Jugador>) {
+                        wraperSala!!.sala.jugadores=lista
+                    }
+
                 })
             }
 
@@ -79,6 +117,9 @@ class LobbyActivity : AppCompatActivity() {
                 Log.w("ACTIVITY LOBBY", "loadPost:onCancelled", databaseError.toException())
             }
         }
+
+
+
 
         BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).addValueEventListener(postListener)
     }
