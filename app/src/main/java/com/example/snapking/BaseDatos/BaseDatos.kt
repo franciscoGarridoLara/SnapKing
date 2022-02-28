@@ -32,6 +32,7 @@ class BaseDatos(){
         var usuarios = reference.child("usuarios").get().addOnSuccessListener {
             for (usuario in it.children)
             {
+
                 if(usuario.key.equals(id))
                 {
                     Log.d(TAG,"Existe el usuario por lo que llamamos a la funcion de reconstruir.")
@@ -43,6 +44,28 @@ class BaseDatos(){
         }
 
         return user
+    }
+
+    fun getUsers(listaIds:ArrayList<String>, iGetUsuarios: IGetUsuarios){
+
+        var users = ArrayList<Usuario>()
+        var user : Usuario
+
+        var usuarios = reference.child("usuarios").get().addOnSuccessListener {
+            for (usuario in it.children)
+            {
+                if(listaIds.contains(usuario.key.toString()))
+                {
+                    Log.d(TAG,"Existe el usuario por lo que llamamos a la funcion de reconstruir.")
+                    user = User.getInstancia()!!.reconstruirUsuario(usuario)
+                    users.add(user)
+                }
+
+            }
+            iGetUsuarios.OnCallBack(users)
+        }
+
+
     }
 
 
@@ -233,9 +256,11 @@ class BaseDatos(){
         return usuarios
     }
 
+    /*
     fun getUsersFromSala(idSala:String, iGetUsersFromSala: IGetUsersFromSala){
         var usuarios : ArrayList<WrapperUsuarioLobby>?
         usuarios = ArrayList<WrapperUsuarioLobby>()
+        var listaIds:ArrayList<String>
         var sala : WrapperSala
 
         reference.child("salas").child(idSala).child("jugadores").get().addOnSuccessListener {
@@ -245,19 +270,66 @@ class BaseDatos(){
                 var estado = user.child("ready").value as Boolean
                 Log.d(TAG,idUser + ":" + estado.toString())
 
-                var userConstruido = getUser(idUser,object : IGetUser{
+                getUser(idUser,object : IGetUser{
                     override fun OnCallBack(user: Usuario) {
                         usuarios.add(WrapperUsuarioLobby(user!!,estado))
                         Log.d(TAG, "USER: -> " + user.toString())
-                        Log.d(TAG,usuarios.toString())
-                        iGetUsersFromSala.OnCallBack(usuarios)
                     }
                 })
+            }
+
+        }.addOnCompleteListener {
+            Log.d(TAG,usuarios.toString())
+            iGetUsersFromSala.OnCallBack(usuarios)
+        }
+
+
+
+
+    }
+
+
+     */
+
+    fun getUsersFromSala(idSala:String, iGetUsersFromSala: IGetUsersFromSala){
+        var wrapperUsuarios : ArrayList<WrapperUsuarioLobby> = ArrayList()
+        var users : ArrayList<Usuario>
+
+        var listaIds:ArrayList<String> = ArrayList()
+        var listaEstados:ArrayList<Boolean> = ArrayList()
+        var sala : WrapperSala
+
+        reference.child("salas").child(idSala).child("jugadores").get().addOnSuccessListener {
+
+            for(jugador in it.children)
+            {
+                var idUser = jugador.child("id").value as String
+                var estadoUser = jugador.child("ready").value as Boolean
+
+                listaIds.add(idUser)
+                listaEstados.add(estadoUser)
 
             }
 
-        }
+            getUsers(listaIds, object: IGetUsuarios{
+                override fun OnCallBack(usuarios: ArrayList<Usuario>) {
 
+                    var i=0
+                       while(i<usuarios.size) {
+                           var usuario=usuarios[i]
+                           var estado=listaEstados[i]
+                           var wrapper : WrapperUsuarioLobby = WrapperUsuarioLobby(usuario,estado)
+                           wrapperUsuarios.add(wrapper)
+                           i++
+                       }
+                    iGetUsersFromSala.OnCallBack(wrapperUsuarios)
+                }
+
+            })
+
+
+
+        }
 
     }
 

@@ -62,7 +62,7 @@ class LobbyActivity : AppCompatActivity() {
             Log.d("ACTIVITY LOBBY", "PULSANDO EL BOTON DE READY!")
             //escribir en la base de datos el ready
 
-            BaseDatos.getInstance()!!.setUserReadySala(wraperSala!!.id, User.getInstancia()!!.printToken(),ready)
+            BaseDatos.getInstance()!!.setUserReadySala(wraperSala!!.id, User.getInstancia()!!.printToken(),true)
             ready=!ready
         }
     }
@@ -71,7 +71,7 @@ class LobbyActivity : AppCompatActivity() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 BaseDatos!!.getInstance()!!.getUsersFromSala(wraperSala!!.id,object : IGetUsersFromSala{
-                    override fun OnCallBack(lista: List<WrapperUsuarioLobby>) {
+                    override fun OnCallBack(lista: ArrayList<WrapperUsuarioLobby>) {
                         Log.d("-----LOBBY ACTIVITY",lista.toString())
                         var adapter = lista.let { it -> UsuarioAdapter(it) }
                         binding!!.recicle.adapter = adapter
@@ -80,6 +80,8 @@ class LobbyActivity : AppCompatActivity() {
                             var votos=lista.count {
                                 it.estado==true
                             }
+                            Log.d("------LOBBY ACITVITY", "Numero ready: " + votos.toString())
+                            Log.d("--------LOBBY ACITVITY", "lista size: " + lista.size.toString())
                             if(votos==lista.size){
                                 BaseDatos.getInstance()?.empezarPartida(wraperSala!!.id)
                                 var intent=Intent(applicationContext,TematicaActivity::class.java)
