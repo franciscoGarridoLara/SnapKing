@@ -21,10 +21,7 @@ import android.os.Handler
 import android.preference.PreferenceManager
 import androidx.core.content.ContextCompat
 import com.example.snapking.Adapters.UsuarioAdapter
-import com.example.snapking.BaseDatos.BaseDatos
-import com.example.snapking.BaseDatos.IComprobarStart
-import com.example.snapking.BaseDatos.IGetJugadoresFromSala
-import com.example.snapking.BaseDatos.IGetUsersFromSala
+import com.example.snapking.BaseDatos.*
 import com.example.snapking.Firebase.User
 import com.example.snapking.Wrapper.WrapperUsuarioLobby
 import com.example.snapking.modelo.Jugador
@@ -38,7 +35,7 @@ import com.google.firebase.database.ktx.getValue
 class LobbyActivity : AppCompatActivity() {
     var wraperSala:WrapperSala?=null
     var binding : ActivityLobbyBinding? = null
-    var ready=false
+    var ready=true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,8 +59,13 @@ class LobbyActivity : AppCompatActivity() {
             Log.d("ACTIVITY LOBBY", "PULSANDO EL BOTON DE READY!")
             //escribir en la base de datos el ready
 
-            BaseDatos.getInstance()!!.setUserReadySala(wraperSala!!.id, User.getInstancia()!!.printToken(),ready)
-            ready=!ready
+            BaseDatos.getInstance()!!.setUserReadySala(wraperSala!!.id, User.getInstancia()!!.printToken(),ready,object:IReady{
+                override fun OnCallback() {
+                    ready=!ready
+                }
+
+            })
+
         }
     }
 
@@ -80,6 +82,8 @@ class LobbyActivity : AppCompatActivity() {
                             var votos=lista.count {
                                 it.estado==true
                             }
+                            Log.d("----------activitylo",votos.toString())
+                            Log.d("----------activitylo lista",lista.size.toString())
                             if(votos==lista.size){
                                 BaseDatos.getInstance()?.empezarPartida(wraperSala!!.id)
                                 var intent=Intent(applicationContext,TematicaActivity::class.java)
