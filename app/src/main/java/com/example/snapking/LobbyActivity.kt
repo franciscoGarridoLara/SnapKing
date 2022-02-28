@@ -43,7 +43,7 @@ class LobbyActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityLobbyBinding.inflate(layoutInflater)
-        activityActual=activ
+        activityActual= this
 
         setContentView(binding!!.root)
 
@@ -103,7 +103,7 @@ class LobbyActivity : AppCompatActivity() {
                                         var intent=Intent(applicationContext,TematicaActivity::class.java)
                                         intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
                                         startActivity(intent)
-                                        activity.finish()
+                                        activityActual!!.finish()
                                     }
                                 }
 
@@ -152,7 +152,7 @@ class LobbyActivity : AppCompatActivity() {
                     BaseDatos.getInstance()?.elminarJugadorSala(wraperSala!!.id, User.getInstancia()!!.printToken())
 
                     startActivity(Intent(this,PrincipalActivity::class.java))
-                    finish()
+                    activityActual!!.finish()
                 }
 
                 builder.setNegativeButton(android.R.string.no) { dialog, which ->
