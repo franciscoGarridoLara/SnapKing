@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +34,7 @@ import com.example.snapking.modelo.Ronda
 import com.example.snapking.modelo.WrapperSala
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.squareup.picasso.Picasso
 import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.*
@@ -79,19 +81,22 @@ class TematicaActivity : AppCompatActivity() {
     }
 
     private fun inciarCountDown() {
-        object : CountDownTimer(60000, 1000) {
+        if (wraperSala!!.sala.anfitrion.equals(User.getInstancia()!!.printToken().toString())) {
+            object : CountDownTimer(60000, 1000) {
 
-            override fun onTick(millisUntilFinished: Long) {
-                Log.d("TEMATICA ACTIVITY","segundos restantes:" + millisUntilFinished / 1000)
-                var segundos = (millisUntilFinished/1000).toString()
-                viewBinding.tvTiempo.setText(segundos)
-            }
+                override fun onTick(millisUntilFinished: Long) {
+                    Log.d("TEMATICA ACTIVITY","segundos restantes:" + millisUntilFinished / 1000)
 
-            override fun onFinish() {
-                Log.d("TEMATICA ACTIVITY", "CountDown finalizado!")
-                viewBinding.tvTiempo.setText("TIEMPO!")
-            }
-        }.start()
+                    var segundos = (millisUntilFinished/1000).toString()
+                    viewBinding.tvTiempo.setText(segundos)
+                }
+
+                override fun onFinish() {
+                    Log.d("TEMATICA ACTIVITY", "CountDown finalizado!")
+                    viewBinding.tvTiempo.setText("TIEMPO!")
+                }
+            }.start()
+        }
     }
     /*
     /*override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -293,10 +298,15 @@ class TematicaActivity : AppCompatActivity() {
 
         fragment = ImageFragment()
 
+
+
+
         fragmentTransaction= supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.cameraLayout,fragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
+
+
 
 
         Thread.sleep(500)
