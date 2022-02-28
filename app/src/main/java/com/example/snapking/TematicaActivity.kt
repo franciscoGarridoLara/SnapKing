@@ -223,7 +223,7 @@ class TematicaActivity : AppCompatActivity() {
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
 
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/SnapKingPhotos")
+               Log.d("-------------dsd", put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/SnapKingPhotos").toString())
             }
         }
 

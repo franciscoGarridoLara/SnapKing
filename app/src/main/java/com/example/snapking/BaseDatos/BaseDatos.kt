@@ -123,11 +123,15 @@ class BaseDatos(){
                     for(foto in child.child("ronda").child("fotos").children){
                         fotos.add(Foto(foto.key.toString(),foto.value.toString()))
                     }
+                    var numero=  child.child("ronda").child("numero").value as Long
+                    var tiempo=child.child("ronda").child("tiempo").value as Long
+                    tiempo.toInt()
                     ronda=Ronda(
-                        child.child("ronda").child("numero").value as Int,
-                        child.child("ronda").child("id_tematica") as String,
+                      numero.toInt(),
+                        child.child("ronda").child("id_tematica").value as String,
                         fotos,
-                        child.child("ronda").child("tiempo") as Int
+                        tiempo.toInt()
+
                     )
                 } catch (e: NullPointerException) {
                     ronda=null
@@ -501,6 +505,11 @@ class BaseDatos(){
 
         reference.child("salas").child(idSala).child("ronda").child("fotos").
                 child(idUser).setValue(url)
+
+    }
+
+    fun elminarSala(id: String) {
+        reference.child("salas").child(id).removeValue()
 
     }
 
