@@ -1,17 +1,23 @@
 package com.example.snapking.BaseDatos
 
+import android.net.Uri
 import android.nfc.Tag
+import android.os.Debug
 import android.text.BoringLayout
 import android.util.Log
 import com.example.snapking.Firebase.User
 import com.example.snapking.Wrapper.WrapperUsuarioLobby
 import com.example.snapking.modelo.*
+import com.google.android.gms.auth.api.signin.internal.Storage
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
+import java.io.File
 
 import java.sql.Wrapper
 import kotlin.random.Random
@@ -21,6 +27,7 @@ class BaseDatos(){
 
     var database: FirebaseDatabase = Firebase.database
     val reference = database.reference
+    val storageReference=Firebase.storage.reference
     lateinit var listaSalasglobal:ArrayList<WrapperSala>
 
 
@@ -463,6 +470,37 @@ class BaseDatos(){
         })
 
 
+
+    }
+
+    fun subirfoto(fileURL: String,idSala: String,idUser:String) {
+
+
+        var file = Uri.fromFile(File(fileURL))
+        val riversRef = storageReference.child("fotos/${idSala}/${file}")
+        var uploadTask = riversRef.putFile(file)
+
+// Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnFailureListener {
+            // Handle unsuccessful uploads
+            Log.d(TAG,"foto no subida")
+        }.addOnSuccessListener { taskSnapshot ->
+            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+            // ...
+            Log.d(TAG,"foto subida")
+            val downloadUri:String = uploadTask.result.toString()
+            Log.d(TAG,"URL FICHERO "+downloadUri)
+
+            escribirBDFoto(idSala,idUser,downloadUri)
+
+        }
+
+    }
+
+    private fun escribirBDFoto(idSala:String,idUser:String,url:String){
+
+        reference.child("salas").child(idSala).child("ronda").child("fotos").
+                child(idUser).setValue(url)
 
     }
 

@@ -47,6 +47,7 @@ class TematicaActivity : AppCompatActivity() {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var fragmentTransaction: FragmentTransaction
     private var wraperSala:WrapperSala?=null
+    var fotoLocal:String?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,7 +94,7 @@ class TematicaActivity : AppCompatActivity() {
         }.start()
     }
     /*
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+    /*override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (event != null) {
             if(keyCode==event.keyCode)
             {
@@ -106,7 +107,10 @@ class TematicaActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext,
                         android.R.string.yes, Toast.LENGTH_SHORT).show()
                     //llamar a base de datos para eliminar la sala.
-                    BaseDatos.getInstance()?.elminarJugadorSala(wraperSala!!.id, User.getInstancia()!!.printToken())
+                    try {
+                        BaseDatos.getInstance()?.elminarJugadorSala(wraperSala!!.id, User.getInstancia()!!.printToken())
+                    } catch (e: NullPointerException) {
+                    }
 
                     startActivity(Intent(this,PrincipalActivity::class.java))
                     finish()
@@ -123,7 +127,7 @@ class TematicaActivity : AppCompatActivity() {
 
         }
         return super.onKeyDown(keyCode, event)
-    }
+    }*/
     */
 
 
@@ -178,6 +182,7 @@ class TematicaActivity : AppCompatActivity() {
             viewBinding.btnPhoto.visibility= View.VISIBLE
             viewBinding.btnAcept.visibility = View.INVISIBLE
             viewBinding.btnBack.visibility = View.INVISIBLE
+            BaseDatos.getInstance()?.subirfoto(fotoLocal!!,wraperSala!!.id,User.getInstancia()!!.printToken())
         }
 
 
@@ -238,7 +243,9 @@ class TematicaActivity : AppCompatActivity() {
                         onImageSaved(output: ImageCapture.OutputFileResults){
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                    fotoLocal= output.savedUri.toString()
                     Log.d(TAG, msg)
+
                 }
             }
         )
