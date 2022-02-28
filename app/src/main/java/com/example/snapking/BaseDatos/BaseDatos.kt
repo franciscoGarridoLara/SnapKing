@@ -14,6 +14,7 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 
 import java.sql.Wrapper
+import kotlin.random.Random
 
 
 class BaseDatos(){
@@ -400,6 +401,61 @@ class BaseDatos(){
 
     fun actualizarUsuario(usuario : WrapperUsuario){
         reference.child("usuarios").child(usuario.id).setValue(usuario.usuario)
+    }
+
+
+    fun getTematicaRandom(iGetTematica : IGetTematica){
+
+        var tematicas = reference.child("tematicas").get().addOnSuccessListener {
+            var listaTematicas : ArrayList<Tematica> = ArrayList()
+
+            for(categoria in it.children){
+                var cat = categoria.key as String
+                for(tematica in categoria.children){
+                    var tematicaId = tematica.key as String
+                    var tematicaNombre = tematica.value as String
+                    listaTematicas.add(Tematica(tematicaId,cat,tematicaNombre))
+                }
+            }
+
+            var random = Random.nextInt(0, listaTematicas.size - 1 )
+
+            var tematicaElegida = listaTematicas[random]
+
+            iGetTematica.OnCallBack(tematicaElegida)
+        }
+
+    }
+
+    fun crearRonda(idSala: String, iGetRonda : IGetRonda){
+
+        getTematicaRandom(object : IGetTematica{
+            override fun OnCallBack(tematica: Tematica) {
+
+                var sala = reference.child("salas").child(idSala).child("ronda").get().addOnSuccessListener {
+                    Log.d(TAG,"Success Listener!")
+                    var con = 0
+                    for(sala in it.children){
+                        con++
+                    }
+                    if(con > 0){
+                        iGetRonda.OnCallBack(Ronda(10,tematica.id))
+                    }else
+                    {
+                        iGetRonda.OnCallBack(Ronda(1,tematica.id))
+                    }
+
+                }.addOnFailureListener {
+                    Log.d(TAG,"Failure Listener")
+                    iGetRonda.OnCallBack(Ronda(1,tematica.id))
+                }
+
+            }
+
+        })
+
+
+
     }
 
     /*

@@ -20,8 +20,16 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.example.snapking.BaseDatos.BaseDatos
+import com.example.snapking.BaseDatos.IGetRonda
+import com.example.snapking.Firebase.User
 import com.example.snapking.databinding.ActivityTematicaBinding
 import com.example.snapking.databinding.FragmentImageBinding
+import com.example.snapking.modelo.Ronda
+import com.example.snapking.modelo.WrapperSala
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -34,6 +42,7 @@ class TematicaActivity : AppCompatActivity() {
     private var imageCapture: ImageCapture? = null
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var fragmentTransaction: FragmentTransaction
+    private var wraperSala: WrapperSala?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,46 +51,79 @@ class TematicaActivity : AppCompatActivity() {
         viewBinding = ActivityTematicaBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        var btnBack:Button = viewBinding.btnBack
-        var btnAcept:Button = viewBinding.btnSi
-        var btnPhoto:Button = viewBinding.btnPhoto
+
+        cogerWrapperSala()
+        crearRonda()
+        pedirPermisos()
+        setListeners()
+        inicializarInterfaz()
+
+
+        cameraExecutor = Executors.newSingleThreadExecutor()
+
+
+    }
+
+    private fun crearRonda() {
+        if(wraperSala!!.sala?.anfitrion.equals(User.getInstancia()!!.printToken())) {
+            //Si el usuario es anfitrion entonces crea una ronda y la inserta en la base de datos.
+            BaseDatos.getInstance()!!.crearRonda(wraperSala!!.id, object : IGetRonda{
+                override fun OnCallBack(ronda: Ronda) {
+                    Log.d(TAG, ronda.toString())
+                }
+
+            })
+
+
+        }
+
+    }
+
+    private fun cogerWrapperSala(){
+        val intent = intent
+        val type: Type = object : TypeToken<WrapperSala>() {}.type
+        wraperSala= Gson().fromJson<WrapperSala>(intent.getStringExtra("wrapersala"),type)
+    }
+
+
+    private fun inicializarInterfaz() {
+        viewBinding.btnBack.visibility = View.INVISIBLE
+        viewBinding.btnAcept.visibility = View.INVISIBLE
+    }
+
+    private fun setListeners() {
+        viewBinding.btnPhoto.setOnClickListener {
+            takePhoto()
+            switchFragment()
+            viewBinding.btnBack.visibility = View.VISIBLE
+            viewBinding.btnPhoto.visibility = View.INVISIBLE
+            viewBinding.btnAcept.visibility = View.VISIBLE
+        }
 
 
 
+        viewBinding.btnBack.setOnClickListener {
+            onBackPressed()
+            viewBinding.btnBack.visibility = View.INVISIBLE
+            viewBinding.btnPhoto.visibility= View.VISIBLE
+            viewBinding.btnAcept.visibility = View.INVISIBLE}
 
+        viewBinding.btnAcept.setOnClickListener {
+            viewBinding.btnPhoto.visibility= View.VISIBLE
+            viewBinding.btnAcept.visibility = View.INVISIBLE
+            viewBinding.btnBack.visibility = View.INVISIBLE
+        }
+
+
+    }
+
+    private fun pedirPermisos() {
         if (allPermissionsGranted()) {
             startCamera()
         } else {
             ActivityCompat.requestPermissions(
                 this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
-
-        btnBack.visibility = View.INVISIBLE
-        btnAcept.visibility = View.INVISIBLE
-
-        btnPhoto.setOnClickListener {
-            takePhoto()
-            switchFragment()
-            btnBack.visibility = View.VISIBLE
-            btnPhoto.visibility = View.INVISIBLE
-            btnAcept.visibility = View.VISIBLE
-        }
-
-
-
-        btnBack.setOnClickListener {
-            onBackPressed()
-            btnBack.visibility = View.INVISIBLE
-            btnPhoto.visibility= View.VISIBLE
-            btnAcept.visibility = View.INVISIBLE}
-
-        btnAcept.setOnClickListener {
-            btnPhoto.visibility= View.VISIBLE
-            btnAcept.visibility = View.INVISIBLE
-            btnBack.visibility = View.INVISIBLE
-        }
-
-        cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
 
