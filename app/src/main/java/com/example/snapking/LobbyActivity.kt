@@ -64,17 +64,17 @@ class LobbyActivity : AppCompatActivity() {
 
     }
 
-    override fun onDestroy() {
-
-        if(wraperSala?.sala?.anfitrion.equals(User.getInstancia()?.printToken())){
-            BaseDatos.getInstance()?.elminarSala(wraperSala!!.id )
-
-        }else{
-            BaseDatos.getInstance()?.elminarJugadorSala(wraperSala!!.id, User.getInstancia()!!.printToken())
-        }
-
-        super.onDestroy()
-    }
+//    override fun onDestroy() {
+//
+//        if(wraperSala?.sala?.anfitrion.equals(User.getInstancia()?.printToken())){
+//            BaseDatos.getInstance()?.elminarSala(wraperSala!!.id )
+//
+//        }else{
+//            BaseDatos.getInstance()?.elminarJugadorSala(wraperSala!!.id, User.getInstancia()!!.printToken())
+//        }
+//
+//        super.onDestroy()
+//    }
 //paco
     private fun setListeners() {
         binding!!.btnReady.setOnClickListener(){

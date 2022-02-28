@@ -34,6 +34,7 @@ import com.example.snapking.databinding.FragmentImageBinding
 import com.example.snapking.modelo.Jugador
 import com.example.snapking.modelo.Ronda
 import com.example.snapking.modelo.WrapperSala
+import com.google.android.filament.MaterialInstance
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -55,6 +56,23 @@ class TematicaActivity : AppCompatActivity() {
     private lateinit var fragmentTransaction: FragmentTransaction
     private var wraperSala:WrapperSala?=null
     var fotoLocal:String?=null
+    var counter = object : CountDownTimer(60000, 1000) {
+
+        override fun onTick(millisUntilFinished: Long) {
+            Log.d("TEMATICA ACTIVITY","segundos restantes:" + millisUntilFinished / 1000)
+
+            var segundos = (millisUntilFinished/1000).toInt()
+
+            BaseDatos.getInstance()!!.actualizarTiempo(wraperSala!!.id,segundos)
+
+            viewBinding.tvTiempo.setText(segundos.toString())
+        }
+
+        override fun onFinish() {
+            Log.d("TEMATICA ACTIVITY", "CountDown finalizado!")
+            viewBinding.tvTiempo.setText("TIEMPO!")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,29 +99,16 @@ class TematicaActivity : AppCompatActivity() {
     }
 
     private fun iniciarJuego() {
-        inciarCountDown()
+        inciarCountDown(true)
 
     }
 
-    private fun inciarCountDown() {
+    private fun inciarCountDown(encender : Boolean) {
         if (wraperSala!!.sala.anfitrion.equals(User.getInstancia()!!.printToken().toString())) {
-            object : CountDownTimer(60000, 1000) {
-
-                override fun onTick(millisUntilFinished: Long) {
-                    Log.d("TEMATICA ACTIVITY","segundos restantes:" + millisUntilFinished / 1000)
-
-                    var segundos = (millisUntilFinished/1000).toInt()
-
-                    BaseDatos.getInstance()!!.actualizarTiempo(wraperSala!!.id,segundos)
-
-                    viewBinding.tvTiempo.setText(segundos.toString())
-                }
-
-                override fun onFinish() {
-                    Log.d("TEMATICA ACTIVITY", "CountDown finalizado!")
-                    viewBinding.tvTiempo.setText("TIEMPO!")
-                }
-            }.start()
+            if(encender)
+                counter.start()
+            else
+                counter.cancel()
         }else
         {
             val postListener = object : ValueEventListener {
@@ -131,14 +136,13 @@ class TematicaActivity : AppCompatActivity() {
         }
 
         }
-    /*
-    /*override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (event != null) {
             if(keyCode==event.keyCode)
             {
                 val builder = AlertDialog.Builder(this)
-                builder.setTitle("Salir de la sala")
-                builder.setMessage("¿Quieres salir de la sala?")
+                builder.setTitle("Salir de la partida")
+                builder.setMessage("¿Quieres salir de la partida?")
                 //builder.setPositiveButton("OK", DialogInterface.OnClickListener(function = x))
 
                 builder.setPositiveButton(android.R.string.yes) { dialog, which ->
@@ -149,7 +153,7 @@ class TematicaActivity : AppCompatActivity() {
                         BaseDatos.getInstance()?.elminarJugadorSala(wraperSala!!.id, User.getInstancia()!!.printToken())
                     } catch (e: NullPointerException) {
                     }
-
+                    inciarCountDown(false)
                     startActivity(Intent(this,PrincipalActivity::class.java))
                     finish()
                 }
@@ -165,8 +169,8 @@ class TematicaActivity : AppCompatActivity() {
 
         }
         return super.onKeyDown(keyCode, event)
-    }*/
-    */
+    }
+
 
 
     private fun crearRonda() {
