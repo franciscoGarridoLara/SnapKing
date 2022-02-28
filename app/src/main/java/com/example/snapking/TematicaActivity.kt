@@ -25,14 +25,18 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.example.snapking.BaseDatos.BaseDatos
-import com.example.snapking.BaseDatos.IGetRonda
-import com.example.snapking.BaseDatos.IGetSegundos
+import com.example.snapking.Adapters.UsuarioAdapter
+import com.example.snapking.BaseDatos.*
 import com.example.snapking.Firebase.User
+import com.example.snapking.Wrapper.WrapperUsuarioLobby
 import com.example.snapking.databinding.ActivityTematicaBinding
 import com.example.snapking.databinding.FragmentImageBinding
+import com.example.snapking.modelo.Jugador
 import com.example.snapking.modelo.Ronda
 import com.example.snapking.modelo.WrapperSala
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.squareup.picasso.Picasso
@@ -102,21 +106,31 @@ class TematicaActivity : AppCompatActivity() {
             }.start()
         }else
         {
-            BaseDatos.getInstance()!!.getSegundos(wraperSala!!.id, object : IGetSegundos{
-                override fun OnCallBack(segundos: Int) {
-                    Log.d("TEMATICA ACTIVITY", "Segundos desde el servidor.")
-                    if(segundos > 0){
-                        viewBinding.tvTiempo.setText(segundos.toString())
-                    }else{
-                        viewBinding.tvTiempo.setText("TIEMPO!")
-                    }
-
+            val postListener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    BaseDatos.getInstance()!!.getSegundos(wraperSala!!.id, object : IGetSegundos{
+                        override fun OnCallBack(segundos: Int) {
+                            Log.d("TEMATICA ACTIVITY", "Segundos desde el servidor.")
+                            if(segundos > 0){
+                                viewBinding.tvTiempo.setText(segundos.toString())
+                            }else{
+                                viewBinding.tvTiempo.setText("TIEMPO!")
+                            }
+                        }
+                    })
                 }
 
+                override fun onCancelled(databaseError: DatabaseError) {
+                    // Getting Post failed, log a message
+                    //Mandar a la principal activity.
+                    Log.w("ACTIVITY LOBBY", "loadPost:onCancelled", databaseError.toException())
+                }
+            }
 
-            })
+            BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("ronda").child("tiempo").addValueEventListener(postListener)
         }
-    }
+
+        }
     /*
     /*override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (event != null) {

@@ -484,8 +484,11 @@ class BaseDatos(){
     fun getSegundos(idSala : String, iGetSegundos: IGetSegundos){
 
         reference.child("salas").child(idSala).child("ronda").get().addOnSuccessListener {
-            var segundos = it.child("tiempo").value as Int
-            iGetSegundos.OnCallBack(segundos)
+            try {
+                var segundos = it.child("tiempo").value as Long
+                iGetSegundos.OnCallBack(segundos.toInt())
+            } catch (e: NullPointerException) {
+            }
         }
 
     }
