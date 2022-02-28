@@ -38,7 +38,11 @@ class LobbyActivity : AppCompatActivity() {
     var binding : ActivityLobbyBinding? = null
     var ready=true
     var chequearStart=true
-    var activityActual:Activity?=null
+    var inicio : Boolean = true
+
+    companion object {
+        var activityActual:Activity?=null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,8 +57,10 @@ class LobbyActivity : AppCompatActivity() {
          wraperSala=Gson().fromJson<WrapperSala>(intent.getStringExtra("wrapersala"),type)
         Log.d("ACTIVITY LOBBY",wraperSala.toString())
 
+
         setListeners()
         cargarUsuarios()
+
 
     }
 //paco
@@ -76,51 +82,54 @@ class LobbyActivity : AppCompatActivity() {
     private fun cargarUsuarios() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                BaseDatos!!.getInstance()!!.getUsersFromSala(wraperSala!!.id,object : IGetUsersFromSala{
-                    override fun OnCallBack(lista: ArrayList<WrapperUsuarioLobby>) {
-                        Log.d("-----LOBBY ACTIVITY",lista.toString())
-                        var adapter = lista.let { it -> UsuarioAdapter(it) }
-                        binding!!.recicle.adapter = adapter
+                if (inicio) {
+                    BaseDatos!!.getInstance()!!.getUsersFromSala(wraperSala!!.id,object : IGetUsersFromSala{
+                        override fun OnCallBack(lista: ArrayList<WrapperUsuarioLobby>) {
+                            Log.d("-----LOBBY ACTIVITY",lista.toString())
+                            var adapter = lista.let { it -> UsuarioAdapter(it) }
+                            binding!!.recicle.adapter = adapter
 
-                        if(chequearStart&&wraperSala!!.sala?.anfitrion.equals(User.getInstancia()!!.printToken())){
-                            var votos=lista.count {
-                                it.estado==true
-                            }
-                            Log.d("------LOBBY ACITVITY", "Numero ready: " + votos.toString())
-                            Log.d("--------LOBBY ACITVITY", "lista size: " + lista.size.toString())
-                            if(votos==lista.size){
-                                BaseDatos.getInstance()?.empezarPartida(wraperSala!!.id)
-                                var intent=Intent(applicationContext,TematicaActivity::class.java)
-                                intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
-                                startActivity(intent)
-                                chequearStart=false
-                                finish()
-                            }
-                        }else{
-                            BaseDatos.getInstance()?.comprobarPartida(wraperSala!!.id,object:IComprobarStart{
-                                override fun OncallBack(ready: Boolean) {
-                                    if(ready){
-                                        var intent=Intent(applicationContext,TematicaActivity::class.java)
-                                        intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
-                                        startActivity(intent)
-                                        activityActual!!.finish()
-                                    }
+                            if(wraperSala!!.sala?.anfitrion.equals(User.getInstancia()!!.printToken())){
+                                var votos=lista.count {
+                                    it.estado==true
                                 }
+                                Log.d("------LOBBY ACITVITY", "Numero ready: " + votos.toString())
+                                Log.d("--------LOBBY ACITVITY", "lista size: " + lista.size.toString())
+                                if(votos==lista.size){
+                                    BaseDatos.getInstance()?.empezarPartida(wraperSala!!.id)
+                                    var intent=Intent(applicationContext,TematicaActivity::class.java)
+                                    intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
+                                    startActivity(intent)
+                                    inicio = false
+
+                                }
+                            }else{
+                                BaseDatos.getInstance()?.comprobarPartida(wraperSala!!.id,object:IComprobarStart{
+                                    override fun OncallBack(ready: Boolean) {
+                                        if(ready){
+                                            var intent=Intent(applicationContext,TematicaActivity::class.java)
+                                            intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
+                                            startActivity(intent)
+                                            inicio = false
+
+                                        }
+                                    }
 
 
-                            })
+                                })
+                            }
+
+                        }
+                    })
+
+                    BaseDatos.getInstance()?.getJugadoresFromSala(wraperSala!!.id,object:
+                        IGetJugadoresFromSala {
+                        override fun OnCallback(lista: ArrayList<Jugador>) {
+                            wraperSala!!.sala.jugadores=lista
                         }
 
-                    }
-                })
-
-                BaseDatos.getInstance()?.getJugadoresFromSala(wraperSala!!.id,object:
-                    IGetJugadoresFromSala {
-                    override fun OnCallback(lista: ArrayList<Jugador>) {
-                        wraperSala!!.sala.jugadores=lista
-                    }
-
-                })
+                    })
+                }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

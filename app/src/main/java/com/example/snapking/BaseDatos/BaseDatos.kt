@@ -111,10 +111,16 @@ class BaseDatos(){
 
                 var ronda:Ronda?
                 try {
+                    var fotos : ArrayList<Foto> = ArrayList()
+
+                    for(foto in child.child("ronda").child("fotos").children){
+                        fotos.add(Foto(foto.key.toString(),foto.value.toString()))
+                    }
                     ronda=Ronda(
                         child.child("ronda").child("numero").value as Int,
-                        child.child("ronda").child("id_tematica") as String
-
+                        child.child("ronda").child("id_tematica") as String,
+                        fotos,
+                        child.child("ronda").child("tiempo") as Int
                     )
                 } catch (e: NullPointerException) {
                     ronda=null
@@ -432,22 +438,24 @@ class BaseDatos(){
         getTematicaRandom(object : IGetTematica{
             override fun OnCallBack(tematica: Tematica) {
 
-                var sala = reference.child("salas").child(idSala).child("ronda").get().addOnSuccessListener {
-                    Log.d(TAG,"Success Listener!")
-                    var con = 0
-                    for(sala in it.children){
-                        con++
-                    }
-                    if(con > 0){
-                        iGetRonda.OnCallBack(Ronda(10,tematica.id))
-                    }else
-                    {
-                        iGetRonda.OnCallBack(Ronda(1,tematica.id))
+                var sala = reference.child("salas").child(idSala).get().addOnSuccessListener {
+                    var ronda : Ronda? = null
+                    try {
+                        Log.d(TAG,"Success Listener!")
+                        ronda = it.child("ronda").getValue<Ronda>()!!
+                        Log.d(TAG,"Ronda: " + ronda.toString())
+                        ronda = Ronda(ronda.numero + 1, tematica.id, ronda.fotos,ronda.tiempo)
+                        iGetRonda.OnCallBack(ronda)
+                    } catch (e: Exception) {
+                            ronda = Ronda(1,tematica.id,ArrayList(),60)
+                            iGetRonda.OnCallBack(ronda)
+                        Log.d(TAG,"No hay ronda-------- ")
+                    }finally {
+                        Log.d(TAG, "Escribiendo ronda en la sala FB")
+                        it.ref.child("ronda").setValue(ronda!!)
                     }
 
-                }.addOnFailureListener {
-                    Log.d(TAG,"Failure Listener")
-                    iGetRonda.OnCallBack(Ronda(1,tematica.id))
+
                 }
 
             }

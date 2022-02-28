@@ -145,6 +145,7 @@ class PrincipalActivity : AppCompatActivity() {
                 var intent=Intent(applicationContext,LobbyActivity::class.java)
                 Log.d("----------",WrapperSalaGlobal.toString())
                 intent.putExtra("wrapersala",Gson().toJson(WrapperSalaGlobal) )
+                //intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
                 startActivity(intent)
 
             }

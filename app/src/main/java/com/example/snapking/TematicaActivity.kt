@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.provider.MediaStore
 import android.util.Log
 import android.view.KeyEvent
@@ -51,6 +52,9 @@ class TematicaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tematica)
 
+        //cerrar la actividad anterior.
+        LobbyActivity.activityActual!!.finish()
+
         viewBinding = ActivityTematicaBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
@@ -60,12 +64,35 @@ class TematicaActivity : AppCompatActivity() {
         pedirPermisos()
         setListeners()
         inicializarInterfaz()
+        iniciarJuego()
 
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
 
     }
+
+    private fun iniciarJuego() {
+        inciarCountDown()
+
+    }
+
+    private fun inciarCountDown() {
+        object : CountDownTimer(60000, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                Log.d("TEMATICA ACTIVITY","segundos restantes:" + millisUntilFinished / 1000)
+                var segundos = (millisUntilFinished/1000).toString()
+                viewBinding.tvTiempo.setText(segundos)
+            }
+
+            override fun onFinish() {
+                Log.d("TEMATICA ACTIVITY", "CountDown finalizado!")
+                viewBinding.tvTiempo.setText("TIEMPO!")
+            }
+        }.start()
+    }
+    /*
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (event != null) {
             if(keyCode==event.keyCode)
@@ -97,6 +124,8 @@ class TematicaActivity : AppCompatActivity() {
         }
         return super.onKeyDown(keyCode, event)
     }
+    */
+
 
     private fun crearRonda() {
         if(wraperSala!!.sala?.anfitrion.equals(User.getInstancia()!!.printToken())) {
