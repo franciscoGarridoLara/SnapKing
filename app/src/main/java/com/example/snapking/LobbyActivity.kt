@@ -29,6 +29,7 @@ import com.example.snapking.modelo.Jugador
 import com.example.snapking.modelo.Sala
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 
@@ -39,6 +40,7 @@ class LobbyActivity : AppCompatActivity() {
     var ready=true
     var chequearStart=true
     var inicio : Boolean = true
+    var postListener: ValueEventListener? =null
 
     companion object {
         var activityActual:Activity?=null
@@ -64,17 +66,20 @@ class LobbyActivity : AppCompatActivity() {
 
     }
 
-//    override fun onDestroy() {
-//
-//        if(wraperSala?.sala?.anfitrion.equals(User.getInstancia()?.printToken())){
-//            BaseDatos.getInstance()?.elminarSala(wraperSala!!.id )
-//
-//        }else{
-//            BaseDatos.getInstance()?.elminarJugadorSala(wraperSala!!.id, User.getInstancia()!!.printToken())
-//        }
-//
-//        super.onDestroy()
-//    }
+   override fun onDestroy() {
+
+       if (inicio) {
+           if(wraperSala?.sala?.anfitrion.equals(User.getInstancia()?.printToken())){
+               BaseDatos.getInstance()?.elminarSala(wraperSala!!.id )
+
+            }else{
+                BaseDatos.getInstance()?.elminarJugadorSala(wraperSala!!.id, User.getInstancia()!!.printToken())
+            }
+
+
+       }
+       super.onDestroy()
+   }
 //paco
     private fun setListeners() {
         binding!!.btnReady.setOnClickListener(){
@@ -92,7 +97,7 @@ class LobbyActivity : AppCompatActivity() {
     }
 
     private fun cargarUsuarios() {
-        val postListener = object : ValueEventListener {
+         postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (inicio) {
                     BaseDatos!!.getInstance()!!.getUsersFromSala(wraperSala!!.id,object : IGetUsersFromSala{
@@ -118,14 +123,19 @@ class LobbyActivity : AppCompatActivity() {
                             }else{
                                 BaseDatos.getInstance()?.comprobarPartida(wraperSala!!.id,object:IComprobarStart{
                                     override fun OncallBack(ready: Boolean) {
-                                        if(ready){
-                                            var intent=Intent(applicationContext,TematicaActivity::class.java)
+
+
+
+
+
+                                        var intent=Intent(applicationContext,TematicaActivity::class.java)
                                             intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
+                                        BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListener!!)
                                             startActivity(intent)
                                             inicio = false
 
                                         }
-                                    }
+
 
 
                                 })
@@ -153,7 +163,7 @@ class LobbyActivity : AppCompatActivity() {
 
 
 
-        BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).addValueEventListener(postListener)
+        BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).addValueEventListener(postListener!!)
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

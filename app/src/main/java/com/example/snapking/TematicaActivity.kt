@@ -129,6 +129,9 @@ class TematicaActivity : AppCompatActivity() {
                     // Getting Post failed, log a message
                     //Mandar a la principal activity.
                     Log.w("ACTIVITY LOBBY", "loadPost:onCancelled", databaseError.toException())
+                    var intent = Intent(this@TematicaActivity,PrincipalActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }
             }
 
