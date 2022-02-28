@@ -42,6 +42,8 @@ class PrincipalActivity : AppCompatActivity() {
 
     }
 
+
+
     private fun iniciarInterfaz() {
         Picasso.get()
             .load(User.getInstancia()!!.getAvatar())

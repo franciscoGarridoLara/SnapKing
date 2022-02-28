@@ -55,6 +55,7 @@ class TematicaActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(
                 this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
+
         btnBack.visibility = View.INVISIBLE
         btnAcept.visibility = View.INVISIBLE
 
@@ -104,7 +105,7 @@ class TematicaActivity : AppCompatActivity() {
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
 
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/CameraX-Image")
+                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/SnapKingPhotos")
             }
         }
 

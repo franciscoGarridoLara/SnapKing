@@ -10,30 +10,30 @@
     android:orientation="vertical"
     tools:context=".TematicaActivity"
     android:gravity="center_horizontal"
+    android:background="@drawable/login"
     >
 
 
-
     <LinearLayout
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
-        >
+        android:orientation="horizontal">
+
         <Button
             android:id="@+id/btnConfiguracion"
             android:layout_width="73dp"
             android:layout_height="73dp"
             android:background="@drawable/icon_configuration"
             android:foreground="@drawable/icon_configuration"
-            app:layout_constraintHorizontal_bias="0.02"
-            app:layout_constraintVertical_bias="0.01"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.02"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.01"
             tools:ignore="SpeakableTextPresentCheck" />
+
         <TextView
             android:id="@+id/tvTematica"
             android:layout_width="match_parent"
@@ -42,52 +42,49 @@
             android:text="TEMÁTICA"
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:textColor="#219EBC"
-            android:textSize="50sp"
-            />
+            android:textColor="#000000"
+            android:textSize="50sp" />
 
     </LinearLayout>
 
     <FrameLayout
+        android:id="@+id/cameraLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/cameraLayout">
+        android:layout_height="wrap_content">
+
         <androidx.camera.view.PreviewView
             android:id="@+id/viewFinder"
             android:layout_width="match_parent"
             android:layout_height="533dp"
-            tools:layout_editor_absoluteY="145dp"/>
+            tools:layout_editor_absoluteY="145dp" />
     </FrameLayout>
-
-
-
-
 
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
-        android:layout_height="102dp"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <Button
-            android:layout_marginStart="10dp"
             android:id="@+id/btnSi"
             android:layout_width="wrap_content"
             android:layout_height="90dp"
+            android:layout_marginStart="10dp"
             android:background="@drawable/tick"
 
 
             tools:ignore="SpeakableTextPresentCheck" />
+
         <Button
             android:id="@+id/btnPhoto"
             android:layout_width="wrap_content"
-            android:layout_height="90dp"
-            android:background="@drawable/tick"
-            android:foreground="@drawable/tick"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/camarashot"
+            android:foreground="@mipmap/camarashot"
 
             tools:ignore="SpeakableTextPresentCheck" />
+
         <Button
 
             android:id="@+id/btnBack"
@@ -102,8 +99,7 @@
     </LinearLayout>
 
 
-
-       <!-- <FrameLayout
+    <!-- <FrameLayout
             android:layout_width="93dp"
             android:layout_height="88dp"
             android:background="@drawable/timer_framelayout"

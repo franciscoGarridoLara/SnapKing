@@ -42,6 +42,8 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
         instancias()
         acciones()
         //modelo.activityTransparent(this@Login)
+
+
     }
 
     override fun onStart() {
