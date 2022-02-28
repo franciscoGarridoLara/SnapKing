@@ -366,7 +366,7 @@ class BaseDatos(){
         }
     }
 
-    fun setUserReadySala(idSala:String, idJugador:String,ready:Boolean){
+    fun setUserReadySala(idSala:String, idJugador:String,ready:Boolean,iReady: IReady){
         reference.child("salas").child(idSala).child("jugadores").get().addOnSuccessListener {
 
             for(user in it.children)
@@ -378,6 +378,7 @@ class BaseDatos(){
                     break
                 }
             }
+            iReady.OnCallback()
         }
     }
 
