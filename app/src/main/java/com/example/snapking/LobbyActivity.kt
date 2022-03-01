@@ -113,7 +113,7 @@ class LobbyActivity : AppCompatActivity() {
                                 BaseDatos.getInstance()?.comprobarPartida(wraperSala!!.id,object:IComprobarStart{
                                     override fun OncallBack(ready: Boolean) {
 
-                                        if (ready) {
+                                        if (ready && inicio) {
                                             inicio = false
                                             var intent=Intent(applicationContext,TematicaActivity::class.java)
                                             intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
