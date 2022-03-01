@@ -522,17 +522,20 @@ class BaseDatos(){
             Log.d(TAG,"foto subida")
             val downloadUri:String = uploadTask.result.toString()
             Log.d(TAG,"URL FICHERO "+downloadUri)
+            riversRef.downloadUrl.addOnCompleteListener {
+                escribirBDFoto(idSala,idUser,it.result)
+            }
 
-            escribirBDFoto(idSala,idUser,downloadUri)
+
 
         }
 
     }
 
-    private fun escribirBDFoto(idSala:String,idUser:String,url:String){
+    private fun escribirBDFoto(idSala:String,idUser:String,url:Uri){
 
         reference.child("salas").child(idSala).child("ronda").child("fotos").
-                child(idUser).setValue(url)
+                child(idUser).setValue(url.toString())
 
     }
 
