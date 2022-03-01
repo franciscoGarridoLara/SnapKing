@@ -556,6 +556,22 @@ class BaseDatos(){
         }
 
     }
+    fun getWrapeeruserVotacion(idSala:String,iVotacionGetWrapper: IVotacionGetWrapper){
+
+        getJugadoresFromSala(idSala,object:IGetJugadoresFromSala{
+            override fun OnCallback(lista: ArrayList<Jugador>) {
+                var jugadores=lista
+
+
+
+
+
+            }
+
+        })
+
+
+    }
 
     fun elminarSala(id: String) {
         reference.child("salas").child(id).removeValue()

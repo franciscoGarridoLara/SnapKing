@@ -111,7 +111,12 @@ class TematicaActivity : AppCompatActivity() {
             mediaDir else appContext.filesDir
     }
 
-
+    private fun pasarActividad(){
+        var intent=Intent(applicationContext,VotacionActivity::class.java)
+        intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
+        startActivity(intent)
+        finish()
+    }
     private fun iniciarJuego() {
         inciarCountDown(true)
         comprobarStatusPartida()
@@ -307,6 +312,7 @@ class TematicaActivity : AppCompatActivity() {
             viewBinding.btnPhoto.visibility= View.VISIBLE
             viewBinding.btnAcept.visibility = View.INVISIBLE
             viewBinding.btnBack.visibility = View.INVISIBLE
+            pasarActividad()
 
 
         }
@@ -437,7 +443,7 @@ class TematicaActivity : AppCompatActivity() {
 
 
 
-        Thread.sleep(500)
+
 
 
 
