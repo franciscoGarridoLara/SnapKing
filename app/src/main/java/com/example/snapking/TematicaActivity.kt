@@ -57,6 +57,7 @@ class TematicaActivity : AppCompatActivity() {
     var fotoLocal:String?=null
     val PHOTO_EXTENSION=".jpg"
     var postListener : ValueEventListener? = null
+    var postListenerStatus : ValueEventListener? = null
     var counter = object : CountDownTimer(60000, 1000) {
 
         override fun onTick(millisUntilFinished: Long) {
@@ -125,7 +126,7 @@ class TematicaActivity : AppCompatActivity() {
 
     private fun comprobarStatusPartida() {
 
-        val postListener = object : ValueEventListener {
+         postListenerStatus = object : ValueEventListener {
             var escuchar = true
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 BaseDatos.getInstance()!!.comprobarStatusSala(wraperSala!!.id, object : IGetStatusSala{
@@ -163,7 +164,7 @@ class TematicaActivity : AppCompatActivity() {
 
         }
 
-        BaseDatos.getInstance()!!.reference.child("salas").addValueEventListener(postListener)
+        BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).addValueEventListener(postListenerStatus!!)
     }
 
     private fun inciarCountDown(encender : Boolean) {
@@ -229,6 +230,14 @@ class TematicaActivity : AppCompatActivity() {
         } catch (e: NullPointerException) {
         }
         inciarCountDown(false)
+
+        if (postListener != null) {
+            Log.d("TEMATICA ACTIVITY","REMOVIENDO ESCUCHADOR DE SEGUNDOS EN BACKPRESSED.")
+            BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("ronda").child("tiempo").removeEventListener(postListener!!)
+        }
+
+        Log.d("TEMATICA ACTIVITY", "REMOVIENDO ESCUCHADOR DE SALA EN BACKPRESSED")
+        BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListenerStatus!!)
         super.onBackPressed() // optional depending on your needs
     }
 
@@ -291,13 +300,13 @@ class TematicaActivity : AppCompatActivity() {
 
 
         }else{
-//            while(ronda == null){
-//                BaseDatos.getInstance()!!.getRondaByIdSala(wraperSala!!.id, object : IGetRonda{
-//                    override fun OnCallBack(rondaDB: Ronda) {
-//                        ronda = rondaDB
-//                    }
-//                })
-//            }
+
+                BaseDatos.getInstance()!!.getRondaByIdSala(wraperSala!!.id, object : IGetRonda{
+                    override fun OnCallBack(rondaDB: Ronda) {
+                        ronda = rondaDB
+                    }
+                })
+
         }
 
     }
