@@ -5,6 +5,7 @@ import android.net.Uri
 import android.util.Log
 import com.example.snapking.Firebase.User
 import com.example.snapking.Wrapper.WrapperUsuarioLobby
+import com.example.snapking.Wrapper.WrapperUsuarioPartida
 import com.example.snapking.modelo.*
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
@@ -305,6 +306,8 @@ class BaseDatos(){
 
      */
 
+
+
     fun getUsersFromSala(idSala:String, iGetUsersFromSala: IGetUsersFromSala){
         var wrapperUsuarios : ArrayList<WrapperUsuarioLobby> = ArrayList()
         var users : ArrayList<Usuario>
@@ -505,6 +508,12 @@ class BaseDatos(){
 
 
     }
+    fun getWrapperusuariosPuntosFromSala(idSala:String){
+        
+        
+
+    }
+
 
     fun actualizarTiempo(idSala : String, segundos : Int){
         reference.child("salas").child(idSala).child("ronda").child("tiempo").setValue(segundos)
@@ -577,6 +586,43 @@ class BaseDatos(){
 
 
     }
+    fun getWrapperusuariosPuntosFromSala(idSala:String,iusuariosPuntos: IusuariosPuntos){
+
+        getJugadoresFromSala(idSala,object :IGetJugadoresFromSala{
+            override fun OnCallback(lista: ArrayList<Jugador>) {
+              var listaIds=ArrayList<String>()
+                var listaJugadores=lista
+
+                for (jugador in lista){
+                    listaIds.add(jugador.id)
+                }
+
+                getUsers(listaIds,object :IGetUsuarios{
+                    override fun OnCallBack(usuarios: ArrayList<WrapperUsuario>) {
+                        var listaWraperVotacion=ArrayList<WrapperUsuarioPartida>()
+
+                        for (usuariow in usuarios){
+                            var jugador=listaJugadores.filter { it.id.equals(usuariow.id) }.first()
+                            listaWraperVotacion.add(WrapperUsuarioPartida(usuariow.usuario,jugador.punto.toInt()))
+                        }
+                        iusuariosPuntos.OncallBack(listaWraperVotacion)
+
+
+                    }
+
+                })
+
+            }
+
+
+        })
+
+
+
+
+
+    }
+
 
     fun elminarSala(id: String) {
         reference.child("salas").child(id).removeValue()
