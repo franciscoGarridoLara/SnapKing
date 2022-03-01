@@ -116,21 +116,27 @@ class TematicaActivity : AppCompatActivity() {
     }
 
     private fun comprobarStatusPartida() {
+
         val postListener = object : ValueEventListener {
+            var escuchar = true
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 BaseDatos.getInstance()!!.comprobarStatusSala(wraperSala!!.id, object : IGetStatusSala{
                     override fun OnCallBack(status: Boolean) {
                         Log.d("TEMATICA ACTIVITY","Status sala: " + status.toString())
                         if(!status)
                         {
-                            var intent = Intent(this@TematicaActivity,PrincipalActivity::class.java)
-                            startActivity(intent)
-                            finish()
+                            escuchar = false
                         }
 
                     }
-
                 })
+                if(!escuchar){
+                    BaseDatos.getInstance()!!.reference.child("salas").removeEventListener(this)
+                    var intent = Intent(this@TematicaActivity,PrincipalActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -204,6 +210,7 @@ class TematicaActivity : AppCompatActivity() {
                     } catch (e: NullPointerException) {
                     }
                     inciarCountDown(false)
+
                     startActivity(Intent(this,PrincipalActivity::class.java))
                     finish()
                 }
@@ -233,7 +240,7 @@ class TematicaActivity : AppCompatActivity() {
 
                     BaseDatos.getInstance()!!.getTematicaById(ronda!!.id_tematica, object : IGetTematica{
                         override fun OnCallBack(tematica: Tematica) {
-                            viewBinding.tvTematica.setText(tematica.nombre)
+                            setTematica(tematica)
                         }
                     })
 
@@ -242,8 +249,20 @@ class TematicaActivity : AppCompatActivity() {
             })
 
 
+        }else{
+            while(ronda == null){
+                BaseDatos.getInstance()!!.getRondaByIdSala(wraperSala!!.id, object : IGetRonda{
+                    override fun OnCallBack(rondaDB: Ronda) {
+                        ronda = rondaDB
+                    }
+                })
+            }
         }
 
+    }
+
+    private fun setTematica(tematica : Tematica){
+        viewBinding.tvTematica.setText(tematica.nombre)
     }
 
     private fun cogerWrapperSala(){
@@ -263,7 +282,7 @@ class TematicaActivity : AppCompatActivity() {
     private fun setListeners() {
         viewBinding.btnPhoto.setOnClickListener {
             takePhoto()
-            switchFragment()
+
             viewBinding.btnBack.visibility = View.VISIBLE
             viewBinding.btnPhoto.visibility = View.INVISIBLE
             viewBinding.btnAcept.visibility = View.VISIBLE
@@ -342,7 +361,12 @@ class TematicaActivity : AppCompatActivity() {
                     val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-                    BaseDatos.getInstance()?.subirfoto(savedUri!!,wraperSala!!.id,User.getInstancia()!!.printToken(),numeroronda)
+                    BaseDatos.getInstance()?.subirfoto(savedUri!!,wraperSala!!.id,User.getInstancia()!!.printToken(),numeroronda, object : IGetSuccessSubirFoto{
+                        override fun OnCallBack(url: String) {
+                            switchFragment(url)
+                        }
+
+                    })
 
                     Log.d(TAG, msg)
 
@@ -391,13 +415,11 @@ class TematicaActivity : AppCompatActivity() {
         }, ContextCompat.getMainExecutor(this))
 
     }
-    private fun switchFragment(){
+    private fun switchFragment(url : String){
 
         var fragment: Fragment?= null
 
-        fragment = ImageFragment()
-
-
+        fragment = ImageFragment(url)
 
 
         fragmentTransaction= supportFragmentManager.beginTransaction()

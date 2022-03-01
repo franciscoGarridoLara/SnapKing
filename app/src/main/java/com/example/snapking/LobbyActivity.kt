@@ -184,6 +184,7 @@ class LobbyActivity : AppCompatActivity() {
                     BaseDatos.getInstance()?.elminarJugadorSala(wraperSala!!.id, User.getInstancia()!!.printToken())
 
                     startActivity(Intent(this,PrincipalActivity::class.java))
+                    finish()
                     activityActual!!.finish()
                 }
 

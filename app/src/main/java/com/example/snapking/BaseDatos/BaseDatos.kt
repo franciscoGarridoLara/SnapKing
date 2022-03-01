@@ -99,13 +99,13 @@ class BaseDatos(){
 
        fun leerSala(interfazSala:ISalasLectura): ArrayList<WrapperSala> {
         var listasalas:ArrayList<WrapperSala>
-        Log.d("-----------------fff","entradon")
+
         listaSalasglobal=ArrayList()
         listasalas=ArrayList()
            var listanueva: ArrayList<WrapperSala>? =null
 
         var datasnapshot = reference.child("salas").get().addOnSuccessListener {
-            Log.d("-----------------fff","entradon2")
+
             for(child in it.children){
 
                 var ronda:Ronda?
@@ -179,9 +179,9 @@ class BaseDatos(){
 
 
             }
-            Log.d("-----------------fff","entradon7")
+            Log.d("TAG","Llamando a callBack de interfazSala")
             interfazSala.OncallBack(listasalas)
-            Log.d("-----------------fff","entradon8")
+
 
         }.addOnFailureListener {
             Log.e("firebase", "Error getting data", it)
@@ -377,6 +377,22 @@ class BaseDatos(){
         }
     }
 
+    fun getRondaByIdSala(idSala : String, iGetRonda: IGetRonda){
+
+        reference.child("salas").child(idSala).child("ronda").get().addOnSuccessListener {
+            var ronda : Ronda? = null
+
+            try {
+                ronda = it.getValue<Ronda>()
+                iGetRonda.OnCallBack(ronda!!)
+            } catch (e: Exception) {
+
+            }
+
+
+        }
+    }
+
     fun setUserReadySala(idSala:String, idJugador:String,ready:Boolean,iReady: IReady){
         reference.child("salas").child(idSala).child("jugadores").get().addOnSuccessListener {
 
@@ -502,7 +518,7 @@ class BaseDatos(){
 
     }
 
-    fun subirfoto(fileURL: Uri, idSala: String, idUser: String, ronda: Int) {
+    fun subirfoto(fileURL: Uri, idSala: String, idUser: String, ronda: Int, iGetSuccesSubirFoto: IGetSuccessSubirFoto) {
 
 
         var file = Uri.fromFile(File(fileURL.path))
@@ -523,7 +539,7 @@ class BaseDatos(){
             val downloadUri:String = uploadTask.result.toString()
             Log.d(TAG,"URL FICHERO "+downloadUri)
             riversRef.downloadUrl.addOnCompleteListener {
-                escribirBDFoto(idSala,idUser,it.result)
+                escribirBDFoto(idSala,idUser,it.result, iGetSuccesSubirFoto)
             }
 
 
@@ -532,10 +548,12 @@ class BaseDatos(){
 
     }
 
-    private fun escribirBDFoto(idSala:String,idUser:String,url:Uri){
+    private fun escribirBDFoto(idSala:String,idUser:String,url:Uri, iGetSuccesSubirFoto : IGetSuccessSubirFoto){
 
         reference.child("salas").child(idSala).child("ronda").child("fotos").
-                child(idUser).setValue(url.toString())
+                child(idUser).setValue(url.toString()).addOnCompleteListener{
+            iGetSuccesSubirFoto.OnCallBack(url.toString())
+        }
 
     }
 

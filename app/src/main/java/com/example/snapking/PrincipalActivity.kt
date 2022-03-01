@@ -105,15 +105,17 @@ class PrincipalActivity : AppCompatActivity() {
         BaseDatos.getInstance()?.leerSala(object: ISalasLectura{
             override fun OncallBack(lista: List<WrapperSala>) {
                 haysalas=true
-                Log.d("-----------principal","entro principal")
+                Log.d("PRINCIPAL ACTIVITY","RECIBIENDO CALLBACK DE WRAPPER SALAS.")
                     var i=0
                     var bucle=true
                     var wraperFinal:WrapperSala?
                     wraperFinal=null
                     while(bucle&&i<lista.size) {
                         var wraperSalaIn=lista[i]
-                        if (wraperSalaIn.sala.capacidad > wraperSalaIn.sala.jugadores.size) {
-                            Log.d("-----------pr","entro en el if")
+                        if (wraperSalaIn.sala.capacidad > wraperSalaIn.sala.jugadores.size
+                            && !wraperSalaIn.sala.anfitrion.equals(User.getInstancia()!!.printToken().toString())
+                            && wraperSalaIn.sala.ronda == null) {
+                            Log.d("PRINCIPAL ACTIVITY","SALA SELECCIONADA")
 
                             var jugador=Jugador(User.getInstancia()?.printToken().toString(),false,0)
                             Log.d("-----------pr","entro en el escribiendo")
@@ -123,7 +125,7 @@ class PrincipalActivity : AppCompatActivity() {
                         }
                         i++
                     }
-                Log.d("---------bb", bucle.toString())
+                Log.d("PRINCIPAL ACTIVITY", "NO HA ENCONTRADO SALAS?: " + bucle.toString())
                     if(bucle){
                         var jugador=Jugador(id,false,0)
                         var listaJugadores=ArrayList<Jugador>()
@@ -140,7 +142,9 @@ class PrincipalActivity : AppCompatActivity() {
                 Log.d("----------",WrapperSalaGlobal.toString())
                 intent.putExtra("wrapersala",Gson().toJson(WrapperSalaGlobal) )
                 //intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                Log.d("PRINCIPAL ACTIVITY","Redireccionando a Activity Lobby")
                 startActivity(intent)
+                finish()
 
             }
 
