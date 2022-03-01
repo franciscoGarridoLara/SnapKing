@@ -494,10 +494,10 @@ class BaseDatos(){
 
     }
 
-    fun subirfoto(fileURL: String,idSala: String,idUser:String) {
+    fun subirfoto(fileURL: Uri, idSala: String, idUser:String) {
 
 
-        var file = Uri.fromFile(File(fileURL))
+        var file = Uri.fromFile(File(fileURL.path))
         val riversRef = storageReference.child("fotos/${idSala}/${file}")
         var uploadTask = riversRef.putFile(file)
 

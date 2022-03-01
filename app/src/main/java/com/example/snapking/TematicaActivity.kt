@@ -2,12 +2,15 @@ package com.example.snapking
 
 import android.Manifest
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.provider.MediaStore
+import android.provider.Telephony.Mms.Part.FILENAME
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -41,7 +44,9 @@ import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.squareup.picasso.Picasso
+import java.io.File
 import java.lang.reflect.Type
+import java.nio.file.Files.createFile
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -54,8 +59,10 @@ class TematicaActivity : AppCompatActivity() {
     private var imageCapture: ImageCapture? = null
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var fragmentTransaction: FragmentTransaction
+    private lateinit var outputDirectory: File
     private var wraperSala:WrapperSala?=null
     var fotoLocal:String?=null
+    val PHOTO_EXTENSION=".jpg"
     var counter = object : CountDownTimer(60000, 1000) {
 
         override fun onTick(millisUntilFinished: Long) {
@@ -80,6 +87,7 @@ class TematicaActivity : AppCompatActivity() {
 
         //cerrar la actividad anterior.
         LobbyActivity.activityActual!!.finish()
+        outputDirectory = getOutputDirectory(this)
 
         viewBinding = ActivityTematicaBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
@@ -97,6 +105,15 @@ class TematicaActivity : AppCompatActivity() {
 
 
     }
+    fun getOutputDirectory(context: Context): File {
+        val appContext = context.applicationContext
+        val mediaDir = context.externalMediaDirs.firstOrNull()?.let {
+            File(it, appContext.resources.getString(R.string.app_name)).apply { mkdirs() }
+        }
+        return if (mediaDir != null && mediaDir.exists())
+            mediaDir else appContext.filesDir
+    }
+
 
     private fun iniciarJuego() {
         inciarCountDown(true)
@@ -227,7 +244,7 @@ class TematicaActivity : AppCompatActivity() {
             viewBinding.btnPhoto.visibility= View.VISIBLE
             viewBinding.btnAcept.visibility = View.INVISIBLE
             viewBinding.btnBack.visibility = View.INVISIBLE
-            BaseDatos.getInstance()?.subirfoto(fotoLocal!!,wraperSala!!.id,User.getInstancia()!!.printToken())
+
         }
 
 
@@ -266,12 +283,10 @@ class TematicaActivity : AppCompatActivity() {
                Log.d("-------------dsd", put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/SnapKingPhotos").toString())
             }
         }
-
+        val photoFile = createFile(outputDirectory, FILENAME, PHOTO_EXTENSION)
         // Create output options object which contains file + metadata
         val outputOptions = ImageCapture.OutputFileOptions
-            .Builder(contentResolver,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                contentValues)
+            .Builder(photoFile)
             .build()
 
         // Set up image capture listener, which is triggered after photo has
@@ -286,15 +301,20 @@ class TematicaActivity : AppCompatActivity() {
 
                 override fun
                         onImageSaved(output: ImageCapture.OutputFileResults){
+                    val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-                    fotoLocal= output.savedUri.toString()
+                    BaseDatos.getInstance()?.subirfoto(savedUri!!,wraperSala!!.id,User.getInstancia()!!.printToken())
                     Log.d(TAG, msg)
+
+
 
                 }
             }
         )
     }
+    private fun createFile(baseFolder: File, format: String, extension: String) =
+        File(baseFolder, "image."+extension)
 
     private fun startCamera() {
 
