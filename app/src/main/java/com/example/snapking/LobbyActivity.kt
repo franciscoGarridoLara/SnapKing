@@ -125,16 +125,15 @@ class LobbyActivity : AppCompatActivity() {
                                     override fun OncallBack(ready: Boolean) {
 
 
-
-
-
-                                        var intent=Intent(applicationContext,TematicaActivity::class.java)
+                                        if (ready) {
+                                            var intent=Intent(applicationContext,TematicaActivity::class.java)
                                             intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
-                                        BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListener!!)
+                                            //BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListener!!)
                                             startActivity(intent)
                                             inicio = false
-
                                         }
+
+                                    }
 
 
 

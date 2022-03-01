@@ -53,7 +53,7 @@ class TematicaActivity : AppCompatActivity() {
     private lateinit var fragmentTransaction: FragmentTransaction
     private lateinit var outputDirectory: File
     private  var savedUri:Uri? =null
-    var ronda=0
+    var numeroronda=0
     private var wraperSala:WrapperSala?=null
     var ronda : Ronda? = null
     var fotoLocal:String?=null
@@ -231,6 +231,12 @@ class TematicaActivity : AppCompatActivity() {
                     Log.d(TAG, rondaDB.toString())
                     ronda = rondaDB
 
+                    BaseDatos.getInstance()!!.getTematicaById(ronda!!.id_tematica, object : IGetTematica{
+                        override fun OnCallBack(tematica: Tematica) {
+                            viewBinding.tvTematica.setText(tematica.nombre)
+                        }
+                    })
+
                 }
 
             })
@@ -248,11 +254,7 @@ class TematicaActivity : AppCompatActivity() {
 
 
     private fun inicializarInterfaz() {
-        BaseDatos.getInstance()!!.getTematicaById(ronda!!.id_tematica, object : IGetTematica{
-            override fun OnCallBack(tematica: Tematica) {
-                viewBinding.tvTematica.setText(tematica.nombre)
-            }
-        })
+
 
         viewBinding.btnBack.visibility = View.INVISIBLE
         viewBinding.btnAcept.visibility = View.INVISIBLE
@@ -340,7 +342,7 @@ class TematicaActivity : AppCompatActivity() {
                     val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-                    BaseDatos.getInstance()?.subirfoto(savedUri!!,wraperSala!!.id,User.getInstancia()!!.printToken(),ronda)
+                    BaseDatos.getInstance()?.subirfoto(savedUri!!,wraperSala!!.id,User.getInstancia()!!.printToken(),numeroronda)
 
                     Log.d(TAG, msg)
 
