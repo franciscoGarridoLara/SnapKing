@@ -132,9 +132,9 @@ class TematicaActivity : AppCompatActivity() {
                         Log.d("TEMATICA ACTIVITY","Status sala: " + status.toString())
                         if(!status)
                         {
-                            var intent = Intent(this@TematicaActivity,PrincipalActivity::class.java)
-                            startActivity(intent)
-                            finish()
+//                            var intent = Intent(this@TematicaActivity,PrincipalActivity::class.java)
+//                            startActivity(intent)
+//                            finish()
                             escuchar = false
                         }
 
@@ -166,12 +166,13 @@ class TematicaActivity : AppCompatActivity() {
     }
 
     private fun inciarCountDown(encender : Boolean) {
+
         if (wraperSala!!.sala.anfitrion.equals(User.getInstancia()!!.printToken().toString())) {
             if(encender)
                 counter.start()
             else
                 counter.cancel()
-        }else
+        }else if(encender)
         {
             val postListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -222,8 +223,9 @@ class TematicaActivity : AppCompatActivity() {
                     }
                     inciarCountDown(false)
 
-                    startActivity(Intent(this,PrincipalActivity::class.java))
-                    finish()
+
+//                    startActivity(Intent(this,PrincipalActivity::class.java))
+//                    finish()
                 }
 
                 builder.setNegativeButton(android.R.string.no) { dialog, which ->

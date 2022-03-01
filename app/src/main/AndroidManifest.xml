@@ -32,7 +32,7 @@
         <activity
             android:name="com.example.snapking.AmigosActivity"
             android:exported="false" android:screenOrientation="locked"
-            android:parentActivityName=".PrincipalActivity"/>
+            />
         <activity
             android:name="com.example.snapking.RegistroActivity"
             android:exported="false" android:screenOrientation="locked"
@@ -53,7 +53,7 @@
 
         <activity
             android:name="com.example.snapking.PrincipalActivity"
-            android:exported="false" android:parentActivityName="com.example.snapking.AmigosActivity" android:screenOrientation="locked"/>
+            android:exported="false" android:screenOrientation="locked"/>
     </application>
 
 </manifest>

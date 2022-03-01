@@ -18,7 +18,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 private lateinit var binding:ViewBinding
-private
 class VotacionActivity : AppCompatActivity() {
     private lateinit var wraperSala:WrapperSala
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,18 +47,12 @@ class VotacionActivity : AppCompatActivity() {
 
 
 
-        })
-
-
-
-    }
-
-
-
-
     private fun cogerWrapperSala(){
         val intent = intent
         val type: Type = object : TypeToken<WrapperSala>() {}.type
         wraperSala= Gson().fromJson<WrapperSala>(intent.getStringExtra("wrapersala"),type)
     }
+
+
+
 }

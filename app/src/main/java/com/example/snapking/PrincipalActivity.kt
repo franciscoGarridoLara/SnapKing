@@ -144,7 +144,7 @@ class PrincipalActivity : AppCompatActivity() {
                 //intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
                 Log.d("PRINCIPAL ACTIVITY","Redireccionando a Activity Lobby")
                 startActivity(intent)
-                finish()
+
 
             }
 

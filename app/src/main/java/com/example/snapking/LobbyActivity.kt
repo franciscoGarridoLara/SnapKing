@@ -116,7 +116,8 @@ class LobbyActivity : AppCompatActivity() {
                                         if (ready) {
                                             var intent=Intent(applicationContext,TematicaActivity::class.java)
                                             intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
-                                            //BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListener!!)
+                                            Log.d("LOBBY ACTIVITY","CERRANDO ESCUCHADOR CARGAR USUARIOS.")
+                                            BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListener!!)
                                             startActivity(intent)
                                             inicio = false
                                         }
@@ -170,12 +171,14 @@ class LobbyActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext,
                         android.R.string.yes, Toast.LENGTH_SHORT).show()
                     chequearStart=false
+                    Log.d("LOBBY ACITVITY", "REMOVIENDO ESCUCHADOR DE SALA")
+                    BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListener!!)
                     //llamar a base de datos para eliminar la sala.
                     BaseDatos.getInstance()?.elminarJugadorSala(wraperSala!!.id, User.getInstancia()!!.printToken())
 
                     startActivity(Intent(this,PrincipalActivity::class.java))
                     finish()
-                    activityActual!!.finish()
+
                 }
 
                 builder.setNegativeButton(android.R.string.no) { dialog, which ->
