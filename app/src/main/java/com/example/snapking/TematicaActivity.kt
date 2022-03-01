@@ -12,10 +12,8 @@ import android.os.CountDownTimer
 import android.provider.MediaStore
 import android.provider.Telephony.Mms.Part.FILENAME
 import android.util.Log
-import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -73,6 +71,8 @@ class TematicaActivity : AppCompatActivity() {
         override fun onFinish() {
             Log.d("TEMATICA ACTIVITY", "CountDown finalizado!")
             viewBinding.tvTiempo.setText("TIEMPO!")
+
+
         }
     }
 
@@ -168,10 +168,15 @@ class TematicaActivity : AppCompatActivity() {
     private fun inciarCountDown(encender : Boolean) {
 
         if (wraperSala!!.sala.anfitrion.equals(User.getInstancia()!!.printToken().toString())) {
-            if(encender)
+            if(encender){
+                Log.d("TEMATICA ACTIVITY","ENCENDIENDO TIMER!!")
                 counter.start()
-            else
+            }
+            else{
+                Log.d("TEMATICA ACTIVITY","CANCELANDO TIMER!!")
                 counter.cancel()
+            }
+
         }else if(encender)
         {
             val postListener = object : ValueEventListener {
@@ -204,7 +209,19 @@ class TematicaActivity : AppCompatActivity() {
         }
 
         }
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+
+    override fun onBackPressed() {
+        // code here to show dialog
+        //llamar a base de datos para eliminar la sala.
+        try {
+            BaseDatos.getInstance()?.elminarJugadorSala(wraperSala!!.id, User.getInstancia()!!.printToken())
+        } catch (e: NullPointerException) {
+        }
+        inciarCountDown(false)
+        super.onBackPressed() // optional depending on your needs
+    }
+
+/*    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (event != null) {
             if(keyCode==event.keyCode)
             {
@@ -239,7 +256,7 @@ class TematicaActivity : AppCompatActivity() {
 
         }
         return super.onKeyDown(keyCode, event)
-    }
+    }*/
 
 
 

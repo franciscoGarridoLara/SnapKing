@@ -102,24 +102,25 @@ class LobbyActivity : AppCompatActivity() {
                                 Log.d("------LOBBY ACITVITY", "Numero ready: " + votos.toString())
                                 Log.d("--------LOBBY ACITVITY", "lista size: " + lista.size.toString())
                                 if(votos==lista.size){
+                                    inicio = false
                                     BaseDatos.getInstance()?.empezarPartida(wraperSala!!.id)
+                                    BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListener!!)
                                     var intent=Intent(applicationContext,TematicaActivity::class.java)
                                     intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
                                     startActivity(intent)
-                                    inicio = false
-
                                 }
                             }else{
                                 BaseDatos.getInstance()?.comprobarPartida(wraperSala!!.id,object:IComprobarStart{
                                     override fun OncallBack(ready: Boolean) {
 
                                         if (ready) {
+                                            inicio = false
                                             var intent=Intent(applicationContext,TematicaActivity::class.java)
                                             intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
                                             Log.d("LOBBY ACTIVITY","CERRANDO ESCUCHADOR CARGAR USUARIOS.")
                                             BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListener!!)
                                             startActivity(intent)
-                                            inicio = false
+                                            finish()
                                         }
 
                                     }
@@ -158,7 +159,26 @@ class LobbyActivity : AppCompatActivity() {
         BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).addValueEventListener(postListener!!)
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+
+    override fun onBackPressed() {
+        // code here to show dialog
+        Toast.makeText(applicationContext,
+            android.R.string.yes, Toast.LENGTH_SHORT).show()
+        chequearStart=false
+        Log.d("LOBBY ACITVITY", "REMOVIENDO ESCUCHADOR DE SALA")
+        BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListener!!)
+        //llamar a base de datos para eliminar la sala.
+        BaseDatos.getInstance()?.elminarJugadorSala(wraperSala!!.id, User.getInstancia()!!.printToken())
+
+        startActivity(Intent(this,PrincipalActivity::class.java))
+        finish()
+
+        super.onBackPressed() // optional depending on your needs
+    }
+
+
+
+  /*  override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (event != null) {
             if(keyCode==event.keyCode)
             {
@@ -192,5 +212,5 @@ class LobbyActivity : AppCompatActivity() {
 
         }
         return super.onKeyDown(keyCode, event)
-    }
+    }*/
 }
