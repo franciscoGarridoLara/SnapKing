@@ -14,8 +14,6 @@ import android.provider.Telephony.Mms.Part.FILENAME
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -28,25 +26,18 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.example.snapking.Adapters.UsuarioAdapter
 import com.example.snapking.BaseDatos.*
 import com.example.snapking.Firebase.User
-import com.example.snapking.Wrapper.WrapperUsuarioLobby
 import com.example.snapking.databinding.ActivityTematicaBinding
-import com.example.snapking.databinding.FragmentImageBinding
-import com.example.snapking.modelo.Jugador
 import com.example.snapking.modelo.Ronda
 import com.example.snapking.modelo.WrapperSala
-import com.google.android.filament.MaterialInstance
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.squareup.picasso.Picasso
 import java.io.File
 import java.lang.reflect.Type
-import java.nio.file.Files.createFile
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -60,6 +51,8 @@ class TematicaActivity : AppCompatActivity() {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var fragmentTransaction: FragmentTransaction
     private lateinit var outputDirectory: File
+    private  var savedUri:Uri? =null
+    var ronda=0
     private var wraperSala:WrapperSala?=null
     var fotoLocal:String?=null
     val PHOTO_EXTENSION=".jpg"
@@ -280,6 +273,7 @@ class TematicaActivity : AppCompatActivity() {
             viewBinding.btnAcept.visibility = View.INVISIBLE
             viewBinding.btnBack.visibility = View.INVISIBLE
 
+
         }
 
 
@@ -339,7 +333,8 @@ class TematicaActivity : AppCompatActivity() {
                     val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-                    BaseDatos.getInstance()?.subirfoto(savedUri!!,wraperSala!!.id,User.getInstancia()!!.printToken())
+                    BaseDatos.getInstance()?.subirfoto(savedUri!!,wraperSala!!.id,User.getInstancia()!!.printToken(),ronda)
+
                     Log.d(TAG, msg)
 
 
@@ -349,7 +344,7 @@ class TematicaActivity : AppCompatActivity() {
         )
     }
     private fun createFile(baseFolder: File, format: String, extension: String) =
-        File(baseFolder, "image."+extension)
+        File(baseFolder, User.getInstancia()!!.printToken()+extension)
 
     private fun startCamera() {
 
