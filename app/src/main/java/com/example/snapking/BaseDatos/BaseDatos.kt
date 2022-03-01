@@ -56,7 +56,7 @@ class BaseDatos(){
 
     fun getUsers(listaIds:ArrayList<String>, iGetUsuarios: IGetUsuarios){
 
-        var users = ArrayList<Usuario>()
+        var users = ArrayList<WrapperUsuario>()
         var user : Usuario
 
         var usuarios = reference.child("usuarios").get().addOnSuccessListener {
@@ -66,7 +66,7 @@ class BaseDatos(){
                 {
                     Log.d(TAG,"Existe el usuario por lo que llamamos a la funcion de reconstruir.")
                     user = User.getInstancia()!!.reconstruirUsuario(usuario)
-                    users.add(user)
+                    users.add(WrapperUsuario(usuario.key.toString(),user))
                 }
 
             }
@@ -330,13 +330,14 @@ class BaseDatos(){
             }
 
             getUsers(listaIds, object: IGetUsuarios{
-                override fun OnCallBack(usuarios: ArrayList<Usuario>) {
+                override fun OnCallBack(usuarios: ArrayList<WrapperUsuario>) {
 
                     var i=0
-                       while(i<usuarios.size) {
-                           var usuario=usuarios[i]
+                       while(i<listaEstados.size) {
+                           var id=listaIds[i]
+                           var usuario=usuarios.filter { it.id.equals(id) }.first()
                            var estado=listaEstados[i]
-                           var wrapper : WrapperUsuarioLobby = WrapperUsuarioLobby(usuario,estado)
+                           var wrapper : WrapperUsuarioLobby = WrapperUsuarioLobby(usuario.usuario,estado)
                            wrapperUsuarios.add(wrapper)
                            i++
                        }
