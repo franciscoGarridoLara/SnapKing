@@ -30,6 +30,7 @@ import com.example.snapking.BaseDatos.*
 import com.example.snapking.Firebase.User
 import com.example.snapking.databinding.ActivityTematicaBinding
 import com.example.snapking.modelo.Ronda
+import com.example.snapking.modelo.Tematica
 import com.example.snapking.modelo.WrapperSala
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -54,6 +55,7 @@ class TematicaActivity : AppCompatActivity() {
     private  var savedUri:Uri? =null
     var ronda=0
     private var wraperSala:WrapperSala?=null
+    var ronda : Ronda? = null
     var fotoLocal:String?=null
     val PHOTO_EXTENSION=".jpg"
     var counter = object : CountDownTimer(60000, 1000) {
@@ -225,10 +227,9 @@ class TematicaActivity : AppCompatActivity() {
         if(wraperSala!!.sala?.anfitrion.equals(User.getInstancia()!!.printToken())) {
             //Si el usuario es anfitrion entonces crea una ronda y la inserta en la base de datos.
             BaseDatos.getInstance()!!.crearRonda(wraperSala!!.id, object : IGetRonda{
-                override fun OnCallBack(ronda: Ronda) {
-                    Log.d(TAG, ronda.toString())
-
-
+                override fun OnCallBack(rondaDB: Ronda) {
+                    Log.d(TAG, rondaDB.toString())
+                    ronda = rondaDB
 
                 }
 
@@ -247,6 +248,12 @@ class TematicaActivity : AppCompatActivity() {
 
 
     private fun inicializarInterfaz() {
+        BaseDatos.getInstance()!!.getTematicaById(ronda!!.id_tematica, object : IGetTematica{
+            override fun OnCallBack(tematica: Tematica) {
+                viewBinding.tvTematica.setText(tematica.nombre)
+            }
+        })
+
         viewBinding.btnBack.visibility = View.INVISIBLE
         viewBinding.btnAcept.visibility = View.INVISIBLE
     }

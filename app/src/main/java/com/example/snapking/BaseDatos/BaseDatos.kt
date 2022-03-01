@@ -437,6 +437,22 @@ class BaseDatos(){
 
     }
 
+    fun getTematicaById(idTematica : String, iGetTematica : IGetTematica){
+        reference.child("tematicas").get().addOnSuccessListener {
+            for(categoria in it.children){
+                for (tematica in categoria.children){
+                    if(tematica.key.toString().equals(idTematica)){
+                        var tem = Tematica(tematica.key.toString(), categoria.key.toString(),tematica.value.toString())
+                        Log.d(TAG,"Tematica encontrada: " + tem.toString())
+                        iGetTematica.OnCallBack(tem)
+                        break
+                    }
+                }
+            }
+
+        }
+    }
+
     fun crearRonda(idSala: String, iGetRonda : IGetRonda){
 
         getTematicaRandom(object : IGetTematica{

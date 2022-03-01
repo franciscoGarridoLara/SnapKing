@@ -52,18 +52,12 @@ class PrincipalActivity : AppCompatActivity() {
 
     private fun setListeners() {
 
-        //-------------BORRAR----------------
-        binding.tematica.setOnClickListener(){
-            startActivity(Intent(this,TematicaActivity::class.java))
-            finish()
-        }
         binding.btnParty.setOnClickListener{
 
 
 
 
         }
-
 
         binding.btnAjustes.setOnClickListener()
         {
