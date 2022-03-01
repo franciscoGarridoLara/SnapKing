@@ -1,37 +1,26 @@
 package com.example.snapking
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.snapking.databinding.ActivityLobbyBinding
-import com.example.snapking.modelo.WrapperSala
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.lang.reflect.Type
-import androidx.core.content.ContextCompat.startActivity
-
-import android.content.Intent
-
-import android.content.SharedPreferences
-import android.os.Handler
-
-import android.preference.PreferenceManager
-import androidx.core.content.ContextCompat
 import com.example.snapking.Adapters.UsuarioAdapter
 import com.example.snapking.BaseDatos.*
 import com.example.snapking.Firebase.User
 import com.example.snapking.Wrapper.WrapperUsuarioLobby
+import com.example.snapking.databinding.ActivityLobbyBinding
 import com.example.snapking.modelo.Jugador
-import com.example.snapking.modelo.Sala
+import com.example.snapking.modelo.WrapperSala
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
 
 
 class LobbyActivity : AppCompatActivity() {
@@ -97,7 +86,7 @@ class LobbyActivity : AppCompatActivity() {
     }
 
     private fun cargarUsuarios() {
-        val postListener = object : ValueEventListener {
+        postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (inicio) {
                     BaseDatos!!.getInstance()!!.getUsersFromSala(wraperSala!!.id,object : IGetUsersFromSala{
@@ -124,7 +113,6 @@ class LobbyActivity : AppCompatActivity() {
                                 BaseDatos.getInstance()?.comprobarPartida(wraperSala!!.id,object:IComprobarStart{
                                     override fun OncallBack(ready: Boolean) {
 
-
                                         if (ready) {
                                             var intent=Intent(applicationContext,TematicaActivity::class.java)
                                             intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
@@ -150,6 +138,10 @@ class LobbyActivity : AppCompatActivity() {
                         }
 
                     })
+                }else
+                {
+                    Log.d("ACTIVITY LOBBY", "REMOVIENDO EL LISTENER DE CARGAR DATOS.")
+                    BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(this)
                 }
             }
 
@@ -160,8 +152,6 @@ class LobbyActivity : AppCompatActivity() {
                 BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(this)
             }
         }
-
-
 
 
         BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).addValueEventListener(postListener!!)

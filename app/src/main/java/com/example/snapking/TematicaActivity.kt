@@ -78,15 +78,17 @@ class TematicaActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tematica)
+        //setContentView(R.layout.activity_tematica)
 
-        //cerrar la actividad anterior.
-        LobbyActivity.activityActual!!.finish()
         outputDirectory = getOutputDirectory(this)
 
         viewBinding = ActivityTematicaBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        Log.d("TEMATICA ACTIVITY","INICIANDO TEMATICA ACTIVITY")
+
+        //cerrar la actividad anterior.
+        LobbyActivity.activityActual!!.finish()
 
         cogerWrapperSala()
         crearRonda()
@@ -125,12 +127,16 @@ class TematicaActivity : AppCompatActivity() {
                         Log.d("TEMATICA ACTIVITY","Status sala: " + status.toString())
                         if(!status)
                         {
+                            var intent = Intent(this@TematicaActivity,PrincipalActivity::class.java)
+                            startActivity(intent)
+                            finish()
                             escuchar = false
                         }
 
                     }
                 })
                 if(!escuchar){
+                    Log.d("TEMATICA ACTIVITY", "STATUS = FALSE, SALIENDO A PRINCIPAL.")
                     BaseDatos.getInstance()!!.reference.child("salas").removeEventListener(this)
                     var intent = Intent(this@TematicaActivity,PrincipalActivity::class.java)
                     startActivity(intent)
@@ -250,13 +256,13 @@ class TematicaActivity : AppCompatActivity() {
 
 
         }else{
-            while(ronda == null){
-                BaseDatos.getInstance()!!.getRondaByIdSala(wraperSala!!.id, object : IGetRonda{
-                    override fun OnCallBack(rondaDB: Ronda) {
-                        ronda = rondaDB
-                    }
-                })
-            }
+//            while(ronda == null){
+//                BaseDatos.getInstance()!!.getRondaByIdSala(wraperSala!!.id, object : IGetRonda{
+//                    override fun OnCallBack(rondaDB: Ronda) {
+//                        ronda = rondaDB
+//                    }
+//                })
+//            }
         }
 
     }
@@ -269,6 +275,7 @@ class TematicaActivity : AppCompatActivity() {
         val intent = intent
         val type: Type = object : TypeToken<WrapperSala>() {}.type
         wraperSala= Gson().fromJson<WrapperSala>(intent.getStringExtra("wrapersala"),type)
+        Log.d("TEMATICA ACTIVITY", wraperSala.toString())
     }
 
 
