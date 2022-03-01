@@ -530,6 +530,17 @@ class BaseDatos(){
 
     }
 
+    fun comprobarStatusSala(idSala: String, iGetStatusSala: IGetStatusSala) {
+        reference.child("salas").child(idSala).child("start").get().addOnSuccessListener {
+            try {
+                var status = it.value as Boolean
+                iGetStatusSala.OnCallBack(status)
+            } catch (e: Exception) {
+                iGetStatusSala.OnCallBack(false)
+            }
+        }
+    }
+
     /*
     fun getListWrapperUsuariosFromListIds(ids : List<String>) : ArrayList<WrapperUsuario>
     {

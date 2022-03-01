@@ -97,7 +97,7 @@ class LobbyActivity : AppCompatActivity() {
     }
 
     private fun cargarUsuarios() {
-         postListener = object : ValueEventListener {
+        val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (inicio) {
                     BaseDatos!!.getInstance()!!.getUsersFromSala(wraperSala!!.id,object : IGetUsersFromSala{
@@ -157,6 +157,8 @@ class LobbyActivity : AppCompatActivity() {
             override fun onCancelled(databaseError: DatabaseError) {
                 // Getting Post failed, log a message
                 Log.w("ACTIVITY LOBBY", "loadPost:onCancelled", databaseError.toException())
+
+                BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(this)
             }
         }
 

@@ -117,7 +117,40 @@ class TematicaActivity : AppCompatActivity() {
 
     private fun iniciarJuego() {
         inciarCountDown(true)
+        comprobarStatusPartida()
+    }
 
+    private fun comprobarStatusPartida() {
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                BaseDatos.getInstance()!!.comprobarStatusSala(wraperSala!!.id, object : IGetStatusSala{
+                    override fun OnCallBack(status: Boolean) {
+                        Log.d("TEMATICA ACTIVITY","Status sala: " + status.toString())
+                        if(!status)
+                        {
+                            var intent = Intent(this@TematicaActivity,PrincipalActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+
+                    }
+
+                })
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                //Mandar a la principal activity.
+                Log.w("ACTIVITY LOBBY", "loadPost:onCancelled", databaseError.toException())
+                var intent = Intent(this@TematicaActivity,PrincipalActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+
+
+        }
+
+        BaseDatos.getInstance()!!.reference.child("salas").addValueEventListener(postListener)
     }
 
     private fun inciarCountDown(encender : Boolean) {
@@ -150,6 +183,8 @@ class TematicaActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 }
+
+
             }
 
             BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("ronda").child("tiempo").addValueEventListener(postListener)
