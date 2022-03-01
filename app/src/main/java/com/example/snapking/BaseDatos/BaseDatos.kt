@@ -517,6 +517,7 @@ class BaseDatos(){
                 var segundos = it.child("tiempo").value as Long
                 iGetSegundos.OnCallBack(segundos.toInt())
             } catch (e: NullPointerException) {
+                iGetSegundos.OnCallBack(-1)
             }
         }
 

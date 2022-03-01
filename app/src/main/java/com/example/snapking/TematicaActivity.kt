@@ -56,6 +56,7 @@ class TematicaActivity : AppCompatActivity() {
     var ronda : Ronda? = null
     var fotoLocal:String?=null
     val PHOTO_EXTENSION=".jpg"
+    var postListener : ValueEventListener? = null
     var counter = object : CountDownTimer(60000, 1000) {
 
         override fun onTick(millisUntilFinished: Long) {
@@ -179,14 +180,21 @@ class TematicaActivity : AppCompatActivity() {
 
         }else if(encender)
         {
-            val postListener = object : ValueEventListener {
+            postListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     BaseDatos.getInstance()!!.getSegundos(wraperSala!!.id, object : IGetSegundos{
                         override fun OnCallBack(segundos: Int) {
                             Log.d("TEMATICA ACTIVITY", "Segundos desde el servidor.")
                             if(segundos > 0){
                                 viewBinding.tvTiempo.setText(segundos.toString())
-                            }else{
+                            }else if(segundos < 0){
+                                Log.d("TEMATICA ACTIVITY","CERRANDO ESCUCHADOR SEGUNDOS")
+                                BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("ronda").child("tiempo").removeEventListener(postListener!!)
+                                var intent = Intent(this@TematicaActivity,PrincipalActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            else if(segundos == 0){
                                 viewBinding.tvTiempo.setText("TIEMPO!")
                             }
                         }
@@ -196,6 +204,9 @@ class TematicaActivity : AppCompatActivity() {
                 override fun onCancelled(databaseError: DatabaseError) {
                     // Getting Post failed, log a message
                     //Mandar a la principal activity.
+                    Log.d("TEMATICA ACTIVITY","ON CANCELLED CERRANDO ESCUCHADOR SEGUNDOS")
+                    BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("ronda").child("tiempo").removeEventListener(postListener!!)
+
                     Log.w("ACTIVITY LOBBY", "loadPost:onCancelled", databaseError.toException())
                     var intent = Intent(this@TematicaActivity,PrincipalActivity::class.java)
                     startActivity(intent)
@@ -205,7 +216,7 @@ class TematicaActivity : AppCompatActivity() {
 
             }
 
-            BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("ronda").child("tiempo").addValueEventListener(postListener)
+            BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("ronda").child("tiempo").addValueEventListener(postListener!!)
         }
 
         }
