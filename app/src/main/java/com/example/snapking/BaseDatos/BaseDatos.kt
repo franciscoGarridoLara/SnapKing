@@ -351,6 +351,21 @@ class BaseDatos(){
 
     }
 
+    fun getFotosFromRonda(idSala: String, iGetFotos : IGetFotos){
+        var fotos : ArrayList<Foto> = ArrayList()
+
+        reference.child("salas").child(idSala).child("ronda").child("fotos").get().addOnSuccessListener {
+            for(foto in it.children){
+                var idFoto = foto.key.toString()
+                var urlFoto = foto.value.toString()
+                fotos.add(Foto(idFoto,urlFoto))
+            }
+            iGetFotos.OnCallBack(fotos)
+        }
+
+
+    }
+
     fun getJugadoresFromSala(idSala:String,iGetJugadoresFromSala: IGetJugadoresFromSala){
         reference.child("salas").child(idSala).child("jugadores").get().addOnSuccessListener {datasnap->
 
@@ -385,19 +400,31 @@ class BaseDatos(){
     }
 
     fun getRondaByIdSala(idSala : String, iGetRonda: IGetRonda){
+        var ronda : Ronda? = null
 
-        reference.child("salas").child(idSala).child("ronda").get().addOnSuccessListener {
-            var ronda : Ronda? = null
 
-            try {
-                ronda = it.getValue<Ronda>()
-                iGetRonda.OnCallBack(ronda!!)
-            } catch (e: Exception) {
+            reference.child("salas").child(idSala).child("ronda").get().addOnSuccessListener {
+                try {
+                    var numero = (it.child("numero").value as Long).toInt()
+                    var id_tematica = it.child("id_tematica").value as String
+                    var fotos = ArrayList<Foto>()
+                    var tiempo = (it.child("tiempo").value as Long).toInt()
+
+                    for(foto in it.child("fotos").children){
+                        var idFoto = foto.child("id").value as String
+                        var urlFoto = foto.child("url").value as String
+                        fotos.add(Foto(idFoto,urlFoto))
+                    }
+
+                    ronda = Ronda(numero,id_tematica,fotos,tiempo)
+                    iGetRonda.OnCallBack(ronda!!)
+                } catch (e: Exception) {
+                    iGetRonda.OnCallBack(null)
+                }
+
 
             }
 
-
-        }
     }
 
     fun setUserReadySala(idSala:String, idJugador:String,ready:Boolean,iReady: IReady){

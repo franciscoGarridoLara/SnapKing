@@ -122,6 +122,10 @@ class User private constructor(var auth:FirebaseAuth, var client : GoogleSignInC
         Log.d(TAG,nombre)
     }
 
+    fun getName() : String{
+        return instance!!.mAuth.currentUser?.displayName.toString()
+    }
+
     fun printToken(): String {
         var token = "SIN TOKEN"
 

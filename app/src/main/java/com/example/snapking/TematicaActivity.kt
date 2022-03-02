@@ -56,6 +56,7 @@ class TematicaActivity : AppCompatActivity() {
     private lateinit var fragment : Fragment
     private lateinit var outputDirectory: File
     private  var savedUri:Uri? =null
+    var stopCorrecto : Boolean = false
     var numeroronda=0
     private var wraperSala:WrapperSala?=null
     var ronda : Ronda? = null
@@ -63,6 +64,7 @@ class TematicaActivity : AppCompatActivity() {
     val PHOTO_EXTENSION=".jpg"
     var postListener : ValueEventListener? = null
     var postListenerStatus : ValueEventListener? = null
+    var postListenerRonda : ValueEventListener? = null
     var counter = object : CountDownTimer(60000, 1000) {
 
         override fun onTick(millisUntilFinished: Long) {
@@ -78,7 +80,7 @@ class TematicaActivity : AppCompatActivity() {
         override fun onFinish() {
             Log.d("TEMATICA ACTIVITY", "CountDown finalizado!")
             viewBinding.tvTiempo.setText("TIEMPO!")
-
+            iniciarVotacion()
 
         }
     }
@@ -130,7 +132,8 @@ class TematicaActivity : AppCompatActivity() {
             mediaDir else appContext.filesDir
     }
 
-    private fun pasarActividad(){
+    private fun iniciarVotacion(){
+        stopCorrecto = true
         var intent=Intent(applicationContext,VotacionActivity::class.java)
         intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
         startActivity(intent)
@@ -139,7 +142,9 @@ class TematicaActivity : AppCompatActivity() {
     private fun iniciarJuego() {
         inciarCountDown(true)
         comprobarStatusPartida()
+
     }
+
 
     private fun comprobarStatusPartida() {
 
@@ -214,6 +219,7 @@ class TematicaActivity : AppCompatActivity() {
                             }
                             else if(segundos == 0){
                                 viewBinding.tvTiempo.setText("TIEMPO!")
+                                iniciarVotacion()
                             }
                         }
                     })
@@ -305,8 +311,9 @@ class TematicaActivity : AppCompatActivity() {
         if(wraperSala!!.sala?.anfitrion.equals(User.getInstancia()!!.printToken())) {
             //Si el usuario es anfitrion entonces crea una ronda y la inserta en la base de datos.
             BaseDatos.getInstance()!!.crearRonda(wraperSala!!.id, object : IGetRonda{
-                override fun OnCallBack(rondaDB: Ronda) {
+                override fun OnCallBack(rondaDB: Ronda?) {
                     Log.d(TAG, rondaDB.toString())
+                    wraperSala!!.sala.ronda = rondaDB
                     ronda = rondaDB
 
                     BaseDatos.getInstance()!!.getTematicaById(ronda!!.id_tematica, object : IGetTematica{
@@ -321,14 +328,52 @@ class TematicaActivity : AppCompatActivity() {
 
 
         }else{
-
-                BaseDatos.getInstance()!!.getRondaByIdSala(wraperSala!!.id, object : IGetRonda{
-                    override fun OnCallBack(rondaDB: Ronda) {
-                        ronda = rondaDB
+            var cargar = true
+            postListenerRonda = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if(cargar){
+                        Log.d("TEMATICA ACTIVITY","LLAMANDO A CARGAR TEMATICA")
+                        cargarTematica(object : ITematicaCargada{
+                            override fun OnCallBack(cargada: Boolean) {
+                                cargar = !cargada
+                            }
+                        })
+                    }else{
+                        Log.d("TEMATICA ACTIVITY", "REMOVIENDO ESCUCHADOR DE RONDA")
+                        BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("ronda").removeEventListener(postListenerRonda!!)
                     }
-                })
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.w("ACTIVITY LOBBY", "loadPost:onCancelled", databaseError.toException())
+                }
+
+
+            }
+
+            BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("ronda").addValueEventListener(postListenerRonda!!)
 
         }
+
+    }
+
+    private fun cargarTematica(iTematicaCargada : ITematicaCargada){
+
+        BaseDatos.getInstance()!!.getRondaByIdSala(wraperSala!!.id, object : IGetRonda{
+            override fun OnCallBack(rondaDB: Ronda?) {
+                wraperSala!!.sala.ronda = rondaDB
+                ronda = rondaDB
+                if(ronda != null){
+                    BaseDatos.getInstance()!!.getTematicaById(ronda!!.id_tematica, object : IGetTematica{
+                        override fun OnCallBack(tematica: Tematica) {
+                            Log.d("TEMATICA ACTIVITY","ONCALLBACK DE GETTEMATICAID" + tematica.toString())
+                            setTematica(tematica)
+                            iTematicaCargada.OnCallBack(true)
+                        }
+                    })
+                }
+            }
+        })
 
     }
 
@@ -373,10 +418,11 @@ class TematicaActivity : AppCompatActivity() {
             viewBinding.btnAcept.visibility = View.INVISIBLE}
 
         viewBinding.btnAcept.setOnClickListener {
+            iniciarVotacion()
             viewBinding.btnPhoto.visibility= View.VISIBLE
             viewBinding.btnAcept.visibility = View.INVISIBLE
             viewBinding.btnBack.visibility = View.INVISIBLE
-            pasarActividad()
+
 
 
         }
@@ -444,7 +490,8 @@ class TematicaActivity : AppCompatActivity() {
                 override fun
                         onImageSaved(output: ImageCapture.OutputFileResults){
                     val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
-                    val msg = "Photo capture succeeded: ${output.savedUri}"
+                    //val msg = "Photo capture succeeded: ${output.savedUri}"
+                    val msg = "Foto capturada correctamente.\n Cargando..."
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     BaseDatos.getInstance()?.subirfoto(savedUri!!,wraperSala!!.id,User.getInstancia()!!.printToken(),numeroronda, object : IGetSuccessSubirFoto{
                         override fun OnCallBack(url: String) {
@@ -506,7 +553,10 @@ class TematicaActivity : AppCompatActivity() {
         fragmentTransaction= supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.cameraLayout, fragment)
         //fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
+        try {
+            fragmentTransaction.commit()
+        } catch (e: Exception) {
+        }
 
     }
 
@@ -516,8 +566,10 @@ class TematicaActivity : AppCompatActivity() {
     }
 
     override fun onStop() {
-        Log.d("TEMATICA ACTIVITY", "INICIANDO CIERRE DE SALA")
-        cronometroCierre.start()
+        if (!stopCorrecto) {
+            Log.d("TEMATICA ACTIVITY", "INICIANDO CIERRE DE SALA")
+            cronometroCierre.start()
+        }
         super.onStop()
     }
 

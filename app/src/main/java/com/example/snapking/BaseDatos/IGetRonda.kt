@@ -4,5 +4,5 @@ import com.example.snapking.modelo.Ronda
 
 interface IGetRonda {
 
-    fun OnCallBack(ronda : Ronda)
+    fun OnCallBack(ronda : Ronda?)
 }

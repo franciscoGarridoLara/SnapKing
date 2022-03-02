@@ -20,20 +20,6 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnConfiguracion"
-            android:layout_width="73dp"
-            android:layout_height="73dp"
-            android:background="@drawable/icon_configuration"
-            android:foreground="@drawable/icon_configuration"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.02"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.01"
-            tools:ignore="SpeakableTextPresentCheck" />
-
         <TextView
             android:id="@+id/tvTematica"
             android:layout_width="match_parent"
