@@ -1,20 +1,21 @@
 package com.example.snapking
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.snapking.BaseDatos.BaseDatos
 import com.example.snapking.BaseDatos.ISalasLectura
 import com.example.snapking.Firebase.User
+import com.example.snapking.Utilidades.CircleTransform
 import com.example.snapking.databinding.ActivityPrincipalBinding
 import com.example.snapking.modelo.Jugador
 import com.example.snapking.modelo.Sala
 import com.example.snapking.modelo.WrapperSala
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.Transformation
 
 
 class PrincipalActivity : AppCompatActivity() {
@@ -45,8 +46,11 @@ class PrincipalActivity : AppCompatActivity() {
 
 
     private fun iniciarInterfaz() {
+
+        Log.d("PRINCIPAL ACTIVITY","AVATAR URL: " + User.getInstancia()!!.getAvatar())
         Picasso.get()
             .load(User.getInstancia()!!.getAvatar())
+            .transform(CircleTransform(50,0))
             .into(binding.btnPerfil)
     }
 
@@ -63,7 +67,7 @@ class PrincipalActivity : AppCompatActivity() {
         {
             User.getInstancia()!!.signOut()
             startActivity(Intent(this,MainActivity::class.java))
-            //finish()
+            finish()
         }
         if(User.getInstancia()!= null){
             User.getInstancia()!!.printName()
@@ -144,7 +148,7 @@ class PrincipalActivity : AppCompatActivity() {
                 //intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
                 Log.d("PRINCIPAL ACTIVITY","Redireccionando a Activity Lobby")
                 startActivity(intent)
-
+                finish()
 
             }
 

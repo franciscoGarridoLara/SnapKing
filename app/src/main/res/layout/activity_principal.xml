@@ -39,7 +39,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <ImageButton
+    <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/btnPerfil"
         android:layout_width="76dp"
         android:layout_height="76dp"

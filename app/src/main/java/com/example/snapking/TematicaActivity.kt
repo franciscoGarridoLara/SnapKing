@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.ImageFormat
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -12,6 +13,8 @@ import android.os.CountDownTimer
 import android.provider.MediaStore
 import android.provider.Telephony.Mms.Part.FILENAME
 import android.util.Log
+import android.util.Rational
+import android.util.Size
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +26,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example.snapking.BaseDatos.*
 import com.example.snapking.Firebase.User
@@ -49,6 +53,7 @@ class TematicaActivity : AppCompatActivity() {
     private var imageCapture: ImageCapture? = null
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var fragmentTransaction: FragmentTransaction
+    private lateinit var fragment : Fragment
     private lateinit var outputDirectory: File
     private  var savedUri:Uri? =null
     var numeroronda=0
@@ -75,6 +80,18 @@ class TematicaActivity : AppCompatActivity() {
             viewBinding.tvTiempo.setText("TIEMPO!")
 
 
+        }
+    }
+
+    var cronometroCierre = object : CountDownTimer(10000, 1000) {
+
+        override fun onTick(millisUntilFinished: Long) {
+            Log.d("TEMATICA ACTIVITY","SEGUNDOS ANTES DE CERRAR LA SALA: " + millisUntilFinished / 1000)
+        }
+
+        override fun onFinish() {
+            Log.d("TEMATICA ACTIVITY", "TIEMPO DE ESPERA TERMINADO, CERRANDO SALA")
+            onBackPressed()
         }
     }
 
@@ -238,7 +255,11 @@ class TematicaActivity : AppCompatActivity() {
 
         Log.d("TEMATICA ACTIVITY", "REMOVIENDO ESCUCHADOR DE SALA EN BACKPRESSED")
         BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListenerStatus!!)
-        super.onBackPressed() // optional depending on your needs
+
+        startActivity(Intent(this,PrincipalActivity::class.java))
+        finish()
+
+        //super.onBackPressed() // optional depending on your needs
     }
 
 /*    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -332,6 +353,7 @@ class TematicaActivity : AppCompatActivity() {
 
     private fun setListeners() {
         viewBinding.btnPhoto.setOnClickListener {
+            Log.d("TEMATICA ACTIVITY", "HACIENDO FOTO BOTON FOTO")
             takePhoto()
 
             viewBinding.btnBack.visibility = View.VISIBLE
@@ -342,7 +364,10 @@ class TematicaActivity : AppCompatActivity() {
 
 
         viewBinding.btnBack.setOnClickListener {
-            onBackPressed()
+            fragmentTransaction= supportFragmentManager.beginTransaction()
+            fragmentTransaction.remove(fragment)
+            fragmentTransaction.commit()
+
             viewBinding.btnBack.visibility = View.INVISIBLE
             viewBinding.btnPhoto.visibility= View.VISIBLE
             viewBinding.btnAcept.visibility = View.INVISIBLE}
@@ -376,7 +401,15 @@ class TematicaActivity : AppCompatActivity() {
 
     private fun takePhoto() {
         // Get a stable reference of the modifiable image capture use case
-        val imageCapture = imageCapture ?: return
+        var imageCapture = imageCapture ?: ImageCapture.Builder()
+            .setJpegQuality(1)
+            .setTargetResolution(Size(480,640))
+            //.setTargetResolution(Size(500,500))
+            .build()
+
+
+
+        //var imageCapture = ImageCapture.Builder().setTargetResolution(Size(50,50))
 
         // Create time stamped name and MediaStore entry.
         val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US)
@@ -469,22 +502,11 @@ class TematicaActivity : AppCompatActivity() {
     }
     private fun switchFragment(url : String){
 
-        var fragment: Fragment?= null
-
         fragment = ImageFragment(url)
-
-
         fragmentTransaction= supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.cameraLayout,fragment)
-        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.replace(R.id.cameraLayout, fragment)
+        //fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
-
-
-
-
-
-
-
 
     }
 
@@ -493,6 +515,17 @@ class TematicaActivity : AppCompatActivity() {
             baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
 
+    override fun onStop() {
+        Log.d("TEMATICA ACTIVITY", "INICIANDO CIERRE DE SALA")
+        cronometroCierre.start()
+        super.onStop()
+    }
+
+    override fun onRestart() {
+        Log.d("TEMATICA ACTIVITY", "CANCELANDO CIERRE DE SALA")
+        cronometroCierre.cancel()
+        super.onRestart()
+    }
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()

@@ -27,6 +27,7 @@ class ImageFragment(var url : String?) : Fragment() {
         if(url != null){
             Picasso.get()
                 .load(url)
+                .rotate(90F)
                 .into(ivFoto)
         }else{
             Picasso.get()
@@ -39,6 +40,8 @@ class ImageFragment(var url : String?) : Fragment() {
 
 
     }
+
+
 
 
 

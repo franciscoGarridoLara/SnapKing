@@ -173,7 +173,7 @@ class LobbyActivity : AppCompatActivity() {
         startActivity(Intent(this,PrincipalActivity::class.java))
         finish()
 
-        super.onBackPressed() // optional depending on your needs
+        //super.onBackPressed() // optional depending on your needs
     }
 
 

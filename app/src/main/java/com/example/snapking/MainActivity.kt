@@ -47,13 +47,14 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
     }
 
     override fun onStart() {
-        super.onStart()
+
         //Si ya ha iniciado sesion.
         if (mAuth != null && mAuth.currentUser != null) {
             User.crearInstance(mAuth,mGoogleSignInClient)
             startActivity(Intent(this,PrincipalActivity::class.java))
             finish()
         }
+        super.onStart()
     }
 
     private fun instanciasGoogle() {

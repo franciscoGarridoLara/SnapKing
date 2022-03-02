@@ -28,7 +28,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <ImageView
+            <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/fotoPerfil"
                 android:layout_width="39dp"
                 android:layout_height="match_parent"

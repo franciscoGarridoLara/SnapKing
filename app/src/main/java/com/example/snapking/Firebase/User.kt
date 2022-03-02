@@ -81,7 +81,7 @@ class User private constructor(var auth:FirebaseAuth, var client : GoogleSignInC
                 user = reconstruirUsuario(userFound!!)
             else{
                 Log.d(TAG,"Creando usuario por defecto y insertando en la base de datos.")
-                user = Usuario(auth.currentUser!!.displayName.toString(),"https://firebasestorage.googleapis.com/v0/b/snap-king.appspot.com/o/user.png?alt=media&token=042c6e93-c9ec-4ee1-8d8e-0113d4bcf14f",1, ArrayList())
+                user = Usuario(auth.currentUser!!.displayName.toString(),auth.currentUser!!.photoUrl.toString(),1, ArrayList())
             }
 
             wrapper = WrapperUsuario(instance!!.mAuth.currentUser!!.uid,user!!)
