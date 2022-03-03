@@ -107,6 +107,7 @@ class VotacionActivity : AppCompatActivity() {
 
     }
     private fun pasarDeEscenaTematica(){
+        Log.d("VOTACION ACTIVITY","CAMBIA A ACTIVIDAD DE TEMATICA")
         var intent = Intent(applicationContext, TematicaActivity::class.java)
         intent.putExtra("wrapersala", Gson().toJson(wraperSala))
         cerrarEscuchadores()
@@ -114,6 +115,7 @@ class VotacionActivity : AppCompatActivity() {
         finish()
     }
     private fun pasarDeEscenaGanador(){
+        Log.d("VOTACION ACTIVITY","CAMBIA A ACTIVIDAD DE GANADOR")
         var intent = Intent(applicationContext, GanadorActivity::class.java)
         intent.putExtra("wrapersala", Gson().toJson(wraperSala))
         cerrarEscuchadores()

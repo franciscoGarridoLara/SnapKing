@@ -233,6 +233,28 @@ class BaseDatos(){
     fun meterJugadorSala(id:String,jugador:Jugador){
         reference.child("salas").child(id).child("jugadores").push().setValue(jugador)
     }
+    fun getGanadorFromSala(idSala: String,iGetJugadorGanador: IGetJugadorGanador){
+
+
+       getJugadoresFromSala(idSala,object:IGetJugadoresFromSala{
+           override fun OnCallback(lista: ArrayList<Jugador>) {
+               var jugadorGanador:Jugador
+               jugadorGanador= lista.maxByOrNull { it-> it.punto}!!
+               Log.d(TAG,"JUGADOR GANADOR"+jugadorGanador.toString())
+
+               getUser(jugadorGanador.id,object:IGetUser{
+                   override fun OnCallBack(user: Usuario) {
+                      var wraper=WrapperUsuarioPartida(user,jugadorGanador.punto.toInt())
+                       iGetJugadorGanador.oncallBack(wraper)
+                   }
+
+               })
+
+           }
+
+       })
+
+    }
 
     fun getUsersWithNickname(nickname:String) : List<WrapperUsuario>?{
         var usuarios : ArrayList<WrapperUsuario>?
