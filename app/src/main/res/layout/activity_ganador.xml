@@ -84,6 +84,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtEstrellas" />
 
     <ImageButton
+        android:id="@+id/btnLobby"
         android:layout_width="142dp"
         android:layout_height="62dp"
         android:layout_marginTop="52dp"
