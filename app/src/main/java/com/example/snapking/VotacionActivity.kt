@@ -53,6 +53,7 @@ class VotacionActivity : AppCompatActivity() {
     }
     //Esto se puede retocar a su gusto.
     private fun iniciarVotacion() {
+
         BaseDatos.getInstance()!!.getFotosFromRonda(wraperSala!!.id, object : IGetFotos{
             override fun OnCallBack(fotos: ArrayList<Foto>) {
                 //Eliminamos la foto del propio usuario por que no se tiene que votar a el mismo.
@@ -185,7 +186,7 @@ class VotacionActivity : AppCompatActivity() {
                                                         object : InRonda {
                                                             override fun OncallBack(nRonda: Int) {
 
-                                                                    if (nRonda <= wraperSala.sala.rondas_totales.toInt()) {
+                                                                    if (nRonda < wraperSala.sala.rondas_totales.toInt()) {
                                                                         BaseDatos.getInstance()
                                                                             ?.cambiarEstapaSala(
                                                                                 wraperSala.id,
@@ -237,6 +238,12 @@ class VotacionActivity : AppCompatActivity() {
 
         }
 
+
+
+
+    }
+
+    private fun listenerInvitadoPasarEscena() {
         postListenerInvitadoPasarEscena = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 BaseDatos.getInstance()?.getEtapaSala(wraperSala.id,object:IGetEtapaSala{
@@ -257,7 +264,6 @@ class VotacionActivity : AppCompatActivity() {
         }
 
         BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala.id).child("etapa").addValueEventListener(postListenerInvitadoPasarEscena!!)
-
     }
 
     override fun onBackPressed() {
@@ -304,6 +310,9 @@ class VotacionActivity : AppCompatActivity() {
                                             override fun onCallBack(etapa: Etapa) {
 
                                                 if(etapa.equals(Etapa.VOTACION)){
+                                                    if(!User.getInstancia()!!.printToken().equals(wraperSala.sala.anfitrion)){
+                                                        listenerInvitadoPasarEscena()
+                                                    }
                                                     iniciarVotacion()
                                                 }
                                             }
