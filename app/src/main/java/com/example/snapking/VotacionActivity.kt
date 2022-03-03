@@ -1,5 +1,6 @@
 package com.example.snapking
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -28,6 +29,7 @@ class VotacionActivity : AppCompatActivity() {
     private lateinit var postListenerJugadores: ValueEventListener
     private lateinit var fragmentTransaction: FragmentTransaction
     private lateinit var fragment : VotacionFragment
+    lateinit var postListenerTiempo: ValueEventListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +41,7 @@ class VotacionActivity : AppCompatActivity() {
 
 
         setListeners()
-        iniciarVotacion()
+
 
 
     }
@@ -96,6 +98,72 @@ class VotacionActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
+    private fun comprobarTiempo(){
+        postListenerTiempo = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                BaseDatos.getInstance()!!.getSegundos(wraperSala!!.id, object : IGetSegundos{
+                    override fun OnCallBack(segundos: Int) {
+                        Log.d("Votacion ACTIVITY", "Segundos desde el servidor.")
+                        if(segundos > 0){
+                            binding.tvJugador.text="Esperando a que todos los jugadores acaben de hacer fotos"
+                            if(wraperSala.sala.anfitrion.equals(User.getInstancia()!!.printToken())){
+                                BaseDatos.getInstance()?.getFotosFromRonda(wraperSala.id,object:IGetFotos{
+                                    override fun OnCallBack(fotos: ArrayList<Foto>) {
+                                        BaseDatos.getInstance()?.getJugadoresFromSala(wraperSala.id,object:IGetJugadoresFromSala{
+                                            override fun OnCallback(lista: ArrayList<Jugador>) {
+                                                if(fotos.size == lista.size){
+                                                    iniciarVotacion()
+                                                    BaseDatos.getInstance()?.cambiarEstadoSala(wraperSala!!.id,Etapa.VOTACION)
+                                                    BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListenerTiempo!!)
+
+
+                                                }
+                                            }
+
+
+                                        })
+                                    }
+
+                                })
+
+                            }else{
+
+                            }
+
+                        }else if(segundos <= 0){
+                            Log.d("Votacion ACTIVITY","CERRANDO ESCUCHADOR SEGUNDOS")
+                            BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListenerTiempo!!)
+                            var intent = Intent(this@VotacionActivity,PrincipalActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                        else if(segundos == 0){
+
+                            iniciarVotacion()
+                            if(wraperSala.sala.anfitrion.equals(User))
+                            BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListenerTiempo!!)
+                        }
+                    }
+                })
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                //Mandar a la principal activity.
+                Log.d("TEMATICA ACTIVITY","ON CANCELLED CERRANDO ESCUCHADOR SEGUNDOS")
+                BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListenerTiempo!!)
+
+                Log.w("ACTIVITY LOBBY", "loadPost:onCancelled", databaseError.toException())
+                var intent = Intent(this@VotacionActivity,PrincipalActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+
+
+        }
+
+        BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("ronda").child("tiempo").addValueEventListener(postListenerTiempo!!)
+    }
     private fun cargarUsuarios() {
         postListenerJugadores = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {

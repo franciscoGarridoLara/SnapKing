@@ -101,7 +101,7 @@ class LobbyActivity : AppCompatActivity() {
                                 }
                                 Log.d("------LOBBY ACITVITY", "Numero ready: " + votos.toString())
                                 Log.d("--------LOBBY ACITVITY", "lista size: " + lista.size.toString())
-                                if(votos==lista.size){
+                                if(votos==lista.size&&votos>1){
                                     inicio = false
                                     BaseDatos.getInstance()?.empezarPartida(wraperSala!!.id)
                                     BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListener!!)

@@ -31,6 +31,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.snapking.BaseDatos.*
 import com.example.snapking.Firebase.User
 import com.example.snapking.databinding.ActivityTematicaBinding
+import com.example.snapking.modelo.Etapa
 import com.example.snapking.modelo.Ronda
 import com.example.snapking.modelo.Tematica
 import com.example.snapking.modelo.WrapperSala
@@ -134,6 +135,7 @@ class TematicaActivity : AppCompatActivity() {
 
     private fun iniciarVotacion(){
         stopCorrecto = true
+
         var intent=Intent(applicationContext,VotacionActivity::class.java)
         intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
         startActivity(intent)
@@ -219,6 +221,9 @@ class TematicaActivity : AppCompatActivity() {
                             }
                             else if(segundos == 0){
                                 viewBinding.tvTiempo.setText("TIEMPO!")
+                                if(wraperSala!!.sala.anfitrion.equals(User.getInstancia()!!.printToken())){
+                                    BaseDatos.getInstance()!!.cambiarEstadoSala(wraperSala!!.id,Etapa.VOTACION)
+                                }
                                 iniciarVotacion()
                             }
                         }

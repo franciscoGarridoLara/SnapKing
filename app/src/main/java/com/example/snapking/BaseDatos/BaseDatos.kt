@@ -161,7 +161,9 @@ class BaseDatos(){
                         child.child("estado").value as Boolean,
                         ronda,
                         child.child("rondas_totales").value as Long,
-                        jugadores
+                        jugadores,
+                        null,
+                        Etapa.LOBBY
                     )
                     var clave=child.key
                 var wrapperSala:WrapperSala?
@@ -656,6 +658,10 @@ class BaseDatos(){
 
     }
 
+    fun cambiarEstadoSala(idSala:String,etapa:Etapa){
+        reference.child("salas").child(idSala).child("etapa").setValue(etapa)
+    }
+
     fun comprobarStatusSala(idSala: String, iGetStatusSala: IGetStatusSala) {
         reference.child("salas").child(idSala).child("start").get().addOnSuccessListener {
             try {
@@ -722,6 +728,7 @@ class BaseDatos(){
     init {
         println("Singleton invoked")
     }
+
 
 
 }

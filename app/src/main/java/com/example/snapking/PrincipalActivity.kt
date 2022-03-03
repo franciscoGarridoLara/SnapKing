@@ -10,6 +10,7 @@ import com.example.snapking.BaseDatos.ISalasLectura
 import com.example.snapking.Firebase.User
 import com.example.snapking.Utilidades.CircleTransform
 import com.example.snapking.databinding.ActivityPrincipalBinding
+import com.example.snapking.modelo.Etapa
 import com.example.snapking.modelo.Jugador
 import com.example.snapking.modelo.Sala
 import com.example.snapking.modelo.WrapperSala
@@ -97,7 +98,7 @@ class PrincipalActivity : AppCompatActivity() {
         var listaJugadores=ArrayList<Jugador>()
         listaJugadores.add(jugador)
 
-        var sala=Sala("sala publica",8,iduser,true,null,5,listaJugadores)
+        var sala=Sala("sala publica",8,iduser,true,null,5,listaJugadores,null,Etapa.LOBBY)
         var id=BaseDatos.getInstance()?.escribirSala(sala)
     }
 
@@ -135,7 +136,7 @@ class PrincipalActivity : AppCompatActivity() {
                         var listaJugadores=ArrayList<Jugador>()
                         listaJugadores.add(jugador)
 
-                        var sala=Sala("sala publica",8,id,true,null,5,listaJugadores)
+                        var sala=Sala("sala publica",8,id,true,null,5,listaJugadores,null,Etapa.LOBBY)
                         var idsala=BaseDatos.getInstance()?.escribirSala(sala)
                         WrapperSalaGlobal=WrapperSala(idsala.toString(),sala)
 
