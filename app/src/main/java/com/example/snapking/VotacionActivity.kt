@@ -27,7 +27,7 @@ class VotacionActivity : AppCompatActivity() {
     private lateinit var fragmentTransaction: FragmentTransaction
     private lateinit var fragment : VotacionFragment
     lateinit var postListenerTiempo: ValueEventListener
-    lateinit var postListenerEtapa : ValueEventListener
+     var postListenerEtapa : ValueEventListener?=null
     lateinit var postListenerPasarDeEscena:ValueEventListener
     private var listaFotos=ArrayList<Foto>()
     var nFoto=0
@@ -57,6 +57,9 @@ class VotacionActivity : AppCompatActivity() {
                 listaFotos=fotos
                 if (fotos.size>0) {
                     fotoActual = fotos[0]
+                    if (wraperSala.sala.anfitrion.equals(User.getInstancia()?.printToken())) {
+                        BaseDatos.getInstance()?.cambiarEstapaSala(wraperSala.id,Etapa.VOTACION)
+                    }
 
 
                     BaseDatos.getInstance()?.getUser(fotoActual.id, object : IGetUser {
@@ -113,9 +116,18 @@ class VotacionActivity : AppCompatActivity() {
     }
 
     private fun cerrarEscuchadores() {
-        BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("jugadores").removeEventListener(postListenerPasarDeEscena!!)
-        BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListenerTiempo!!)
-        BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("etapa").removeEventListener(postListenerEtapa!!)
+        try {
+            BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("jugadores").removeEventListener(postListenerPasarDeEscena!!)
+        } catch (e: Exception) {
+        }
+        try {
+            BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListenerTiempo!!)
+        } catch (e: Exception) {
+        }
+        try {
+            BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("etapa").removeEventListener(postListenerEtapa!!)
+        } catch (e: Exception) {
+        }
 
     }
 
@@ -159,24 +171,27 @@ class VotacionActivity : AppCompatActivity() {
                                             if (votados == lista.size) {
 
                                                 BaseDatos.getInstance()
-                                                    ?.getRondaByIdSala(wraperSala.id,
-                                                        object : IGetRonda {
-                                                            override fun OnCallBack(ronda: Ronda?) {
-                                                                if (ronda!!.numero < this@VotacionActivity.wraperSala.sala.rondas_totales.toInt()) {
-                                                                    BaseDatos.getInstance()
-                                                                        ?.cambiarEstapaSala(
-                                                                            wraperSala.id,
-                                                                            Etapa.PARTIDA
-                                                                        )
-                                                                    pasarDeEscenaTematica()
-                                                                } else {
-                                                                    BaseDatos.getInstance()
-                                                                        ?.cambiarEstapaSala(
-                                                                            wraperSala.id,
-                                                                            Etapa.GANADOR
-                                                                        )
-                                                                    pasarDeEscenaTematica()
-                                                                }
+                                                    ?.getnronda(wraperSala.id,
+                                                        object : InRonda {
+                                                            override fun OncallBack(nRonda: Int) {
+
+                                                                    if (nRonda < this@VotacionActivity.wraperSala.sala.rondas_totales.toInt()) {
+                                                                        BaseDatos.getInstance()
+                                                                            ?.cambiarEstapaSala(
+                                                                                wraperSala.id,
+                                                                                Etapa.PARTIDA
+                                                                            )
+                                                                        pasarDeEscenaTematica()
+                                                                    } else {
+                                                                        BaseDatos.getInstance()
+                                                                            ?.cambiarEstapaSala(
+                                                                                wraperSala.id,
+                                                                                Etapa.GANADOR
+                                                                            )
+                                                                        pasarDeEscenaTematica()
+                                                                    }
+
+
                                                             }
 
                                                         })

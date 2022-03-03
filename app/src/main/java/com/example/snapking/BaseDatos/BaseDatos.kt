@@ -561,6 +561,13 @@ class BaseDatos(){
         }
 
     }
+    fun getnronda(idSala : String,inRonda: InRonda){
+        reference.child("salas").child(idSala).child("ronda").child("numero").get().addOnSuccessListener {
+            var nRonda=(it.value as Long).toInt()
+            inRonda.OncallBack(nRonda)
+        }
+
+    }
 
     fun subirfoto(fileURL: Uri, idSala: String, idUser: String, ronda: Int, iGetSuccesSubirFoto: IGetSuccessSubirFoto) {
 
