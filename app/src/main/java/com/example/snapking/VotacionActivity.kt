@@ -140,6 +140,12 @@ class VotacionActivity : AppCompatActivity() {
         } catch (e: Exception) {
         }
 
+        try {
+            BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("jugadores").removeEventListener(postListenerJugadores!!)
+        } catch (e: Exception) {
+        }
+
+
     }
 
     private fun setListeners() {

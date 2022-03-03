@@ -114,6 +114,7 @@ class BaseDatos(){
             for(child in it.children){
 
                 var ronda:Ronda?
+                var wrapperSala: WrapperSala?
                 try {
                     var fotos : ArrayList<Foto> = ArrayList()
 
@@ -154,7 +155,8 @@ class BaseDatos(){
                     }
 
                 Log.d("-----------------fff","entradon5")
-                    var sala=Sala(
+                try {
+                    var sala = Sala(
                         child.child("nombre").value as String,
                         child.child("capacidad").value as Long,
                         child.child("anfitrion").value as String,
@@ -165,11 +167,14 @@ class BaseDatos(){
                         null,
                         Etapa.LOBBY
                     )
-                    var clave=child.key
-                var wrapperSala:WrapperSala?
-                  wrapperSala=null
-                if(clave!=null){
-                     wrapperSala= WrapperSala(clave,sala)
+                    var clave = child.key
+
+                    wrapperSala = null
+                    if (clave != null) {
+                        wrapperSala = WrapperSala(clave, sala)
+                    }
+                }catch  (e:Exception){
+                    wrapperSala=null
                 }
 
                 Log.d("-----------------fff","entradon6")
@@ -180,6 +185,7 @@ class BaseDatos(){
                         Log.d("------------------mmmmmmm","nulllazooooooooo")
 
                     }
+
                     listaSalasglobal=listasalas
 
 
@@ -673,12 +679,15 @@ class BaseDatos(){
     fun getEtapaSala(idSala:String,iGetEtapaSala: IGetEtapaSala){
 
 
-        reference.child("salas").child(idSala).child("etapa").get().addOnSuccessListener {
-            var etapastr:String=it.value as String
-            var etapa=Etapa.valueOf(etapastr)
+        try {
+            reference.child("salas").child(idSala).child("etapa").get().addOnSuccessListener {
+                var etapastr:String=it.value as String
+                var etapa=Etapa.valueOf(etapastr)
 
-            iGetEtapaSala.onCallBack(etapa)
+                iGetEtapaSala.onCallBack(etapa)
 
+            }
+        } catch (e: Exception) {
         }
 
 
