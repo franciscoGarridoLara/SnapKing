@@ -513,11 +513,12 @@ class BaseDatos(){
 
                 var sala = reference.child("salas").child(idSala).get().addOnSuccessListener {
                     var ronda : Ronda? = null
+                    var numeroRonda : Int = 0
                     try {
                         Log.d(TAG,"Success Listener!")
-                        ronda = it.child("ronda").getValue<Ronda>()!!
+                        numeroRonda = (it.child("ronda").child("numero").value as Long).toInt()
+                        ronda = Ronda(numeroRonda + 1, tematica.id, ArrayList(),60)
                         Log.d(TAG,"Ronda: " + ronda.toString())
-                        ronda = Ronda(ronda.numero + 1, tematica.id, ronda.fotos,ronda.tiempo)
                         iGetRonda.OnCallBack(ronda)
                     } catch (e: Exception) {
                             ronda = Ronda(1,tematica.id,ArrayList(),60)

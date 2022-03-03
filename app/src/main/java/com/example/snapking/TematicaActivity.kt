@@ -251,6 +251,10 @@ class TematicaActivity : AppCompatActivity() {
         }
 
     override fun onBackPressed() {
+        try {
+            BaseDatos.getInstance()?.elminarJugadorSala(wraperSala!!.id, User.getInstancia()!!.printToken())
+        } catch (e: NullPointerException) {
+        }
         cerrarEscuchadores()
         startActivity(Intent(this,PrincipalActivity::class.java))
         finish()
@@ -261,10 +265,7 @@ class TematicaActivity : AppCompatActivity() {
     private fun cerrarEscuchadores() {
         // code here to show dialog
         //llamar a base de datos para eliminar la sala.
-        try {
-            BaseDatos.getInstance()?.elminarJugadorSala(wraperSala!!.id, User.getInstancia()!!.printToken())
-        } catch (e: NullPointerException) {
-        }
+
         inciarCountDown(false)
 
         if (postListener != null) {
