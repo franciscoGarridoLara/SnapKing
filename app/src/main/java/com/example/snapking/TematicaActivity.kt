@@ -135,6 +135,7 @@ class TematicaActivity : AppCompatActivity() {
         var idJugador=User.getInstancia()!!.printToken()
 
         BaseDatos.getInstance()?.cambiarEstadoJugadorSala(wraperSala!!.id,idJugador,Etapa.VOTACION)
+        cerrarEscuchadores()
         var intent=Intent(applicationContext,VotacionActivity::class.java)
         intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
         startActivity(intent)
@@ -250,6 +251,14 @@ class TematicaActivity : AppCompatActivity() {
         }
 
     override fun onBackPressed() {
+        cerrarEscuchadores()
+        startActivity(Intent(this,PrincipalActivity::class.java))
+        finish()
+
+        //super.onBackPressed() // optional depending on your needs
+    }
+
+    private fun cerrarEscuchadores() {
         // code here to show dialog
         //llamar a base de datos para eliminar la sala.
         try {
@@ -266,10 +275,6 @@ class TematicaActivity : AppCompatActivity() {
         Log.d("TEMATICA ACTIVITY", "REMOVIENDO ESCUCHADOR DE SALA EN BACKPRESSED")
         BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListenerStatus!!)
 
-        startActivity(Intent(this,PrincipalActivity::class.java))
-        finish()
-
-        //super.onBackPressed() // optional depending on your needs
     }
 
 /*    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

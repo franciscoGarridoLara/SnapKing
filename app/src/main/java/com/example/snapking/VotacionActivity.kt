@@ -91,6 +91,7 @@ class VotacionActivity : AppCompatActivity() {
     private fun switchFragment(nickname : String, url : String){
 
         fragment = VotacionFragment(nickname, url)
+        binding.btnVotar.visibility=View.VISIBLE
         fragmentTransaction= supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frameVotacion, fragment)
         //fragmentTransaction.addToBackStack(null)
@@ -188,7 +189,7 @@ class VotacionActivity : AppCompatActivity() {
                                                                                 wraperSala.id,
                                                                                 Etapa.GANADOR
                                                                             )
-                                                                        pasarDeEscenaTematica()
+                                                                        pasarDeEscenaGanador()
                                                                     }
 
 
