@@ -47,6 +47,8 @@ class VotacionActivity : AppCompatActivity() {
 
 
 
+
+
     }
     //Esto se puede retocar a su gusto.
     private fun iniciarVotacion() {
@@ -56,6 +58,7 @@ class VotacionActivity : AppCompatActivity() {
                 fotos.removeIf { it -> it.id.equals(User.getInstancia()!!.printToken().toString()) }
                 listaFotos=fotos
                 if (fotos.size>0) {
+                    TematicaActivity.votacion = true
                     fotoActual = fotos[0]
                     if (wraperSala.sala.anfitrion.equals(User.getInstancia()?.printToken())) {
                         BaseDatos.getInstance()?.cambiarEstapaSala(wraperSala.id,Etapa.VOTACION)

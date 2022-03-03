@@ -70,18 +70,23 @@ class TematicaActivity : AppCompatActivity() {
 
             var segundos = (millisUntilFinished/1000).toInt()
 
-            BaseDatos.getInstance()!!.actualizarTiempo(wraperSala!!.id,segundos)
+            if(!votacion){
+                BaseDatos.getInstance()!!.actualizarTiempo(wraperSala!!.id,segundos)
+                viewBinding.tvTiempo.setText(segundos.toString())
+            }else{
+                this.cancel()
+            }
 
-            viewBinding.tvTiempo.setText(segundos.toString())
         }
 
         override fun onFinish() {
             Log.d("TEMATICA ACTIVITY", "CountDown finalizado!")
             viewBinding.tvTiempo.setText("TIEMPO!")
-            iniciarVotacion()
+            //iniciarVotacion()
 
         }
     }
+
 
     var cronometroCierre = object : CountDownTimer(10000, 1000) {
 
@@ -251,6 +256,7 @@ class TematicaActivity : AppCompatActivity() {
         }
 
     override fun onBackPressed() {
+        inciarCountDown(false)
         try {
             BaseDatos.getInstance()?.elminarJugadorSala(wraperSala!!.id, User.getInstancia()!!.printToken())
         } catch (e: NullPointerException) {
@@ -266,7 +272,6 @@ class TematicaActivity : AppCompatActivity() {
         // code here to show dialog
         //llamar a base de datos para eliminar la sala.
 
-        inciarCountDown(false)
 
         if (postListener != null) {
             Log.d("TEMATICA ACTIVITY","REMOVIENDO ESCUCHADOR DE SEGUNDOS EN BACKPRESSED.")
@@ -594,6 +599,7 @@ class TematicaActivity : AppCompatActivity() {
     }
 
     companion object {
+        var votacion : Boolean = false
         private const val TAG = "CameraXApp"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
