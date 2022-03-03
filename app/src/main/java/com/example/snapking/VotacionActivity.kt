@@ -28,6 +28,9 @@ class VotacionActivity : AppCompatActivity() {
     private lateinit var fragment : VotacionFragment
     lateinit var postListenerTiempo: ValueEventListener
     lateinit var postListenerEtapa : ValueEventListener
+    lateinit var postListenerPasarDeEscena:ValueEventListener
+    private var listaFotos=ArrayList<Foto>()
+    var nFoto=0
     private lateinit var fotoActual:Foto
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,12 +54,24 @@ class VotacionActivity : AppCompatActivity() {
             override fun OnCallBack(fotos: ArrayList<Foto>) {
                 //Eliminamos la foto del propio usuario por que no se tiene que votar a el mismo.
                 fotos.removeIf { it -> it.id.equals(User.getInstancia()!!.printToken().toString()) }
+                listaFotos=fotos
+                if (fotos.size>0) {
+                    fotoActual = fotos[0]
 
-                for(foto in fotos){
-                    switchFragment(User.getInstancia()!!.getName(),foto.url)
-                    votar()
-                    fotoActual=foto
+
+                    BaseDatos.getInstance()?.getUser(fotoActual.id, object : IGetUser {
+                        override fun OnCallBack(user: Usuario) {
+                            switchFragment(user.nickname, fotoActual.url)
+                            votar()
+                        }
+
+
+                    })
                 }
+
+
+
+
             }
 
         })
@@ -82,6 +97,27 @@ class VotacionActivity : AppCompatActivity() {
         }
 
     }
+    private fun pasarDeEscenaTematica(){
+        var intent = Intent(applicationContext, TematicaActivity::class.java)
+        intent.putExtra("wrapersala", Gson().toJson(wraperSala))
+        cerrarEscuchadores()
+        startActivity(intent)
+        finish()
+    }
+    private fun pasarDeEscenaGanador(){
+        var intent = Intent(applicationContext, TematicaActivity::class.java)
+        intent.putExtra("wrapersala", Gson().toJson(wraperSala))
+        cerrarEscuchadores()
+        startActivity(intent)
+        finish()
+    }
+
+    private fun cerrarEscuchadores() {
+        BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("jugadores").removeEventListener(postListenerPasarDeEscena!!)
+        BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListenerTiempo!!)
+        BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("etapa").removeEventListener(postListenerEtapa!!)
+
+    }
 
     private fun setListeners() {
         binding.btnVotar.visibility = View.INVISIBLE
@@ -89,6 +125,101 @@ class VotacionActivity : AppCompatActivity() {
             Log.d("ACTIVITY VOTACION", "VALORACION: " + binding.sliderPuntuacion.rating)
             BaseDatos.getInstance()!!.sumarPuntosJugadorSala(wraperSala.id,fotoActual.id, binding.sliderPuntuacion.rating)
             binding.btnVotar.visibility = View.INVISIBLE
+            nFoto++
+
+            if (nFoto<listaFotos.size) {
+                 fotoActual=listaFotos[nFoto]
+
+
+                BaseDatos.getInstance()!!.getUser(fotoActual.id,object:IGetUser{
+                    override fun OnCallBack(user: Usuario) {
+                        switchFragment(user.nickname,fotoActual.url)
+                    }
+
+                })
+
+            }else{
+                BaseDatos.getInstance()!!.cambiarEstadoJugadorSala(wraperSala.id,User.getInstancia()!!.printToken(),Etapa.VOTADO)
+
+
+                    postListenerPasarDeEscena = object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            if (wraperSala.sala.anfitrion.equals(
+                                    User.getInstancia()!!.printToken()
+                                )
+                            ) {
+
+                                BaseDatos.getInstance()?.getJugadoresFromSala(wraperSala.id,
+                                    object : IGetJugadoresFromSala {
+                                        override fun OnCallback(lista: ArrayList<Jugador>) {
+                                            var votados =
+                                                lista.filter { it.etapa.equals(Etapa.VOTADO) }
+                                                    .count()
+
+                                            if (votados == lista.size) {
+
+                                                BaseDatos.getInstance()
+                                                    ?.getRondaByIdSala(wraperSala.id,
+                                                        object : IGetRonda {
+                                                            override fun OnCallBack(ronda: Ronda?) {
+                                                                if (ronda!!.numero < this@VotacionActivity.wraperSala.sala.rondas_totales.toInt()) {
+                                                                    BaseDatos.getInstance()
+                                                                        ?.cambiarEstapaSala(
+                                                                            wraperSala.id,
+                                                                            Etapa.PARTIDA
+                                                                        )
+                                                                    pasarDeEscenaTematica()
+                                                                } else {
+                                                                    BaseDatos.getInstance()
+                                                                        ?.cambiarEstapaSala(
+                                                                            wraperSala.id,
+                                                                            Etapa.GANADOR
+                                                                        )
+                                                                    pasarDeEscenaTematica()
+                                                                }
+                                                            }
+
+                                                        })
+
+                                            }
+                                        }
+
+
+                                    })
+
+                            }else{
+                                BaseDatos.getInstance()?.getEtapaSala(wraperSala.id,object:IGetEtapaSala{
+                                    override fun onCallBack(etapa: Etapa) {
+                                       if (etapa.equals(Etapa.PARTIDA)){
+                                           pasarDeEscenaTematica()
+                                       }else{
+                                           pasarDeEscenaGanador()
+                                       }
+                                    }
+
+                                })
+                            }
+                        }
+
+                        override fun onCancelled(databaseError: DatabaseError) {
+                            // Getting Post failed, log a message
+                            //Mandar a la principal activity.
+                            Log.d("VOTACION ACTIVITY","ON CANCELLED CERRANDO ESCUCHADOR SEGUNDOS")
+                            BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("jugadores").removeEventListener(postListenerPasarDeEscena!!)
+
+                            Log.w("VOTACION LOBBY", "loadPost:onCancelled", databaseError.toException())
+                            var intent = Intent(this@VotacionActivity,PrincipalActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+
+
+                    }
+
+                    BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("jugadores").addValueEventListener(postListenerPasarDeEscena!!)
+
+            }
+
 
         }
 

@@ -133,7 +133,9 @@ class LobbyActivity : AppCompatActivity() {
                             var intent = Intent(applicationContext, TematicaActivity::class.java)
                             intent.putExtra("wrapersala", Gson().toJson(wraperSala))
                             startActivity(intent)
-                            BaseDatos.getInstance()!!.cambiarEstadoJugadorSala(wraperSala!!.id,User.getInstancia()!!.printToken(),Etapa.PARTIDA)
+                            if (wraperSala!!.sala.anfitrion.equals(User.getInstancia()?.printToken())) {
+                                BaseDatos.getInstance()!!.cambiarEstadoJugadorSala(wraperSala!!.id,User.getInstancia()!!.printToken(),Etapa.PARTIDA)
+                            }
                             finish()
                         }
                     })

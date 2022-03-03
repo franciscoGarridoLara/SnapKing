@@ -421,6 +421,7 @@ class BaseDatos(){
                     ronda = Ronda(numero,id_tematica,fotos,tiempo)
                     iGetRonda.OnCallBack(ronda!!)
                 } catch (e: Exception) {
+                    Log.d(TAG,e.toString())
                     iGetRonda.OnCallBack(null)
                 }
 
@@ -705,7 +706,8 @@ class BaseDatos(){
                 var idJugadorbucle=jugador.child("id").value as String
                 if (idJugador.equals(idJugadorbucle)) {
                     idJugadorSala=jugador.key as String
-                    puntosAcumulador=jugador.child("punto").value as Float
+                    Log.d(TAG, jugador.child("punto").value.toString())
+                    puntosAcumulador=jugador.child("punto").value.toString().toFloat()
                     puntosAcumulador+=puntos
                     break
                 }
