@@ -146,7 +146,7 @@ class BaseDatos(){
 
                         if (j != null) {
 
-                            var jugadorclass=Jugador(j,false, 0,Etapa.LOBBY)
+                            var jugadorclass=Jugador(j,false, 0f,Etapa.LOBBY)
                             jugadores.add(jugadorclass)
                         }
 
@@ -678,18 +678,45 @@ class BaseDatos(){
     fun cambiarEstadoJugadorSala(idSala:String,idJugador: String,etapa:Etapa){
 
         reference.child("salas").child(idSala).child("jugadores").get().addOnSuccessListener {
+            var idJugadorSala:String=""
             for (jugador in it.children){
                 var idJugadorbucle=jugador.child("id").value as String
-                if(idJugadorbucle.equals(idJugador)){
-                    var idJugadorpush=jugador.key as String
-                    reference.child("salas").child(idSala).child("jugadores").child(idJugadorpush).child("etapa").setValue(etapa)
+                if (idJugador.equals(idJugadorbucle)) {
+                     idJugadorSala=jugador.key as String
                     break
                 }
+
+
             }
+            if (!idJugadorSala.equals("")) {
+                reference.child("salas").child(idSala).child("jugadores").child(idJugadorSala).child("etapa").setValue(etapa)
+            }
+
         }
 
 
+    }
+    fun sumarPuntosJugadorSala(idSala:String,idJugador: String,puntos:Float){
 
+        reference.child("salas").child(idSala).child("jugadores").get().addOnSuccessListener {
+            var idJugadorSala:String=""
+            var puntosAcumulador=0f
+            for (jugador in it.children){
+                var idJugadorbucle=jugador.child("id").value as String
+                if (idJugador.equals(idJugadorbucle)) {
+                    idJugadorSala=jugador.key as String
+                    puntosAcumulador=jugador.child("punto").value as Float
+                    puntosAcumulador+=puntos
+                    break
+                }
+
+
+            }
+            if (!idJugadorSala.equals("")) {
+                reference.child("salas").child(idSala).child("jugadores").child(idJugadorSala).child("punto").setValue(puntosAcumulador)
+            }
+
+        }
 
 
     }

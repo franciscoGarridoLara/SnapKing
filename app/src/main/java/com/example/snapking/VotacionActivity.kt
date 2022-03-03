@@ -28,6 +28,7 @@ class VotacionActivity : AppCompatActivity() {
     private lateinit var fragment : VotacionFragment
     lateinit var postListenerTiempo: ValueEventListener
     lateinit var postListenerEtapa : ValueEventListener
+    private lateinit var fotoActual:Foto
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +55,7 @@ class VotacionActivity : AppCompatActivity() {
                 for(foto in fotos){
                     switchFragment(User.getInstancia()!!.getName(),foto.url)
                     votar()
+                    fotoActual=foto
                 }
             }
 
@@ -85,7 +87,7 @@ class VotacionActivity : AppCompatActivity() {
         binding.btnVotar.visibility = View.INVISIBLE
         binding.btnVotar.setOnClickListener {
             Log.d("ACTIVITY VOTACION", "VALORACION: " + binding.sliderPuntuacion.rating)
-
+            BaseDatos.getInstance()!!.sumarPuntosJugadorSala(wraperSala.id,fotoActual.id, binding.sliderPuntuacion.rating)
             binding.btnVotar.visibility = View.INVISIBLE
 
         }
