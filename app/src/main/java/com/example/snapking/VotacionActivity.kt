@@ -29,6 +29,7 @@ class VotacionActivity : AppCompatActivity() {
     lateinit var postListenerTiempo: ValueEventListener
      var postListenerEtapa : ValueEventListener?=null
     lateinit var postListenerPasarDeEscena:ValueEventListener
+    private lateinit var postListenerInvitadoPasarEscena:ValueEventListener
     private var listaFotos=ArrayList<Foto>()
     var nFoto=0
     private lateinit var fotoActual:Foto
@@ -112,7 +113,7 @@ class VotacionActivity : AppCompatActivity() {
         finish()
     }
     private fun pasarDeEscenaGanador(){
-        var intent = Intent(applicationContext, TematicaActivity::class.java)
+        var intent = Intent(applicationContext, GanadorActivity::class.java)
         intent.putExtra("wrapersala", Gson().toJson(wraperSala))
         cerrarEscuchadores()
         startActivity(intent)
@@ -130,6 +131,11 @@ class VotacionActivity : AppCompatActivity() {
         }
         try {
             BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("etapa").removeEventListener(postListenerEtapa!!)
+        } catch (e: Exception) {
+        }
+
+        try {
+            BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala.id).child("etapa").removeEventListener(postListenerInvitadoPasarEscena!!)
         } catch (e: Exception) {
         }
 
@@ -179,7 +185,7 @@ class VotacionActivity : AppCompatActivity() {
                                                         object : InRonda {
                                                             override fun OncallBack(nRonda: Int) {
 
-                                                                    if (nRonda < this@VotacionActivity.wraperSala.sala.rondas_totales.toInt()) {
+                                                                    if (nRonda <= wraperSala.sala.rondas_totales.toInt()) {
                                                                         BaseDatos.getInstance()
                                                                             ?.cambiarEstapaSala(
                                                                                 wraperSala.id,
@@ -206,17 +212,6 @@ class VotacionActivity : AppCompatActivity() {
 
                                     })
 
-                            }else{
-                                BaseDatos.getInstance()?.getEtapaSala(wraperSala.id,object:IGetEtapaSala{
-                                    override fun onCallBack(etapa: Etapa) {
-                                       if (etapa.equals(Etapa.PARTIDA)){
-                                           pasarDeEscenaTematica()
-                                       }else{
-                                           pasarDeEscenaGanador()
-                                       }
-                                    }
-
-                                })
                             }
                         }
 
@@ -241,6 +236,27 @@ class VotacionActivity : AppCompatActivity() {
 
 
         }
+
+        postListenerInvitadoPasarEscena = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                BaseDatos.getInstance()?.getEtapaSala(wraperSala.id,object:IGetEtapaSala{
+                    override fun onCallBack(etapa: Etapa) {
+                        if (etapa.equals(Etapa.PARTIDA)){
+                            pasarDeEscenaTematica()
+                        }else if(etapa.equals(Etapa.GANADOR)){
+                            pasarDeEscenaGanador()
+                        }
+                    }
+
+                })
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala.id).child("etapa").removeEventListener(postListenerInvitadoPasarEscena!!)
+            }
+        }
+
+        BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala.id).child("etapa").addValueEventListener(postListenerInvitadoPasarEscena!!)
 
     }
 

@@ -137,7 +137,7 @@ class PrincipalActivity : AppCompatActivity() {
                         var listaJugadores=ArrayList<Jugador>()
                         listaJugadores.add(jugador)
 
-                        var sala=Sala("sala publica",8,id,true,null,5,listaJugadores,null,Etapa.LOBBY)
+                        var sala=Sala("sala publica",8,id,true,null,2,listaJugadores,null,Etapa.LOBBY)
                         var idsala=BaseDatos.getInstance()?.escribirSala(sala)
                         WrapperSalaGlobal=WrapperSala(idsala.toString(),sala)
 

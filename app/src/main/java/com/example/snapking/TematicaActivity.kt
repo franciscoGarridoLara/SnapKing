@@ -103,7 +103,8 @@ class TematicaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_tematica)
-
+        //Se cambia el estado.
+        TematicaActivity.votacion = false
         outputDirectory = getOutputDirectory(this)
 
         viewBinding = ActivityTematicaBinding.inflate(layoutInflater)
