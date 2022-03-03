@@ -91,6 +91,7 @@ class VotacionActivity : AppCompatActivity() {
             binding.btnVotar.visibility = View.INVISIBLE
 
         }
+
     }
 
     override fun onBackPressed() {
