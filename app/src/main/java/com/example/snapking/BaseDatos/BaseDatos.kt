@@ -146,7 +146,7 @@ class BaseDatos(){
 
                         if (j != null) {
 
-                            var jugadorclass=Jugador(j,false, 0)
+                            var jugadorclass=Jugador(j,false, 0,Etapa.LOBBY)
                             jugadores.add(jugadorclass)
                         }
 
@@ -658,8 +658,40 @@ class BaseDatos(){
 
     }
 
-    fun cambiarEstadoSala(idSala:String,etapa:Etapa){
+    fun cambiarEstapaSala(idSala:String, etapa:Etapa){
         reference.child("salas").child(idSala).child("etapa").setValue(etapa)
+    }
+    fun getEtapaSala(idSala:String,iGetEtapaSala: IGetEtapaSala){
+
+
+        reference.child("salas").child(idSala).child("etapa").get().addOnSuccessListener {
+            var etapastr:String=it.value as String
+            var etapa=Etapa.valueOf(etapastr)
+
+            iGetEtapaSala.onCallBack(etapa)
+
+        }
+
+
+    }
+
+    fun cambiarEstadoJugadorSala(idSala:String,idJugador: String,etapa:Etapa){
+
+        reference.child("salas").child(idSala).child("jugadores").get().addOnSuccessListener {
+            for (jugador in it.children){
+                var idJugadorbucle=jugador.child("id").value as String
+                if(idJugadorbucle.equals(idJugador)){
+                    var idJugadorpush=jugador.key as String
+                    reference.child("salas").child(idSala).child("jugadores").child(idJugadorpush).child("etapa").setValue(etapa)
+                    break
+                }
+            }
+        }
+
+
+
+
+
     }
 
     fun comprobarStatusSala(idSala: String, iGetStatusSala: IGetStatusSala) {

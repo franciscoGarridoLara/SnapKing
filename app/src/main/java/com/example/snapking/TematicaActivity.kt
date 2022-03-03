@@ -5,7 +5,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.ImageFormat
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -13,7 +12,6 @@ import android.os.CountDownTimer
 import android.provider.MediaStore
 import android.provider.Telephony.Mms.Part.FILENAME
 import android.util.Log
-import android.util.Rational
 import android.util.Size
 import android.view.View
 import android.widget.Toast
@@ -26,7 +24,6 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example.snapking.BaseDatos.*
 import com.example.snapking.Firebase.User
@@ -135,7 +132,9 @@ class TematicaActivity : AppCompatActivity() {
 
     private fun iniciarVotacion(){
         stopCorrecto = true
+        var idJugador=User.getInstancia()!!.printToken()
 
+        BaseDatos.getInstance()?.cambiarEstadoJugadorSala(wraperSala!!.id,idJugador,Etapa.VOTACION)
         var intent=Intent(applicationContext,VotacionActivity::class.java)
         intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
         startActivity(intent)
@@ -222,7 +221,7 @@ class TematicaActivity : AppCompatActivity() {
                             else if(segundos == 0){
                                 viewBinding.tvTiempo.setText("TIEMPO!")
                                 if(wraperSala!!.sala.anfitrion.equals(User.getInstancia()!!.printToken())){
-                                    BaseDatos.getInstance()!!.cambiarEstadoSala(wraperSala!!.id,Etapa.VOTACION)
+                                    BaseDatos.getInstance()!!.cambiarEstapaSala(wraperSala!!.id,Etapa.VOTACION)
                                 }
                                 iniciarVotacion()
                             }

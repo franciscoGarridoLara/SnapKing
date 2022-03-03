@@ -7,12 +7,9 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
-import com.example.snapking.Adapters.AmigoAdapterOnline
 import com.example.snapking.Adapters.UsuarioAdapterVotacion
 import com.example.snapking.BaseDatos.*
 import com.example.snapking.Firebase.User
-import com.example.snapking.Wrapper.WrapperUsuarioLobby
 import com.example.snapking.Wrapper.WrapperUsuarioPartida
 import com.example.snapking.databinding.ActivityVotacionBinding
 import com.example.snapking.modelo.*
@@ -30,6 +27,7 @@ class VotacionActivity : AppCompatActivity() {
     private lateinit var fragmentTransaction: FragmentTransaction
     private lateinit var fragment : VotacionFragment
     lateinit var postListenerTiempo: ValueEventListener
+    lateinit var postListenerEtapa : ValueEventListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +36,7 @@ class VotacionActivity : AppCompatActivity() {
         setContentView(binding!!.root)
         cogerWrapperSala()
         cargarUsuarios()
+        comprobarTiempo()
 
 
         setListeners()
@@ -107,13 +106,15 @@ class VotacionActivity : AppCompatActivity() {
                         if(segundos > 0){
                             binding.tvJugador.text="Esperando a que todos los jugadores acaben de hacer fotos"
                             if(wraperSala.sala.anfitrion.equals(User.getInstancia()!!.printToken())){
-                                BaseDatos.getInstance()?.getFotosFromRonda(wraperSala.id,object:IGetFotos{
-                                    override fun OnCallBack(fotos: ArrayList<Foto>) {
+
+
                                         BaseDatos.getInstance()?.getJugadoresFromSala(wraperSala.id,object:IGetJugadoresFromSala{
                                             override fun OnCallback(lista: ArrayList<Jugador>) {
-                                                if(fotos.size == lista.size){
+
+                                                var enVotacion:Int=lista.filter { it.etapa.equals(Etapa.VOTACION) }.count()
+                                                if(enVotacion == lista.size){
                                                     iniciarVotacion()
-                                                    BaseDatos.getInstance()?.cambiarEstadoSala(wraperSala!!.id,Etapa.VOTACION)
+                                                    BaseDatos.getInstance()?.cambiarEstapaSala(wraperSala!!.id,Etapa.VOTACION)
                                                     BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListenerTiempo!!)
 
 
@@ -122,15 +123,43 @@ class VotacionActivity : AppCompatActivity() {
 
 
                                         })
-                                    }
 
-                                })
+
+
 
                             }else{
+                                postListenerEtapa= object : ValueEventListener {
+                                    var escuchar = true
+                                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                        BaseDatos.getInstance()!!.getEtapaSala(wraperSala.id,object: IGetEtapaSala{
+                                            override fun onCallBack(etapa: Etapa) {
 
+                                                if(etapa.equals(Etapa.VOTACION)){
+                                                    iniciarVotacion()
+                                                }
+                                            }
+
+                                        })
+
+
+                                    }
+
+                                    override fun onCancelled(databaseError: DatabaseError) {
+                                        // Getting Post failed, log a message
+                                        //Mandar a la principal activity.
+                                            Log.w("VOTACION LOBBY", "loadPost:onCancelled", databaseError.toException())
+                                        var intent = Intent(this@VotacionActivity,PrincipalActivity::class.java)
+                                        startActivity(intent)
+                                        finish()
+                                    }
+
+
+                                }
+
+                                BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("etapa").addValueEventListener(postListenerEtapa!!)
                             }
 
-                        }else if(segundos <= 0){
+                        }else if(segundos < 0){
                             Log.d("Votacion ACTIVITY","CERRANDO ESCUCHADOR SEGUNDOS")
                             BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListenerTiempo!!)
                             var intent = Intent(this@VotacionActivity,PrincipalActivity::class.java)

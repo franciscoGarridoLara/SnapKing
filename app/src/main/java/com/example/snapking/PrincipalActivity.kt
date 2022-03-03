@@ -94,7 +94,7 @@ class PrincipalActivity : AppCompatActivity() {
 
     private fun crearSala() {
         var iduser=User.getInstancia()?.printToken().toString()
-        var jugador=Jugador(iduser,false,0)
+        var jugador=Jugador(iduser,false,0,Etapa.LOBBY)
         var listaJugadores=ArrayList<Jugador>()
         listaJugadores.add(jugador)
 
@@ -122,7 +122,7 @@ class PrincipalActivity : AppCompatActivity() {
                             && wraperSalaIn.sala.ronda == null) {
                             Log.d("PRINCIPAL ACTIVITY","SALA SELECCIONADA")
 
-                            var jugador=Jugador(User.getInstancia()?.printToken().toString(),false,0)
+                            var jugador=Jugador(User.getInstancia()?.printToken().toString(),false,0,Etapa.LOBBY)
                             Log.d("-----------pr","entro en el escribiendo")
                             BaseDatos.getInstance()?.meterJugadorSala(wraperSalaIn.id,jugador)
                             bucle=false
@@ -132,7 +132,7 @@ class PrincipalActivity : AppCompatActivity() {
                     }
                 Log.d("PRINCIPAL ACTIVITY", "NO HA ENCONTRADO SALAS?: " + bucle.toString())
                     if(bucle){
-                        var jugador=Jugador(id,false,0)
+                        var jugador=Jugador(id,false,0,Etapa.LOBBY)
                         var listaJugadores=ArrayList<Jugador>()
                         listaJugadores.add(jugador)
 

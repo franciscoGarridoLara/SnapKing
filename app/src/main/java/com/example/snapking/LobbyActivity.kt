@@ -13,6 +13,7 @@ import com.example.snapking.BaseDatos.*
 import com.example.snapking.Firebase.User
 import com.example.snapking.Wrapper.WrapperUsuarioLobby
 import com.example.snapking.databinding.ActivityLobbyBinding
+import com.example.snapking.modelo.Etapa
 import com.example.snapking.modelo.Jugador
 import com.example.snapking.modelo.WrapperSala
 import com.google.firebase.database.DataSnapshot
@@ -105,9 +106,7 @@ class LobbyActivity : AppCompatActivity() {
                                     inicio = false
                                     BaseDatos.getInstance()?.empezarPartida(wraperSala!!.id)
                                     BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListener!!)
-                                    var intent=Intent(applicationContext,TematicaActivity::class.java)
-                                    intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
-                                    startActivity(intent)
+                                    pasoDeActividad()
                                 }
                             }else{
                                 BaseDatos.getInstance()?.comprobarPartida(wraperSala!!.id,object:IComprobarStart{
@@ -115,12 +114,10 @@ class LobbyActivity : AppCompatActivity() {
 
                                         if (ready && inicio) {
                                             inicio = false
-                                            var intent=Intent(applicationContext,TematicaActivity::class.java)
-                                            intent.putExtra("wrapersala",Gson().toJson(wraperSala) )
+
                                             Log.d("LOBBY ACTIVITY","CERRANDO ESCUCHADOR CARGAR USUARIOS.")
                                             BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListener!!)
-                                            startActivity(intent)
-                                            finish()
+                                            pasoDeActividad()
                                         }
 
                                     }
@@ -130,6 +127,14 @@ class LobbyActivity : AppCompatActivity() {
                                 })
                             }
 
+                        }
+
+                        private fun pasoDeActividad() {
+                            var intent = Intent(applicationContext, TematicaActivity::class.java)
+                            intent.putExtra("wrapersala", Gson().toJson(wraperSala))
+                            startActivity(intent)
+                            BaseDatos.getInstance()!!.cambiarEstadoJugadorSala(wraperSala!!.id,User.getInstancia()!!.printToken(),Etapa.PARTIDA)
+                            finish()
                         }
                     })
 
