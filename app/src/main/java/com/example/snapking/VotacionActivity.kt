@@ -275,9 +275,17 @@ class VotacionActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        cerrarEscuchadores()
+        TematicaActivity.votacion = true
+        try {
+            BaseDatos.getInstance()?.elminarJugadorSala(wraperSala!!.id, User.getInstancia()!!.printToken())
+        } catch (e: NullPointerException) {
+        }
 
+        startActivity(Intent(this,PrincipalActivity::class.java))
+        finish()
 
-        super.onBackPressed()
+        //super.onBackPressed()
     }
 
     private fun comprobarTiempo(){

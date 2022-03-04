@@ -703,10 +703,13 @@ class BaseDatos(){
 
         try {
             reference.child("salas").child(idSala).child("etapa").get().addOnSuccessListener {
-                var etapastr:String=it.value as String
-                var etapa=Etapa.valueOf(etapastr)
+                try {
+                    var etapastr:String=it.value as String
+                    var etapa=Etapa.valueOf(etapastr)
 
-                iGetEtapaSala.onCallBack(etapa)
+                    iGetEtapaSala.onCallBack(etapa)
+                } catch (e: Exception) {
+                }
 
             }
         } catch (e: Exception) {

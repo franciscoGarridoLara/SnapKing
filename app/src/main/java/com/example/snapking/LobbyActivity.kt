@@ -104,8 +104,8 @@ class LobbyActivity : AppCompatActivity() {
                                 Log.d("--------LOBBY ACITVITY", "lista size: " + lista.size.toString())
                                 if(votos==lista.size&&votos>1){
                                     inicio = false
-                                    BaseDatos.getInstance()?.empezarPartida(wraperSala!!.id)
                                     BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListener!!)
+                                    BaseDatos.getInstance()?.empezarPartida(wraperSala!!.id)
                                     pasoDeActividad()
                                 }
                             }else{
@@ -130,6 +130,7 @@ class LobbyActivity : AppCompatActivity() {
                         }
 
                         private fun pasoDeActividad() {
+                            BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListener!!)
                             var intent = Intent(applicationContext, TematicaActivity::class.java)
                             intent.putExtra("wrapersala", Gson().toJson(wraperSala))
                             startActivity(intent)
@@ -152,7 +153,7 @@ class LobbyActivity : AppCompatActivity() {
                 }else
                 {
                     Log.d("ACTIVITY LOBBY", "REMOVIENDO EL LISTENER DE CARGAR DATOS.")
-                    BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(this)
+                    BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).removeEventListener(postListener!!)
                 }
             }
 

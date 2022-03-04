@@ -112,8 +112,11 @@ class TematicaActivity : AppCompatActivity() {
 
         Log.d("TEMATICA ACTIVITY","INICIANDO TEMATICA ACTIVITY")
 
-        //cerrar la actividad anterior.
-        LobbyActivity.activityActual!!.finish()
+        //cerrar la actividad anterior si existe.
+        if(LobbyActivity.activityActual != null){
+            LobbyActivity.activityActual!!.finish()
+        }
+
 
         cogerWrapperSala()
         crearRonda()
@@ -174,7 +177,7 @@ class TematicaActivity : AppCompatActivity() {
                 })
                 if(!escuchar){
                     Log.d("TEMATICA ACTIVITY", "STATUS = FALSE, SALIENDO A PRINCIPAL.")
-                    BaseDatos.getInstance()!!.reference.child("salas").removeEventListener(this)
+                    BaseDatos.getInstance()!!.reference.child("salas").child("start").removeEventListener(this)
                     var intent = Intent(this@TematicaActivity,PrincipalActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -194,7 +197,7 @@ class TematicaActivity : AppCompatActivity() {
 
         }
 
-        BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).addValueEventListener(postListenerStatus!!)
+        BaseDatos.getInstance()!!.reference.child("salas").child(wraperSala!!.id).child("start").addValueEventListener(postListenerStatus!!)
     }
 
     private fun inciarCountDown(encender : Boolean) {
@@ -417,7 +420,7 @@ class TematicaActivity : AppCompatActivity() {
             Log.d("TEMATICA ACTIVITY", "HACIENDO FOTO BOTON FOTO")
             takePhoto()
 
-            viewBinding.btnBack.visibility = View.VISIBLE
+
             viewBinding.btnPhoto.visibility = View.INVISIBLE
             viewBinding.btnAcept.visibility = View.VISIBLE
         }
@@ -426,6 +429,7 @@ class TematicaActivity : AppCompatActivity() {
 
         viewBinding.btnBack.setOnClickListener {
             fragmentTransaction= supportFragmentManager.beginTransaction()
+
             fragmentTransaction.remove(fragment)
             fragmentTransaction.commit()
 
@@ -573,6 +577,7 @@ class TematicaActivity : AppCompatActivity() {
             fragmentTransaction.commit()
         } catch (e: Exception) {
         }
+        viewBinding.btnBack.visibility = View.VISIBLE
 
     }
 
